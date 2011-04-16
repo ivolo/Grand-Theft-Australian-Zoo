@@ -8,4 +8,3 @@ class FloorTile(Tile):
         self.walkable = True
         self.visible = True
         self.swimmable = False
-        self.passable = True

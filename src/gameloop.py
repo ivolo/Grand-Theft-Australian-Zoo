@@ -9,8 +9,6 @@ from pygame.locals import *
 from player.Player import Player
 from map.Map import Map
 
-QUIT = 0
-
 class Game:
 
     screen_dim = 640, 480

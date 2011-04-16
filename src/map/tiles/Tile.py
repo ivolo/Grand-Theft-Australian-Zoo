@@ -5,7 +5,6 @@ class Tile:
     walkable = False
     visible = False
     swimmable = False
-    passable = False
     
     def __init__(self, image, x, y, game):
         self.image = image

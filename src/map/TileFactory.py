@@ -3,10 +3,14 @@ from tiles.Tile import Tile
 
 import os
 from tiles.FloorTile import FloorTile
+from map.tiles.WaterTile import WaterTile
+from map.tiles.WallTile import WallTile
 
 # The dictionary describing tiles
 # The form is: character : (tile image file, tile Class)
-tiles = { '' : (os.path.join("tiles","grass.png"), FloorTile)
+tiles = { '' : (os.path.join("tiles","grass.png"), FloorTile),
+          'w': (os.path.join("tiles","water.png"), WaterTile),
+          's': (os.path.join("tiles","stone_wall.png"), WallTile)
         }
 
 # The dictionary describing sprites (non-Player)
