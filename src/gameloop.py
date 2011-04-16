@@ -8,6 +8,7 @@ from pygame.locals import *
 
 from player.Player import Player
 from map.Map import Map
+from player.taz import Taz
 
 class Game:
 
@@ -25,13 +26,13 @@ class Game:
         pygame.display.set_caption("Grand Theft Australian Zoo")
         pygame.mouse.set_visible(1);        
         
-        self.player = Player(self, 0, 0)
+        self.player = Taz(self, 0, 0)
         
         self.pressed = []
         for key in pygame.key.get_pressed():
             self.pressed.append( False )
             
-        self.loadLevel("blank_map.txt")
+        self.loadLevel("sample_map.txt")
     
     def loadLevel(self, file):
         self.pressed = []
@@ -74,6 +75,31 @@ class Game:
                 sys.exit()
         else:
             self.pressed[K_ESCAPE] = False
+    
+        if(keys[K_w]):
+            if not self.pressed[K_w]:
+                self.player.move(0, -1)
+        else:
+            self.pressed[K_w] = False
+    
+        if(keys[K_s]):
+            if not self.pressed[K_s]:
+                self.player.move(0, 1)
+        else:
+            self.pressed[K_s] = False
+            
+        if(keys[K_a]):
+            if not self.pressed[K_a]:
+                self.player.move(-1, 0)
+        else:
+            self.pressed[K_a] = False
+            
+        if(keys[K_d]):
+            if not self.pressed[K_d]:
+                self.player.move(1, 0)
+        else:
+            self.pressed[K_d] = False
+        
     
     def update_state(self):
         return
