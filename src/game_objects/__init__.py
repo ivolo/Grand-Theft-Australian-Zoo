@@ -8,4 +8,5 @@ class GameObject(pygame.sprite.Sprite):
     def update(self):
         pass
 
-        
+    def draw(self):
+        pass
