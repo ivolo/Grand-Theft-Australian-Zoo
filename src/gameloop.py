@@ -26,7 +26,7 @@ class Game:
         pygame.display.set_caption("Grand Theft Australian Zoo")
         pygame.mouse.set_visible(1);        
         
-        self.player = Taz(self, 0, 0)
+        self.player = Taz(0, 0, self)
         
         self.pressed = []
         for key in pygame.key.get_pressed():

@@ -3,10 +3,10 @@ from tiles.Tile import Tile
 import TileFactory
 
 class Map:
-    tile_size = 32
+    tile_size = 32   
     
     def __init__(self, name,screen,game):
-        # Make the full pathmane of the map
+        # Make the full pathnane of the map
         self.fullname = os.path.join('map', 'maps', name)
 
         self.gameObjects = []
@@ -73,7 +73,7 @@ class Map:
             x = 0
             for key in line_tiles:
                 if key is not None and key is not '':
-                    self.gameObjects.append( TileFactory.generateSprite(key,x,y,self.game) )
+                    self.gameObjects.append( TileFactory.generateSprite(key,x,y - index,self.game) )
                 x += 1
         
         # special commands        

@@ -1,13 +1,15 @@
 from game_objects.gameObject import GameObject
 
+tile_size = 32
+
 class Player(GameObject):
     
     def __init__(self, game, x, y, image, rect, speed):
         self.game = game
         self.screen = game.screen
         
-        self.x = x
-        self.y = y
+        self.x = x * tile_size
+        self.y = y * tile_size
         
         self.image = image
         self.rect = rect
