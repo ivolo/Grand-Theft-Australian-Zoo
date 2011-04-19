@@ -46,6 +46,11 @@ class Game:
             self.loaded_maps[file] = self.current_map
             self.current_map.intialize()
     
+    def change_maps(self, dest, x, y):
+        self.loadLevel(dest)
+        self.player.x = x * 32
+        self.player.y = y * 32
+    
     def gameloop(self):
         while(True):
             self.get_input()

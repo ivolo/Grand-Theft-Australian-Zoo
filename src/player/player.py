@@ -34,6 +34,29 @@ class Player(GameObject):
                 self.attacking = False
                 self.current_image = self.image
                 self.attack_end = time.get_ticks()
+                
+        self.fire_tiles()
+    
+    def fire_tiles(self):
+        x = self.x + self.rect.left
+        y = self.y + self.rect.top
+        
+        # check all four corners
+        new_tile_idx = y/self.game.current_map.tile_size * self.game.current_map.tiles_wide \
+                           + x/self.game.current_map.tile_size
+        self.game.current_map.fire_tile(new_tile_idx, self)
+        
+        new_tile_idx = y/self.game.current_map.tile_size * self.game.current_map.tiles_wide \
+                           + (x+self.rect.width)/self.game.current_map.tile_size
+        self.game.current_map.fire_tile(new_tile_idx, self)
+        
+        new_tile_idx = (y+self.rect.height)/self.game.current_map.tile_size * self.game.current_map.tiles_wide \
+                           + x/self.game.current_map.tile_size
+        self.game.current_map.fire_tile(new_tile_idx, self)
+        
+        new_tile_idx = (y+self.rect.height)/self.game.current_map.tile_size * self.game.current_map.tiles_wide \
+                           + (x+self.rect.width)/self.game.current_map.tile_size
+        self.game.current_map.fire_tile(new_tile_idx, self)
     
     def collides_with_tiles(self, x, y):
         x += self.rect.left

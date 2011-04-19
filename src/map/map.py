@@ -28,8 +28,7 @@ class Map:
 
     def fire_tile(self, index, source):
         if index in self.events:
-            for event in self.events[index]:
-                event.fire(source)
+            self.events[index].fire(source)
 
     def update_objects(self):
         for obj in self.gameObjects:
@@ -82,7 +81,7 @@ class Map:
                 x += 1
         
         # special commands        
-        index = self.tiles_high 
+        index = self.tiles_high + index + 1
         while index < len(lines):
             if lines[index] is "\n":
                 index += 1
@@ -90,11 +89,11 @@ class Map:
             
             command = lines[index].split(' ')
             
-            if command[0] is "link":
+            if command[0] == 'link':
                 start_coords = command[1].split(',')
                 end_map = command[2]
-                end_coords = command[3].spliy(',')
-                self.events[start_coords] = LinkEvent(start_coords, end_coords, end_map)
+                end_coords = command[3].split(',')
+                self.events[int(start_coords[1])*self.tiles_wide+int(start_coords[0])] = LinkEvent(start_coords, end_coords, end_map, self.game)
             
             index += 1
             
