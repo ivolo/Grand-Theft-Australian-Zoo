@@ -102,7 +102,10 @@ class Game:
         
     
     def update_state(self):
-        return
+        if self.current_map is not None:
+            self.current_map.update_objects()
+            
+        self.player.update()
     
     def draw(self):
         if self.current_map is not None:

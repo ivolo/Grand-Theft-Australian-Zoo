@@ -30,6 +30,10 @@ class Map:
             for event in self.events[index]:
                 event.fire(source)
 
+    def update_objects(self):
+        for obj in self.gameObjects:
+            obj.update()
+
     def draw_tiles(self):
         for tile in self.tiles:
             tile.draw()

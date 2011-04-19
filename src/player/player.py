@@ -18,6 +18,9 @@ class Player(GameObject):
     def draw(self):
         self.screen.blit(self.image, (self.x,self.y))
     
+    def update(self):
+        return
+    
     def collides_with_tiles(self, x, y):
         # check all four corners
         new_tile_idx = y/self.game.current_map.tile_size * self.game.current_map.tiles_wide \
