@@ -1,4 +1,4 @@
-from player.Player import Player
+from player import Player
 from utils import image_util
 
 

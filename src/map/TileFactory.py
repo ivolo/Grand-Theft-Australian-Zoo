@@ -3,8 +3,8 @@ from tiles.Tile import Tile
 
 import os
 from tiles.FloorTile import FloorTile
-from map.tiles.WaterTile import WaterTile
-from map.tiles.WallTile import WallTile
+from tiles.WaterTile import WaterTile
+from tiles.WallTile import WallTile
 
 # The dictionary describing tiles
 # The form is: character : (tile image file, tile Class)

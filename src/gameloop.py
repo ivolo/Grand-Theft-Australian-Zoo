@@ -6,8 +6,8 @@ import sys, os
 import pygame
 from pygame.locals import *
 
-from player.Player import Player
-from map.Map import Map
+from player.player import Player
+from map.map import Map
 from player.taz import Taz
 
 class Game:

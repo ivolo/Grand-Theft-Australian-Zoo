@@ -1,6 +1,6 @@
 import sys,os
-import TileFactory
 from tiles.Tile import Tile
+import TileFactory
 
 class Map:
     tile_size = 32
