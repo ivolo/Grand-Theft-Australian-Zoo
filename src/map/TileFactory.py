@@ -11,7 +11,8 @@ from visitor.visitor import Visitor
 # The form is: character : (tile image file, tile Class)
 tiles = { '' : (os.path.join("tiles","grass.png"), FloorTile),
           'w': (os.path.join("tiles","water.png"), WaterTile),
-          's': (os.path.join("tiles","stone_wall.png"), WallTile)
+          's': (os.path.join("tiles","stone_wall.png"), WallTile),
+          'p': (os.path.join("tiles","path.png"), FloorTile),
         }
 
 # The dictionary describing sprites (non-Player)

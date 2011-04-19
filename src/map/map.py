@@ -6,9 +6,9 @@ class Map:
     tile_size = 32   
     
     def __init__(self, name,screen,game):
-        # Make the full pathnane of the map
+        # Make the full pathname of the map
         self.fullname = os.path.join('map', 'maps', name)
-
+        
         self.gameObjects = []
         self.tiles = []
         

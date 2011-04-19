@@ -26,7 +26,7 @@ class Game:
         pygame.display.set_caption("Grand Theft Australian Zoo")
         pygame.mouse.set_visible(1);        
         
-        self.player = Taz(0, 0, self)
+        self.player = Taz(1, 1, self)
         
         self.pressed = []
         for key in pygame.key.get_pressed():
@@ -70,12 +70,28 @@ class Game:
     def getButtonPresses(self):
         keys = pygame.key.get_pressed()
 
+        # quit
         if(keys[K_ESCAPE]):
             if not self.pressed[K_ESCAPE]:
                 sys.exit()
         else:
             self.pressed[K_ESCAPE] = False
     
+        # attack
+        if(keys[K_SPACE]):
+            if not self.pressed[K_SPACE]:
+                self.player.attack()
+        else:
+            self.pressed[K_SPACE] = False
+    
+        # use ability
+        if(keys[K_RETURN]):
+            if not self.pressed[K_RETURN]:
+                self.player.use_ability()
+        else:
+            self.pressed[K_RETURN] = False
+    
+        # move
         if(keys[K_w]):
             if not self.pressed[K_w]:
                 self.player.move(0, -1)

@@ -1,10 +1,11 @@
 from game_objects.gameObject import GameObject
+from pygame import time
 
 tile_size = 32
 
 class Player(GameObject):
     
-    def __init__(self, game, x, y, image, rect, speed):
+    def __init__(self, game, x, y, image, attack_image, rect, speed, attack_length):
         self.game = game
         self.screen = game.screen
         
@@ -12,16 +13,29 @@ class Player(GameObject):
         self.y = y * tile_size
         
         self.image = image
+        self.attack_image = attack_image
         self.rect = rect
         self.speed = speed
     
+        self.current_image = self.image
+    
+        self.attack_length = attack_length
+        self.attack_start = 0
+        self.attacking = False
+    
     def draw(self):
-        self.screen.blit(self.image, (self.x,self.y))
+        self.screen.blit(self.current_image, (self.x,self.y))
     
     def update(self):
-        pass
+        if self.attacking:
+            if self.attack_start + self.attack_length < time.get_ticks():
+                self.attacking = False
+                self.current_image = self.image
     
     def collides_with_tiles(self, x, y):
+        x += self.rect.left
+        y += self.rect.top
+        
         # check all four corners
         new_tile_idx = y/self.game.current_map.tile_size * self.game.current_map.tiles_wide \
                            + x/self.game.current_map.tile_size
@@ -59,7 +73,12 @@ class Player(GameObject):
                 self.y = new_y
         
     def use_ability(self):
-        raise NotImplementedError();
+        pass
     
     def attack(self):
-        raise NotImplementedError();
+        if self.attacking:
+            return
+        
+        self.attacking = True
+        self.attack_start = time.get_ticks()
+        self.current_image = self.attack_image
