@@ -1,6 +1,7 @@
 import sys,os
 from tiles.Tile import Tile
 import TileFactory
+from linkEvent import LinkEvent
 
 class Map:
     tile_size = 32   
@@ -82,7 +83,19 @@ class Map:
         
         # special commands        
         index = self.tiles_high 
-        while lines[index] is "\n":
+        while index < len(lines):
+            if lines[index] is "\n":
+                index += 1
+                continue
+            
+            command = lines[index].split(' ')
+            
+            if command[0] is "link":
+                start_coords = command[1].split(',')
+                end_map = command[2]
+                end_coords = command[3].spliy(',')
+                self.events[start_coords] = LinkEvent(start_coords, end_coords, end_map)
+            
             index += 1
             
         

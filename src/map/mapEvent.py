@@ -4,7 +4,7 @@
 class MapEvent:
     
     def __init__(self):
-        raise NotImplementedError();
+        pass
     
     def fire(self):
         raise NotImplementedError();
