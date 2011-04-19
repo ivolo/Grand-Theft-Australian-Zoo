@@ -5,7 +5,7 @@ tile_size = 32
 
 class Player(GameObject):
     
-    def __init__(self, game, x, y, image, attack_image, rect, speed, attack_length):
+    def __init__(self, game, x, y, image, attack_image, rect, speed, attack_length, attack_delay):
         self.game = game
         self.screen = game.screen
         
@@ -20,6 +20,8 @@ class Player(GameObject):
         self.current_image = self.image
     
         self.attack_length = attack_length
+        self.attack_delay = attack_delay
+        self.attack_end = 0
         self.attack_start = 0
         self.attacking = False
     
@@ -31,6 +33,7 @@ class Player(GameObject):
             if self.attack_start + self.attack_length < time.get_ticks():
                 self.attacking = False
                 self.current_image = self.image
+                self.attack_end = time.get_ticks()
     
     def collides_with_tiles(self, x, y):
         x += self.rect.left
@@ -76,7 +79,7 @@ class Player(GameObject):
         pass
     
     def attack(self):
-        if self.attacking:
+        if self.attacking or time.get_ticks() < self.attack_delay + self.attack_end:
             return
         
         self.attacking = True

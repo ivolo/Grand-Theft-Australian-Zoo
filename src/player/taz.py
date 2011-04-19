@@ -15,7 +15,8 @@ class Taz(Player):
         speed = 2
         
         attack_length = 250
+        attack_delay = 200
         
-        Player.__init__(self, game, x, y, image, attack_image, rect, speed, attack_length)
+        Player.__init__(self, game, x, y, image, attack_image, rect, speed, attack_length, attack_delay)
    
     
