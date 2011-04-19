@@ -16,7 +16,7 @@ class GameObject(pygame.sprite.Sprite):
         self.rect = self.image.get_rect().move(coordinates)
         
     def update(self):
-        pass
+        raise NotImplementedError();
 
     def draw(self):
-        pass
+        raise NotImplementedError();

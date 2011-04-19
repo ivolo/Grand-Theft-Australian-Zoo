@@ -19,7 +19,7 @@ class Player(GameObject):
         self.screen.blit(self.image, (self.x,self.y))
     
     def update(self):
-        return
+        pass
     
     def collides_with_tiles(self, x, y):
         # check all four corners
@@ -59,7 +59,7 @@ class Player(GameObject):
                 self.y = new_y
         
     def use_ability(self):
-        return
+        raise NotImplementedError();
     
     def attack(self):
-        return
+        raise NotImplementedError();

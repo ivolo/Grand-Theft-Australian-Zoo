@@ -10,5 +10,3 @@ class Taz(Player):
         speed = 2
         
         Player.__init__(self, game, x, y, image, rect, speed)
-        
-    
