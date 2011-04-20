@@ -18,7 +18,6 @@ class Map:
         self.tiles = []
         self.game_objects = pygame.sprite.Group()
         self.unwalkable_tiles = pygame.sprite.Group()
-
         
         self.screen=screen
         self.game=game
