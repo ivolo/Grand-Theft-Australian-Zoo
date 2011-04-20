@@ -43,8 +43,8 @@ class Player(GameObject):
         self.fire_tiles()
     
     def fire_tiles(self):
-        x = self.x + self.rect.left
-        y = self.y + self.rect.top
+        x = self.x
+        y = self.y
         
         # check all four corners
         new_tile_idx = y/self.game.current_map.tile_size * self.game.current_map.tiles_wide \
