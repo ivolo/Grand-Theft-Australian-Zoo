@@ -9,6 +9,7 @@ from visitor.visitor import Visitor
 from zookeeper.zookeeper import Zookeeper
 from specialObject.fance import Fence
 from car.car import Car
+from player.kangaroo import Kangaroo
 
 # The dictionary describing tiles
 # The form is: character : (tile image file, tile Class)
@@ -23,7 +24,8 @@ tiles = { '' : (os.path.join("tiles","grass.png"), FloorTile),
 sprites = { 'V' : (os.path.join("visitor.png"), Visitor),
             'Z' : (os.path.join("zookeeper.png"), Zookeeper),
             'F' : (os.path.join("fence.png"), Fence),
-            'C' : (os.path.join("car.png"), Car)}
+            'C' : (os.path.join("car.png"), Car),
+            'K' : (os.path.join("kangaroo.png"), Kangaroo)}
 
 loaded_sprites = {}
 loaded_tiles = {}

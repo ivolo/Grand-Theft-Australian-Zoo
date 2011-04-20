@@ -9,7 +9,7 @@ from pygame.locals import *
 from player.player import Player
 from map.map import Map
 from player.taz import Taz
-from pygame.sprite import Group
+from pygame.sprite import Group, Sprite
 
 class Game:
 
@@ -27,9 +27,12 @@ class Game:
         pygame.display.set_caption("Grand Theft Australian Zoo")
         pygame.mouse.set_visible(1);        
         
-        self.player = Taz(1, 1, self)
+        self.cursor = Sprite()
+        self.cursor.rect = Rect(0,0,1,1)
+        
         self.player_group = Group()
-        self.player_group.add(self.player)
+        self.player = Taz(None, 1, 1, self)
+        self.player.inUse = True
         self.clock = pygame.time.Clock()
         
         self.pressed = []
@@ -39,8 +42,8 @@ class Game:
         self.loadLevel("sample_map.txt")
         
     def reset(self):
-        self.current_map.game_objects.remove(self.player)
-        self.player = Taz(1, 1, self)
+        self.player_group.remove(self.player)
+        self.player = self.player.newPlayer()
         self.pressed = []
         for key in pygame.key.get_pressed():
             self.pressed.append( False )
@@ -66,6 +69,11 @@ class Game:
         self.player.rect.left = self.player.x + self.player.left_offset
         self.player.rect.top = self.player.y + self.player.top_offset
     
+    def change_player(self, newPlayer):
+        self.player.inUse = False
+        self.player = newPlayer;
+        self.player.inUse = True
+    
     def gameloop(self):
         while(True):
             self.clock.tick(60)
@@ -86,7 +94,12 @@ class Game:
             elif event.type == MOUSEBUTTONDOWN:
                 pass
             elif event.type == MOUSEBUTTONUP:
-                pass
+                pos = pygame.mouse.get_pos()
+                self.cursor.rect.left = pos[0]
+                self.cursor.rect.top = pos[1]
+                collision = pygame.sprite.spritecollideany(self.cursor, self.player_group)
+                if collision != None:
+                    self.change_player(collision)
     
     def getButtonPresses(self):
         keys = pygame.key.get_pressed()
@@ -156,14 +169,16 @@ class Game:
         if self.current_map is not None:
             self.current_map.update_objects()
             
-        self.player.update()
+        for p in self.player_group:
+            p.update()
     
     def draw(self):
         if self.current_map is not None:
             self.current_map.draw_tiles()
             self.current_map.draw_objects()
-            
-        self.player.draw()
+        
+        for p in self.player_group:
+            p.draw()
         
         pygame.display.flip()
 

@@ -7,7 +7,11 @@ from car.car import Car
 
 class Taz(Player):
     
-    def __init__(self, x, y, game):
+    def __init__(self, image, x, y, game):
+        self.init_image = image
+        self.init_x = x
+        self.init_y = y
+        
         image = image_util.load_image("taz.png")
         attack_image = image_util.load_image("taz_attack.png")
         rect = image.get_rect()
@@ -30,7 +34,10 @@ class Taz(Player):
         self.attack_sprite.rect.width += 10
         self.attack_sprite.rect.height += 10
         
-        self.canDriveCar = True
+        self.canDriveCar = False
+    
+    def newPlayer(self):
+        return Taz(self.init_image, self.init_x, self.init_y, self.game)
     
     def attack(self):
         started = Player.attack(self)

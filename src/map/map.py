@@ -74,6 +74,7 @@ class Map:
         index = self.tiles_high 
         while lines[index] is "\n":
             index += 1
+        index += 1
             
         # Load the sprite map
         for y in xrange(index, self.tiles_high + index):
@@ -90,7 +91,7 @@ class Map:
                 x += 1
         
         # special commands        
-        index = self.tiles_high + index + 1
+        index = self.tiles_high + index
         while index < len(lines):
             if lines[index] is "\n":
                 index += 1

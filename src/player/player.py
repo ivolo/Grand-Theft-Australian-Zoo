@@ -33,6 +33,12 @@ class Player(GameObject):
         self.attacking = False
         
         self.isInCar = False
+        
+        self.inUse = False
+        self.game.player_group.add(self)
+    
+    def newPlayer(self):
+        pass
     
     def draw(self):
         if(self.isInCar):
