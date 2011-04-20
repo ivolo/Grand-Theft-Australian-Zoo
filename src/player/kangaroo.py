@@ -5,7 +5,7 @@ import pygame
 from pygame.sprite import Sprite
 from car.car import Car
 
-class Taz(Player):
+class Kangaroo(Player):
     
     def __init__(self, x, y, game):
         image = image_util.load_image("taz.png")

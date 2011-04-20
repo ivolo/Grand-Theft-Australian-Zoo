@@ -54,3 +54,6 @@ class GameObject(pygame.sprite.Sprite):
     
     def attacked(self, source):
         pass
+    
+    def ranOver(self, source):
+        pass

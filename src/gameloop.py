@@ -9,10 +9,11 @@ from pygame.locals import *
 from player.player import Player
 from map.map import Map
 from player.taz import Taz
+from pygame.sprite import Group
 
 class Game:
 
-    screen_dim = 640, 480
+    screen_dim = 800,576
     
     loaded_maps = {}
     current_map = None
@@ -27,6 +28,8 @@ class Game:
         pygame.mouse.set_visible(1);        
         
         self.player = Taz(1, 1, self)
+        self.player_group = Group()
+        self.player_group.add(self.player)
         self.clock = pygame.time.Clock()
         
         self.pressed = []
@@ -36,6 +39,7 @@ class Game:
         self.loadLevel("sample_map.txt")
         
     def reset(self):
+        self.current_map.game_objects.remove(self.player)
         self.player = Taz(1, 1, self)
         self.pressed = []
         for key in pygame.key.get_pressed():
@@ -108,6 +112,20 @@ class Game:
         else:
             self.pressed[K_RETURN] = False
     
+        # get into car
+        if(keys[K_UP]):
+            if not self.pressed[K_UP]:
+                self.player.get_into_car()
+        else:
+            self.pressed[K_UP] = False
+        
+        # get out of car
+        if(keys[K_DOWN]):
+            if not self.pressed[K_DOWN]:
+                self.player.leave_car()
+        else:
+            self.pressed[K_DOWN] = False
+        
         # move
         if(keys[K_w]):
             if not self.pressed[K_w]:

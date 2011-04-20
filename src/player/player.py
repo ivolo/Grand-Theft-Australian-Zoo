@@ -2,6 +2,8 @@ import pygame
 
 from game_objects.gameObject import GameObject
 from pygame import time
+from car.car import Car
+from utils.sprite_util import check_collision
 
 tile_size = 32
 
@@ -29,11 +31,19 @@ class Player(GameObject):
         self.attack_end = 0
         self.attack_start = 0
         self.attacking = False
+        
+        self.isInCar = False
     
     def draw(self):
+        if(self.isInCar):
+            return
+        
         self.screen.blit(self.current_image, (self.x,self.y))
     
     def update(self):
+        if(self.isInCar):
+            return
+        
         if self.attacking:
             if self.attack_start + self.attack_length < time.get_ticks():
                 self.attacking = False
@@ -90,12 +100,13 @@ class Player(GameObject):
             
         return True
     
-
-
     def use_ability(self):
         pass
     
     def attack(self):
+        if(self.isInCar):
+            return
+        
         if self.attacking or time.get_ticks() < self.attack_delay + self.attack_end:
             return False
         
@@ -103,3 +114,63 @@ class Player(GameObject):
         self.attack_start = time.get_ticks()
         self.current_image = self.attack_image
         return True
+
+    # car stuff
+    def move(self, x_change,  y_change):
+        if(self.isInCar):
+            return
+        
+        GameObject.move(self, x_change, y_change)
+    
+    def get_into_car(self):
+        if not self.canDriveCar:
+            return
+        
+        self.attack_sprite.rect.top = self.y - 5
+        self.attack_sprite.rect.left = self.x - 5
+        collisions = pygame.sprite.spritecollide(self.attack_sprite, self.game.current_map.game_objects, False)
+        if collisions is not None:
+            for collision in collisions:
+                if isinstance(collision, Car):
+                    self.isInCar = True
+                    collision.inCar(self)
+                    self.car = collision
+                    self.game.current_map.game_objects.remove(self)
+                    self.x = -1000
+                    self.y = -1000
+                    self.rect.top = -1000
+                    self.rect.left = -1000
+                    
+    def leave_car(self):
+        if self.isInCar:
+            #find some spot to put myself
+            self.x = self.car.x
+            self.y = self.car.y - self.rect.height - 1
+            self.rect.top = self.y + self.top_offset
+            self.rect.left = self.x + self.left_offset
+            if (check_collision(self, self.game.current_map.game_objects) or 
+                check_collision(self, self.game.current_map.unwalkable_tiles)):
+                self.y = self.car.y + self.car.rect.height
+                self.rect.top = self.y + self.top_offset
+                self.rect.left = self.x + self.left_offset
+                if (check_collision(self, self.game.current_map.game_objects) or 
+                    check_collision(self, self.game.current_map.unwalkable_tiles)):
+                    self.x = self.car.x - self.rect.width - 1
+                    self.y = self.car.y
+                    self.rect.top = self.y + self.top_offset
+                    self.rect.left = self.x + self.left_offset
+                    if (check_collision(self, self.game.current_map.game_objects) or 
+                        check_collision(self, self.game.current_map.unwalkable_tiles)):
+                        self.x = self.car.x + self.car.rect.width + self.rect.width + 1
+                        self.rect.top = self.y + self.top_offset
+                        self.rect.left = self.x + self.left_offset
+                        if (check_collision(self, self.game.current_map.game_objects) or 
+                            check_collision(self, self.game.current_map.unwalkable_tiles)):
+                            # Oh well, I guess we're stuck
+                            return
+            
+            self.car.leaveCar()
+            self.isInCar = False
+            self.car = None
+            self.game.current_map.game_objects.add(self)
+            

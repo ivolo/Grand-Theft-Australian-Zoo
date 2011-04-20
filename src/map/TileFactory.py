@@ -8,20 +8,22 @@ from tiles.WallTile import WallTile
 from visitor.visitor import Visitor
 from zookeeper.zookeeper import Zookeeper
 from specialObject.fance import Fence
+from car.car import Car
 
 # The dictionary describing tiles
 # The form is: character : (tile image file, tile Class)
 tiles = { '' : (os.path.join("tiles","grass.png"), FloorTile),
           'w': (os.path.join("tiles","water.png"), WaterTile),
           's': (os.path.join("tiles","stone_wall.png"), WallTile),
-          'p': (os.path.join("tiles","path.png"), FloorTile),
+          'p': (os.path.join("tiles","path.png"), FloorTile)
         }
 
 # The dictionary describing sprites (non-Player)
 # The form is: character : (sprite image file, sprite Class)
 sprites = { 'V' : (os.path.join("visitor.png"), Visitor),
             'Z' : (os.path.join("zookeeper.png"), Zookeeper),
-            'F' : (os.path.join("fence.png"), Fence)}
+            'F' : (os.path.join("fence.png"), Fence),
+            'C' : (os.path.join("car.png"), Car)}
 
 loaded_sprites = {}
 loaded_tiles = {}

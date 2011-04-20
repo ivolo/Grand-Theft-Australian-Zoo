@@ -8,7 +8,7 @@ class Visitor(GameObject):
     
     def __init__(self, image, x, y, game):
         super(Visitor, self).__init__(image, (x*tile_size,y*tile_size), game)
-        self.speed = 1
+        self.speed = 2
         
     
     def update(self):
@@ -26,4 +26,7 @@ class Visitor(GameObject):
         self.screen.blit(self.image, (self.x,self.y))
         
     def attacked(self, source):
+        self.shouldRemove = True
+        
+    def ranOver(self, source):
         self.shouldRemove = True

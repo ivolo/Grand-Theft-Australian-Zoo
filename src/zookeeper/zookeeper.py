@@ -22,7 +22,13 @@ class Zookeeper(GameObject):
             
         if self.rect.colliderect(player.rect):
             self.game.reset()
+            
+        if self.shouldRemove:
+            self.kill()
 
     
     def draw(self):
         self.screen.blit(self.image, (self.x,self.y))
+        
+    def ranOver(self, source):
+        self.shouldRemove = True
