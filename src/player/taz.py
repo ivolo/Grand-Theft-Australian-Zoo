@@ -21,8 +21,13 @@ class Taz(Player):
         
         Player.__init__(self, game, x, y, image, attack_image, rect, speed, attack_length, attack_delay)
     
+        self.left_offset = 5
+        self.top_offset = 5
+    
         self.attack_sprite = Sprite()
         self.attack_sprite.rect = image.get_rect()
+        self.attack_sprite.rect.width += 10
+        self.attack_sprite.rect.height += 10
     
     def attack(self):
         started = Player.attack(self)
@@ -30,10 +35,11 @@ class Taz(Player):
         if not started:
             return
         
-        self.attack_sprite.x = self.x
-        self.attack_sprite.y = self.y
+        self.attack_sprite.rect.top = self.y - 5
+        self.attack_sprite.rect.left = self.x - 5
         
-        collisions = pygame.sprite.spritecollideany(self.attack_sprite, self.game.current_map.game_objects)
+        collisions = pygame.sprite.spritecollide(self.attack_sprite, self.game.current_map.game_objects, False)
         if collisions is not None:
-            print "attack!", collisions
+            for collision in collisions:
+                collision.attacked(self)
         

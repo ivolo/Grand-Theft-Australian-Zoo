@@ -24,6 +24,9 @@ class GameObject(pygame.sprite.Sprite):
         
         self.shouldRemove = False
         
+        self.left_offset = 0
+        self.top_offset = 0
+        
     def move(self, x_change, y_change):
         # check x
         old_rect = self.rect
@@ -40,11 +43,14 @@ class GameObject(pygame.sprite.Sprite):
             check_collision(self, self.game.current_map.unwalkable_tiles)):
             self.rect = old_rect
             
-        self.x = self.rect.left
-        self.y = self.rect.top
+        self.x = self.rect.left - self.left_offset
+        self.y = self.rect.top - self.top_offset
         
     def update(self):
-        raise NotImplementedError();
+        pass
 
     def draw(self):
-        raise NotImplementedError();
+        pass
+    
+    def attacked(self, source):
+        pass

@@ -22,7 +22,11 @@ class Visitor(GameObject):
         
     
     def update(self):
-        return
+        if self.shouldRemove:
+            self.kill()
     
     def draw(self):
         self.screen.blit(self.image, (self.x,self.y))
+        
+    def attacked(self, source):
+        self.shouldRemove = True
