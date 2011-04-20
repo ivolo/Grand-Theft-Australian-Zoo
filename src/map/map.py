@@ -1,6 +1,10 @@
-import sys,os
-from tiles.Tile import Tile
+import os
+import pygame
+import sys
+
 import TileFactory
+
+from tiles.Tile import Tile
 from linkEvent import LinkEvent
 
 class Map:
@@ -10,8 +14,11 @@ class Map:
         # Make the full pathname of the map
         self.fullname = os.path.join('map', 'maps', name)
         
-        self.gameObjects = []
+        
         self.tiles = []
+        self.game_objects = pygame.sprite.Group()
+        self.unwalkable_tiles = pygame.sprite.Group()
+
         
         self.screen=screen
         self.game=game
@@ -31,7 +38,7 @@ class Map:
             self.events[index].fire(source)
 
     def update_objects(self):
-        for obj in self.gameObjects:
+        for obj in self.game_objects:
             obj.update()
 
     def draw_tiles(self):
@@ -39,7 +46,7 @@ class Map:
             tile.draw()
         
     def draw_objects(self):
-        for obj in self.gameObjects:
+        for obj in self.game_objects:
             obj.draw()
 
     # Load the map from the text file
@@ -59,7 +66,10 @@ class Map:
             
             x = 0
             for key in line_tiles:
-                self.tiles.append( TileFactory.generateTile(key,x,y,self.game) )
+                tile = TileFactory.generateTile(key,x,y,self.game) 
+                self.tiles.append(tile)
+                if not tile.walkable:
+                    self.unwalkable_tiles.add(tile)
                 x += 1
                
         index = self.tiles_high 
@@ -77,7 +87,7 @@ class Map:
             x = 0
             for key in line_tiles:
                 if key is not None and key is not '':
-                    self.gameObjects.append( TileFactory.generateSprite(key,x,y - index,self.game) )
+                    self.game_objects.add( TileFactory.generateSprite(key,x,y - index,self.game) )
                 x += 1
         
         # special commands        

@@ -1,3 +1,5 @@
+import pygame
+
 from game_objects.gameObject import GameObject
 from pygame import time
 
@@ -16,6 +18,8 @@ class Player(GameObject):
         
         self.attack_image = attack_image
         self.rect = rect
+        self.rect.left = self.x
+        self.rect.top = self.y
         self.speed = speed
     
         self.current_image = self.image
@@ -88,17 +92,23 @@ class Player(GameObject):
     
     def move(self, x_change, y_change):
         # check x
-        new_x = x_change * self.speed + self.x
-        if new_x >= 0 and new_x < self.game.screen_dim[0] - self.rect.width:
-            if self.collides_with_tiles(new_x, self.y):
-                self.x = new_x
-        
-        # check y
-        new_y = y_change * self.speed + self.y
-        if new_y >= 0 and new_y < self.game.screen_dim[1] - self.rect.height:
-            if self.collides_with_tiles(self.x, new_y):
-                self.y = new_y
-        
+        old_rect = self.rect
+        delta_x = x_change * self.speed
+        self.rect = self.rect.move(delta_x, 0)
+        if (pygame.sprite.spritecollideany(self, self.game.current_map.game_objects) or
+            pygame.sprite.spritecollideany(self, self.game.current_map.unwalkable_tiles)):
+            self.rect = old_rect
+            
+        old_rect = self.rect
+        delta_y = y_change * self.speed
+        self.rect = self.rect.move(0, delta_y)
+        if (pygame.sprite.spritecollideany(self, self.game.current_map.game_objects) or
+            pygame.sprite.spritecollideany(self, self.game.current_map.unwalkable_tiles)):
+            self.rect = old_rect
+            
+        self.x = self.rect.left
+        self.y = self.rect.top
+
     def use_ability(self):
         pass
     
