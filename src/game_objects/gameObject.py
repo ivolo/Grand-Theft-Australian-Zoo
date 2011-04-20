@@ -18,6 +18,8 @@ class GameObject(pygame.sprite.Sprite):
         
         self.rect = self.image.get_rect().move(coordinates)
         
+        self.shouldRemove = False
+        
     def update(self):
         raise NotImplementedError();
 
