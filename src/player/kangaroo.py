@@ -40,17 +40,13 @@ class Kangaroo(Player):
     def newPlayer(self):
         return Kangaroo(self.init_image, self.init_x, self.init_y, self.game)
     
+    def use_ability(self):
+        # jump
+        # get the tile we're facing
+        
+        pass
+    
     def attack(self):
-        started = Player.attack(self)
-        
-        if not started:
-            return
-        
-        self.attack_sprite.rect.top = self.y - 5
-        self.attack_sprite.rect.left = self.x - 5
-        
-        collisions = pygame.sprite.spritecollide(self.attack_sprite, self.game.current_map.game_objects, False)
-        if collisions is not None:
-            for collision in collisions:
-                collision.attacked(self)
-        
+        pass
+    
+    
