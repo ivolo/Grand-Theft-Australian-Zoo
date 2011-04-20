@@ -1,6 +1,8 @@
 from player import Player
 from utils import image_util
 from pygame import time
+import pygame
+from pygame.sprite import Sprite
 
 class Taz(Player):
     
@@ -18,5 +20,20 @@ class Taz(Player):
         attack_delay = 200
         
         Player.__init__(self, game, x, y, image, attack_image, rect, speed, attack_length, attack_delay)
-   
     
+        self.attack_sprite = Sprite()
+        self.attack_sprite.rect = image.get_rect()
+    
+    def attack(self):
+        started = Player.attack(self)
+        
+        if not started:
+            return
+        
+        self.attack_sprite.x = self.x
+        self.attack_sprite.y = self.y
+        
+        collisions = pygame.sprite.spritecollideany(self.attack_sprite, self.game.current_map.game_objects)
+        if collisions is not None:
+            print "attack!", collisions
+        
