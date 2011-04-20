@@ -19,6 +19,11 @@ class Visitor(GameObject):
             y = 1 if self.rect.top - player.rect.top > 0 else - 1
             self.move(x, y)
             
+        if self.shouldRemove:
+            self.kill()
     
     def draw(self):
         self.screen.blit(self.image, (self.x,self.y))
+        
+    def attacked(self, source):
+        self.shouldRemove = True

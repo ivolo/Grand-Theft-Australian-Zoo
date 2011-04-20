@@ -97,8 +97,9 @@ class Player(GameObject):
     
     def attack(self):
         if self.attacking or time.get_ticks() < self.attack_delay + self.attack_end:
-            return
+            return False
         
         self.attacking = True
         self.attack_start = time.get_ticks()
         self.current_image = self.attack_image
+        return True
