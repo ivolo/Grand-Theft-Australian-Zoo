@@ -6,13 +6,14 @@ tile_size = 32
 class Player(GameObject):
     
     def __init__(self, game, x, y, image, attack_image, rect, speed, attack_length, attack_delay):
-        self.game = game
+        super(Player, self).__init__(image, (x*tile_size,y*tile_size), game)
+        
+        self.screen = game.screen
+        self.rect = self.image.get_rect()
+        self.speed = 1
+        
         self.screen = game.screen
         
-        self.x = x * tile_size
-        self.y = y * tile_size
-        
-        self.image = image
         self.attack_image = attack_image
         self.rect = rect
         self.speed = speed

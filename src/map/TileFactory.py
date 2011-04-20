@@ -6,6 +6,7 @@ from tiles.FloorTile import FloorTile
 from tiles.WaterTile import WaterTile
 from tiles.WallTile import WallTile
 from visitor.visitor import Visitor
+from zookeeper.zookeeper import Zookeeper
 
 # The dictionary describing tiles
 # The form is: character : (tile image file, tile Class)
@@ -17,7 +18,8 @@ tiles = { '' : (os.path.join("tiles","grass.png"), FloorTile),
 
 # The dictionary describing sprites (non-Player)
 # The form is: character : (sprite image file, sprite Class)
-sprites = { 'V' : (os.path.join("visitor.png"), Visitor)}
+sprites = { 'V' : (os.path.join("visitor.png"), Visitor),
+            'Z' : (os.path.join("zookeeper.png"), Zookeeper)}
 
 loaded_sprites = {}
 loaded_tiles = {}

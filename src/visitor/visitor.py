@@ -6,13 +6,9 @@ tile_size = 32
 class Visitor(GameObject):
     
     def __init__(self, image, x, y, game):
-        self.game = game
+        super(Visitor, self).__init__(image, (x*tile_size,y*tile_size), game)
+        
         self.screen = game.screen
-        
-        self.x = x * tile_size
-        self.y = y * tile_size
-        
-        self.image = load_image("visitor.png");
         self.rect = self.image.get_rect()
         self.speed = 1
     
