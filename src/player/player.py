@@ -90,24 +90,7 @@ class Player(GameObject):
             
         return True
     
-    def move(self, x_change, y_change):
-        # check x
-        old_rect = self.rect
-        delta_x = x_change * self.speed
-        self.rect = self.rect.move(delta_x, 0)
-        if (pygame.sprite.spritecollideany(self, self.game.current_map.game_objects) or
-            pygame.sprite.spritecollideany(self, self.game.current_map.unwalkable_tiles)):
-            self.rect = old_rect
-            
-        old_rect = self.rect
-        delta_y = y_change * self.speed
-        self.rect = self.rect.move(0, delta_y)
-        if (pygame.sprite.spritecollideany(self, self.game.current_map.game_objects) or
-            pygame.sprite.spritecollideany(self, self.game.current_map.unwalkable_tiles)):
-            self.rect = old_rect
-            
-        self.x = self.rect.left
-        self.y = self.rect.top
+
 
     def use_ability(self):
         pass
