@@ -17,7 +17,7 @@ class Tile(GameObject):
         self.map_y = y * tile_size
         self.game = game
         self.screen = self.game.screen
-        super(Tile, self).__init__((x, y))
+        super(Tile, self).__init__(image, (x, y), game)
         self.rect.left = self.map_x
         self.rect.top = self.map_y
         

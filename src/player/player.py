@@ -19,7 +19,7 @@ class Player(GameObject):
         self.attack_image = attack_image
         self.rect = rect
         self.rect.left = self.x
-        self.rect.right = self.y
+        self.rect.top = self.y
         self.speed = speed
     
         self.current_image = self.image
@@ -29,7 +29,6 @@ class Player(GameObject):
         self.attack_end = 0
         self.attack_start = 0
         self.attacking = False
-        super(Player, self).__init__((x * tile_size, y * tile_size))
     
     def draw(self):
         self.screen.blit(self.current_image, (self.x,self.y))
