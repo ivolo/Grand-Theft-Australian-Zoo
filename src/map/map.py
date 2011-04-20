@@ -39,7 +39,7 @@ class Map:
     def update_objects(self):
         for obj in self.game_objects:
             obj.update()
-
+            
     def draw_tiles(self):
         for tile in self.tiles:
             tile.draw()
