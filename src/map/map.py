@@ -6,6 +6,7 @@ import TileFactory
 
 from tiles.Tile import Tile
 from linkEvent import LinkEvent
+from player.player import Player
 
 class Map:
     tile_size = 32   
@@ -87,7 +88,9 @@ class Map:
             x = 0
             for key in line_tiles:
                 if key is not None and key is not '':
-                    self.game_objects.add( TileFactory.generateSprite(key,x,y - index,self.game) )
+                    object = TileFactory.generateSprite(key,x,y - index,self.game)
+                    if not isinstance(object, Player):
+                        self.game_objects.add( object )
                 x += 1
         
         # special commands        

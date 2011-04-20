@@ -9,6 +9,11 @@ class Kangaroo(Player):
     
     def __init__(self, image, x, y, game):
         image = image_util.load_image("kangaroo.png")
+        
+        self.init_image = image
+        self.init_x = x
+        self.init_y = y
+        
         attack_image = image_util.load_image("taz_attack.png")
         rect = image.get_rect()
         rect.left = 5
@@ -31,6 +36,9 @@ class Kangaroo(Player):
         self.attack_sprite.rect.height += 10
         
         self.canDriveCar = True
+    
+    def newPlayer(self):
+        return Kangaroo(self.init_image, self.init_x, self.init_y, self.game)
     
     def attack(self):
         started = Player.attack(self)
