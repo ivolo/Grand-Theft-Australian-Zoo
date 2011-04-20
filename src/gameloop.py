@@ -27,7 +27,16 @@ class Game:
         pygame.mouse.set_visible(1);        
         
         self.player = Taz(1, 1, self)
+        self.clock = pygame.time.Clock()
         
+        self.pressed = []
+        for key in pygame.key.get_pressed():
+            self.pressed.append( False )
+            
+        self.loadLevel("sample_map.txt")
+        
+    def reset(self):
+        self.player = Taz(1, 1, self)
         self.pressed = []
         for key in pygame.key.get_pressed():
             self.pressed.append( False )
@@ -50,9 +59,12 @@ class Game:
         self.loadLevel(dest)
         self.player.x = x * 32
         self.player.y = y * 32
+        self.player.rect.left = self.player.x + self.player.left_offset
+        self.player.rect.top = self.player.y + self.player.top_offset
     
     def gameloop(self):
         while(True):
+            self.clock.tick(60)
             self.get_input()
             self.update_state()
             self.draw()

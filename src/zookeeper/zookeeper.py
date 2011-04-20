@@ -13,12 +13,15 @@ class Zookeeper(GameObject):
         self.speed = 1
     
     def update(self):
-        player = self.game.player
+        player = self.game.player        
         if get_distance(self, player) <= 200:
             # move away
             x = 1 if self.rect.left - player.rect.left < 0 else - 1 
             y = 1 if self.rect.top - player.rect.top < 0 else - 1
             self.move(x, y)
+            
+        if self.rect.colliderect(player.rect):
+            self.game.reset()
 
     
     def draw(self):

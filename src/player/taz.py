@@ -14,7 +14,7 @@ class Taz(Player):
         rect.top = 5
         rect.width = rect.width-10
         rect.height = rect.height-10
-        speed = 2
+        speed = 3
         
         attack_length = 250
         attack_delay = 200
