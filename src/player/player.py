@@ -9,7 +9,7 @@ tile_size = 32
 
 class Player(GameObject):
     
-    def __init__(self, game, x, y, image, attack_image, rect, speed, attack_length, attack_delay):
+    def __init__(self, game, x, y, image, attack_image, unselected_images, rect, speed, attack_length, attack_delay):
         super(Player, self).__init__(image, (x*tile_size,y*tile_size), game)
         
         self.screen = game.screen
@@ -24,7 +24,12 @@ class Player(GameObject):
         self.rect.top = self.y
         self.speed = speed
     
-        self.current_image = self.image
+        self.unselected_images = unselected_images
+        self.last_unselected_change = time.get_ticks()
+        self.unselected_change_delay = 250
+        self.unselected_image = 0
+        
+        self.current_image = self.unselected_images[self.unselected_image]
     
         self.attack_length = attack_length
         self.attack_delay = attack_delay
@@ -49,6 +54,15 @@ class Player(GameObject):
     def update(self):
         if(self.isInCar):
             return
+        
+        if not self.inUse:
+            #update the image
+            if self.last_unselected_change + self.unselected_change_delay < time.get_ticks():
+                self.unselected_image += 1
+                if self.unselected_image >= len(self.unselected_images):
+                    self.unselected_image = 0
+                self.current_image = self.unselected_images[self.unselected_image]
+                self.last_unselected_change = time.get_ticks()
         
         if self.attacking:
             if self.attack_start + self.attack_length < time.get_ticks():

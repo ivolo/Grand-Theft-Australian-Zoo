@@ -15,6 +15,7 @@ class Kangaroo(Player):
         self.init_y = y
         
         attack_image = image_util.load_image("taz_attack.png")
+        unselected_images = image_util.load_sliced_sprites(32, 32, "kangaroo_unselected.png")
         rect = image.get_rect()
         rect.left = 5
         rect.top = 5
@@ -25,7 +26,7 @@ class Kangaroo(Player):
         attack_length = 250
         attack_delay = 200
         
-        Player.__init__(self, game, x, y, image, attack_image, rect, speed, attack_length, attack_delay)
+        Player.__init__(self, game, x, y, image, attack_image, unselected_images, rect, speed, attack_length, attack_delay)
     
         self.left_offset = 5
         self.top_offset = 5
@@ -38,7 +39,7 @@ class Kangaroo(Player):
         self.canDriveCar = True
     
     def newPlayer(self):
-        return Kangaroo(self.init_image, self.init_x, self.init_y, self.game)
+        return Kangaroo(self.init_x, self.init_y, self.game)
     
     def use_ability(self):
         # jump

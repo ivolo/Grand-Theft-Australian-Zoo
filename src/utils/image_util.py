@@ -38,7 +38,7 @@ def get_angle(source, dest):
     return angle*180/math.pi - extra_rotation
 
 # Stolen shamelessly from http://shinylittlething.com/2009/07/21/pygame-and-animated-sprites/
-def load_sliced_sprites(self, w, h, filename):
+def load_sliced_sprites(w, h, filename):
     '''
     Specs :
         Master can be any height.

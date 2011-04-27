@@ -23,7 +23,7 @@ class Car(GameObject):
         
         self.speed = 1
         
-        self.max_speed = 5
+        self.max_speed = 6
         
         self.forward_speed = 0
         self.side_speed = 0

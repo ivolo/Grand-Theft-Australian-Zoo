@@ -33,6 +33,7 @@ class Game:
         self.player_group = Group()
         self.player = Taz(1, 1, self)
         self.player.inUse = True
+        self.player.current_image = self.player.image
         self.clock = pygame.time.Clock()
         
         self.pressed = []
@@ -74,6 +75,7 @@ class Game:
         self.player.leave_car()
         self.player = newPlayer;
         self.player.inUse = True
+        self.player.current_image = self.player.image
     
     def gameloop(self):
         while(True):
