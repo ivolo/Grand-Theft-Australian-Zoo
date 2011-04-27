@@ -2,6 +2,7 @@ from game_objects.gameObject import GameObject
 from utils.image_util import load_image
 from utils.sprite_util import get_distance
 from utils import image_util
+from splat import Splat
 
 tile_size = 32
 
@@ -23,6 +24,7 @@ class Visitor(GameObject):
             
         if self.shouldRemove:
             self.game.current_map.num_visitors -= 1
+            self.game.current_map.tiles.append(Splat(self.x,self.y,self.game))
             self.kill()
         
     def attacked(self, source):

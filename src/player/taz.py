@@ -17,7 +17,6 @@ class Taz(Player):
         
         unselected_images = image_util.load_sliced_sprites(32, 32, "taz_unselected.png")
         
-        
         rect = image.get_rect()
         rect.left = 5
         rect.top = 5
