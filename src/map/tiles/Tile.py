@@ -21,5 +21,3 @@ class Tile(GameObject):
         self.rect.left = self.map_x
         self.rect.top = self.map_y
         
-    def draw(self):
-        self.screen.blit(self.image, (self.map_x, self.map_y))

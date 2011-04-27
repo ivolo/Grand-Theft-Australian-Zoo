@@ -44,7 +44,7 @@ class Player(GameObject):
         if(self.isInCar):
             return
         
-        self.screen.blit(self.current_image, (self.x,self.y))
+        super(Player, self).draw()
     
     def update(self):
         if(self.isInCar):

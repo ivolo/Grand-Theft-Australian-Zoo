@@ -96,8 +96,10 @@ class Game:
                 pass
             elif event.type == MOUSEBUTTONUP:
                 pos = pygame.mouse.get_pos()
-                self.cursor.rect.left = pos[0]
-                self.cursor.rect.top = pos[1]
+                x_diff = self.player.x - (self.map_screen.get_width() / 2)
+                y_diff = self.player.y - (self.map_screen.get_height() / 2)
+                self.cursor.rect.left = pos[0] + x_diff
+                self.cursor.rect.top = pos[1] + y_diff
                 collision = pygame.sprite.spritecollideany(self.cursor, self.player_group)
                 if collision != None:
                     self.change_player(collision)
@@ -174,13 +176,13 @@ class Game:
             p.update()
     
     def draw(self):
+        self.map_screen.fill((0,0,0))
         if self.current_map is not None:
             self.current_map.draw_tiles()
             self.current_map.draw_objects()
         
         for p in self.player_group:
             p.draw()
-        
         pygame.display.flip()
 
 if __name__ == '__main__':

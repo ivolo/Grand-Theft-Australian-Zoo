@@ -36,8 +36,6 @@ class Car(GameObject):
         
         self.driving = False
         
-    def draw(self):
-        self.screen.blit(self.current_image, (self.x, self.y))
         
     def inCar(self, source):
         self.driver = source
@@ -63,6 +61,9 @@ class Car(GameObject):
             
         self.x = self.rect.left - self.left_offset
         self.y = self.rect.top - self.top_offset
+        if self.driver:
+            self.driver.x = self.x
+            self.driver.y = self.y
         
         collisions = pygame.sprite.spritecollide(self, self.game.current_map.game_objects, False)
         if collisions is not None:

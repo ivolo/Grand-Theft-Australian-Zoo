@@ -17,7 +17,7 @@ class GameObject(pygame.sprite.Sprite):
         self.game = game
         
         self.image = image
-        
+        self.current_image = image
         self.rect = self.image.get_rect().move(coordinates)
         
         self.screen = game.screen
@@ -50,7 +50,10 @@ class GameObject(pygame.sprite.Sprite):
         pass
 
     def draw(self):
-        pass
+        x_diff = self.game.player.x - (self.game.map_screen.get_width() / 2)
+        y_diff = self.game.player.y - (self.game.map_screen.get_height() / 2)
+        rect = self.rect.move(-x_diff, -y_diff)
+        self.game.map_screen.blit(self.current_image, rect)
     
     def attacked(self, source):
         pass

@@ -26,9 +26,6 @@ class Zookeeper(GameObject):
         if self.shouldRemove:
             self.kill()
 
-    
-    def draw(self):
-        self.screen.blit(self.image, (self.x,self.y))
         
     def ranOver(self, source):
         self.shouldRemove = True

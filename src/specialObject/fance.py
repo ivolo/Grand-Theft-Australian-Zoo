@@ -18,5 +18,3 @@ class Fence(GameObject):
         if isinstance(source, Taz):
             self.kill()
             
-    def draw(self):
-        self.screen.blit(self.image, (self.x,self.y))
