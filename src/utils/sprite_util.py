@@ -11,3 +11,4 @@ def check_collision(sprite, group):
 def get_distance(a, b):
     return  math.sqrt(((a.rect.left - b.rect.left) ** 2 + \
                        (a.rect.top - b.rect.top) ** 2))
+    
