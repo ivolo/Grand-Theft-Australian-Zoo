@@ -132,6 +132,9 @@ class Player(GameObject):
         if not self.canDriveCar:
             return
         
+        if(self.isInCar):
+            return;
+        
         self.attack_sprite.rect.top = self.y - 5
         self.attack_sprite.rect.left = self.x - 5
         collisions = pygame.sprite.spritecollide(self.attack_sprite, self.game.current_map.game_objects, False)
@@ -146,6 +149,7 @@ class Player(GameObject):
                     self.y = -1000
                     self.rect.top = -1000
                     self.rect.left = -1000
+                    break;
                     
     def leave_car(self):
         if self.isInCar:
