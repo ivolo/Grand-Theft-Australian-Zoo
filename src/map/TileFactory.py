@@ -10,13 +10,15 @@ from zookeeper.zookeeper import Zookeeper
 from specialObject.fance import Fence
 from car.car import Car
 from player.kangaroo import Kangaroo
+from tiles.visitorTile import VisitorTile
+from player.taz import Taz
 
 # The dictionary describing tiles
 # The form is: character : (tile image file, tile Class)
 tiles = { '' : (os.path.join("tiles","grass.png"), FloorTile),
           'w': (os.path.join("tiles","water.png"), WaterTile),
           's': (os.path.join("tiles","stone_wall.png"), WallTile),
-          'p': (os.path.join("tiles","path.png"), FloorTile)
+          'p': (os.path.join("tiles","path.png"), VisitorTile)
         }
 
 # The dictionary describing sprites (non-Player)
@@ -25,7 +27,8 @@ sprites = { 'V' : (os.path.join("visitor.png"), Visitor),
             'Z' : (os.path.join("zookeeper.png"), Zookeeper),
             'F' : (os.path.join("fence.png"), Fence),
             'C' : (os.path.join("car.png"), Car),
-            'K' : (os.path.join("kangaroo.png"), Kangaroo)}
+            'K' : (os.path.join("kangaroo.png"), Kangaroo),
+            'T' : (os.path.join("taz.png"), Taz)}
 
 loaded_sprites = {}
 loaded_tiles = {}
@@ -50,8 +53,7 @@ def generateSprite(key,x,y,game):
     """
     Generates Tile object
     """
-    image = getSpriteImages(key)
-    return sprites[key][1](image,x,y,game)
+    return sprites[key][1](x,y,game)
 
 def getSpriteImages(key):
     """

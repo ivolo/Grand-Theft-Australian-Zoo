@@ -31,7 +31,7 @@ class Game:
         self.cursor.rect = Rect(0,0,1,1)
         
         self.player_group = Group()
-        self.player = Taz(None, 1, 1, self)
+        self.player = Taz(1, 1, self)
         self.player.inUse = True
         self.clock = pygame.time.Clock()
         

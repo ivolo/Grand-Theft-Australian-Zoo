@@ -1,15 +1,17 @@
 from game_objects.gameObject import GameObject
 from utils.image_util import load_image
 from utils.sprite_util import get_distance
+from utils import image_util
 
 tile_size = 32
 
 class Visitor(GameObject):
     
-    def __init__(self, image, x, y, game):
+    def __init__(self, x, y, game):
+        image = image_util.load_image("visitor.png")
         super(Visitor, self).__init__(image, (x*tile_size,y*tile_size), game)
         self.speed = 2
-        
+        self.game.current_map.num_visitors += 1
     
     def update(self):
         player = self.game.player
@@ -20,6 +22,7 @@ class Visitor(GameObject):
             self.move(x, y)
             
         if self.shouldRemove:
+            self.game.current_map.num_visitors -= 1
             self.kill()
         
     def attacked(self, source):
