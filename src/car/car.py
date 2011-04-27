@@ -70,7 +70,7 @@ class Car(GameObject):
                 collision.ranOver(self)
         
     def update(self):
-        drag = .3
+        drag = .075
         
         if not self.driving:
             if(self.forward_speed == 0 and self.side_speed == 0):
