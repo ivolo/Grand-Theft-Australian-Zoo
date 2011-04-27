@@ -6,6 +6,7 @@ import TileFactory
 
 from tiles.Tile import Tile
 from linkEvent import LinkEvent
+from dialogEvent import DialogEvent
 from player.player import Player
 
 class Map:
@@ -118,7 +119,11 @@ class Map:
                 end_map = command[2]
                 end_coords = command[3].split(',')
                 self.events[int(start_coords[1])*self.tiles_wide+int(start_coords[0])] = LinkEvent(start_coords, end_coords, end_map, self.game)
-            
+            elif command[0] == 'dialog':
+                start_coords = command[1].split(',')
+                text = " ".join(command[2:])
+                self.events[int(start_coords[1])*self.tiles_wide+int(start_coords[0])] = DialogEvent(text, self.game)
+  
             index += 1
             
         
