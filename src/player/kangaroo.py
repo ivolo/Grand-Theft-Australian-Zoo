@@ -7,7 +7,7 @@ from car.car import Car
 
 class Kangaroo(Player):
     
-    def __init__(self, image, x, y, game):
+    def __init__(self, x, y, game):
         image = image_util.load_image("kangaroo.png")
         
         self.init_image = image

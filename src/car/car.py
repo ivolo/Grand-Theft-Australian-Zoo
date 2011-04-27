@@ -8,13 +8,15 @@ from pygame.locals import *
 
 from game_objects.gameObject import GameObject
 from utils.sprite_util import check_collision
+from utils import image_util
 
 
 tile_size = 32
 
 class Car(GameObject):
     
-    def __init__(self, image, x, y, game):
+    def __init__(self, x, y, game):
+        image = image_util.load_image("car.png")
         super(Car, self).__init__(image, (x*tile_size,y*tile_size), game)
         
         self.current_image = image

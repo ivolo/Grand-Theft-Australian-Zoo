@@ -3,14 +3,17 @@ import random
 from game_objects.gameObject import GameObject
 from utils.image_util import load_image
 from utils.sprite_util import get_distance
+from utils import image_util
 
 tile_size = 32
 
 class Zookeeper(GameObject):
     
-    def __init__(self, image, x, y, game):
+    def __init__(self, x, y, game):
+        image = image_util.load_image("zookeeper.png")
         super(Zookeeper, self).__init__(image, (x*tile_size,y*tile_size), game)
         self.speed = 1
+        self.game.current_map.num_zookeepers += 1
     
     def update(self):
         player = self.game.player        
@@ -24,6 +27,7 @@ class Zookeeper(GameObject):
             self.game.reset()
             
         if self.shouldRemove:
+            self.game.current_map.num_zookeepers -= 1
             self.kill()
 
         

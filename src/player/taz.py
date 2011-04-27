@@ -7,8 +7,8 @@ from car.car import Car
 
 class Taz(Player):
     
-    def __init__(self, image, x, y, game):
-        self.init_image = image
+    def __init__(self, x, y, game):
+        self.init_image = image_util.load_image("taz.png")
         self.init_x = x
         self.init_y = y
         
