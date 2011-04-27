@@ -25,9 +25,9 @@ class Map:
         
         self.events = dict()
         
-        self.tiles_wide = screen.get_width()/self.tile_size
-        self.tiles_high = screen.get_height()/self.tile_size
-        self.num_tiles = self.tiles_wide * self.tiles_high
+        #self.tiles_wide = screen.get_width()/self.tile_size
+        #self.tiles_high = screen.get_height()/self.tile_size
+        #self.num_tiles = self.tiles_wide * self.tiles_high
 
     def intialize(self):
         file = open(self.fullname, 'r')
@@ -57,12 +57,23 @@ class Map:
         lines = file.readlines()
         
         # Load the tile map
+        
+        for idx in xrange(len(lines)):
+            line = lines[idx]
+            if line == " \n":
+                self.tiles_high = idx
+        
+        print self.tiles_high
+        
         for y in xrange(0, self.tiles_high):
             line = lines[y]
             
             parsed_comments = line.split('#');
             
             line_tiles = parsed_comments[0].replace(' ','').replace('\n','').split(',')
+            
+            self.tiles_wide = len(line_tiles)
+            self.num_tiles = self.tiles_wide * self.tiles_high
             
             x = 0
             for key in line_tiles:

@@ -39,7 +39,7 @@ class Game:
         for key in pygame.key.get_pressed():
             self.pressed.append( False )
             
-        self.loadLevel("sample_map.txt")
+        self.loadLevel("large_map.txt")
         
     def reset(self):
         self.player_group.remove(self.player)
