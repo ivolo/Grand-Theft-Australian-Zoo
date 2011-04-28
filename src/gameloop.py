@@ -12,18 +12,22 @@ from player.taz import Taz
 from pygame.sprite import Group, Sprite
 from player.kangaroo import Kangaroo
 
-class Game:
+from game_constants.client import *
+from hud.hud import Hud
+from hud import animal_info
+from game_variables import animals_freed
+from utils import image_util
 
-    screen_dim = 800,576
+class Game:
     
     loaded_maps = {}
     current_map = None
     
     def __init__(self):
         pygame.init()
-        self.window = pygame.display.set_mode(self.screen_dim)
+        self.window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
         self.screen = pygame.display.get_surface()
-        self.map_screen = self.screen.subsurface(0, 0, self.screen_dim[0], self.screen_dim[1])
+        self.map_screen = self.screen.subsurface(0, 0, MAP_WIDTH, MAP_HEIGHT)
         #pygame.display.set_icon(pygame.image.load(os.path.join("images", "ui","icon.png")))
         pygame.display.set_caption("Grand Theft Australian Zoo")
         pygame.mouse.set_visible(1);        
@@ -33,8 +37,13 @@ class Game:
         
         self.player_group = Group()
         self.player = Kangaroo(1, 1, self)
+        animals_freed[self.player.name] = self.player.image
         self.player.inUse = True
         self.player.current_image = self.player.image
+        
+        self.hud = Hud(self)
+        self.hud.set_player(self.player)
+        
         self.clock = pygame.time.Clock()
         
         self.pressed = []
@@ -79,6 +88,7 @@ class Game:
         self.player = newPlayer;
         self.player.inUse = True
         self.player.current_image = self.player.image
+        self.hud.set_player(self.player)
     
     def gameloop(self):
         while(True):

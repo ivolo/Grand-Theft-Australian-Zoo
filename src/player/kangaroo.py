@@ -11,6 +11,8 @@ from visitor.visitor import Visitor
 class Kangaroo(Player):
     
     def __init__(self, x, y, game):
+        self.name = "Kangaroo"
+        
         image = image_util.load_image("kangaroo.png")
         
         self.init_image = image
@@ -94,8 +96,6 @@ class Kangaroo(Player):
         if self.x is newx and self.y is newy:
             return
         
-        print "jumping!"
-        
         # check x
         old_rect = self.rect
         delta_x = x_change * self.speed
@@ -112,48 +112,6 @@ class Kangaroo(Player):
         self.x = self.rect.left - self.left_offset
         self.y = self.rect.top - self.top_offset
         
-    def fix_me(self):
-        if not (check_collision(self, self.game.current_map.game_objects) or 
-                check_collision(self, self.game.current_map.unwalkable_tiles)):
-            return
-        
-        old_x = self.x
-        old_y = self.y
-        
-        radius = 1
-        while(True):
-            self.x = old_x + radius * TILE_SIZE
-            self.y = old_y
-            self.rect.top = self.y + self.top_offset
-            self.rect.left = self.x + self.left_offset
-            if not (check_collision(self, self.game.current_map.game_objects) or 
-                    check_collision(self, self.game.current_map.unwalkable_tiles)):
-                return
-            
-            self.x = old_x
-            self.y = old_y + radius * TILE_SIZE
-            self.rect.top = self.y + self.top_offset
-            self.rect.left = self.x + self.left_offset
-            if not (check_collision(self, self.game.current_map.game_objects) or 
-                    check_collision(self, self.game.current_map.unwalkable_tiles)):
-                return
-            
-            self.x = old_x - radius * TILE_SIZE
-            self.y = old_y
-            self.rect.top = self.y + self.top_offset
-            self.rect.left = self.x + self.left_offset
-            if not (check_collision(self, self.game.current_map.game_objects) or 
-                    check_collision(self, self.game.current_map.unwalkable_tiles)):
-                return
-            
-            self.x = old_x
-            self.y = old_y - radius * TILE_SIZE
-            self.rect.top = self.y + self.top_offset
-            self.rect.left = self.x + self.left_offset
-            if not (check_collision(self, self.game.current_map.game_objects) or 
-                    check_collision(self, self.game.current_map.unwalkable_tiles)):
-                return
-    
     def land(self):
         self.current_image = self.image
         

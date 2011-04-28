@@ -7,7 +7,7 @@ from tiles.WaterTile import WaterTile
 from tiles.WallTile import WallTile
 from visitor.visitor import Visitor
 from zookeeper.zookeeper import Zookeeper
-from specialObject.fance import Fence
+from specialObject.fence import Fence
 from car.car import Car
 from player.kangaroo import Kangaroo
 from tiles.visitorTile import VisitorTile

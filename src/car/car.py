@@ -48,10 +48,6 @@ class Car(GameObject):
         self.driver = None
         
     def move(self, x_change, y_change):
-        # todo: make sure the car doesn't get stuck
-        if (check_collision(self, self.game.current_map.unwalkable_tiles)):
-            pass
-        
         # check x
         old_rect = self.rect
         delta_x = x_change * self.speed
@@ -75,6 +71,8 @@ class Car(GameObject):
         if collisions is not None:
             for collision in collisions:
                 collision.ranOver(self)
+        
+        self.fix_me()
         
     def update(self):
         drag = .2

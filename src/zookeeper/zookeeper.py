@@ -27,10 +27,13 @@ class Zookeeper(GameObject):
             self.game.reset()
             
         if self.shouldRemove:
-            self.game.current_map.num_zookeepers -= 1
-            self.game.current_map.add_splat(self.x, self.y)
-            self.kill()
+            self.die()
 
+    def die(self):
+        self.game.hud.add_zookeeper_killed()
+        self.game.current_map.num_zookeepers -= 1
+        self.game.current_map.add_splat(self.x, self.y)
+        self.kill()
         
     def ranOver(self, source):
-        self.shouldRemove = True
+        self.die()

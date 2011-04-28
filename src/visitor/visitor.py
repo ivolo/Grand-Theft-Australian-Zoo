@@ -16,7 +16,15 @@ class Visitor(GameObject):
     
     def update(self):
         player = self.game.player
-        if get_distance(self, player) <= 100:
+        
+        if player.isInCar:
+            if get_distance(self, player.car) <= 100:
+                # move away
+                x = 1 if self.rect.left - player.car.rect.left > 0 else - 1 
+                y = 1 if self.rect.top - player.car.rect.top > 0 else - 1
+                self.move(x, y)
+        
+        elif get_distance(self, player) <= 100:
             # move away
             x = 1 if self.rect.left - player.rect.left > 0 else - 1 
             y = 1 if self.rect.top - player.rect.top > 0 else - 1
@@ -26,6 +34,7 @@ class Visitor(GameObject):
             self.die()
         
     def die(self):
+        self.game.hud.add_visitor_killed()
         self.game.current_map.num_visitors -= 1
         self.game.current_map.add_splat(self.x, self.y)
         self.kill()
@@ -34,4 +43,4 @@ class Visitor(GameObject):
         self.shouldRemove = True
         
     def ranOver(self, source):
-        self.shouldRemove = True
+        self.die()

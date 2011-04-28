@@ -8,6 +8,8 @@ from car.car import Car
 class Taz(Player):
     
     def __init__(self, x, y, game):
+        self.name = "Tasmanian Devil"
+        
         self.init_image = image_util.load_image("taz.png")
         self.init_x = x
         self.init_y = y
