@@ -24,7 +24,7 @@ class Visitor(GameObject):
             
         if self.shouldRemove:
             self.game.current_map.num_visitors -= 1
-            self.game.current_map.tiles.append(Splat(self.x,self.y,self.game))
+            self.game.current_map.add_splat(self.x, self.y)
             self.kill()
         
     def attacked(self, source):

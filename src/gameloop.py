@@ -10,6 +10,7 @@ from player.player import Player
 from map.map import Map
 from player.taz import Taz
 from pygame.sprite import Group, Sprite
+from player.kangaroo import Kangaroo
 
 class Game:
 
@@ -31,7 +32,7 @@ class Game:
         self.cursor.rect = Rect(0,0,1,1)
         
         self.player_group = Group()
-        self.player = Taz(1, 1, self)
+        self.player = Kangaroo(1, 1, self)
         self.player.inUse = True
         self.player.current_image = self.player.image
         self.clock = pygame.time.Clock()
@@ -45,11 +46,12 @@ class Game:
     def reset(self):
         self.player_group.remove(self.player)
         self.player = self.player.newPlayer()
+        self.player.current_image = self.player.image
         self.pressed = []
         for key in pygame.key.get_pressed():
             self.pressed.append( False )
             
-        self.loadLevel("sample_map.txt")
+        self.loadLevel("large_map.txt")
     
     def loadLevel(self, file):
         self.pressed = []

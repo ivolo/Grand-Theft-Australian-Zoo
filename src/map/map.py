@@ -12,6 +12,8 @@ import random
 from visitor.visitor import Visitor
 from tiles.visitorTile import VisitorTile
 from zookeeper.zookeeper import Zookeeper
+from Queue import Queue
+from visitor.splat import Splat
 
 class Map:
     tile_size = 32   
@@ -20,10 +22,15 @@ class Map:
         # Make the full pathname of the map
         self.fullname = os.path.join('map', 'maps', name)
         
-        
         self.tiles = []
+        
+        self.splat_idx = 0
+        self.max_splats = 20
+        self.splats = []
+        
         self.game_objects = pygame.sprite.Group()
         self.unwalkable_tiles = pygame.sprite.Group()
+        self.unjumpable_tiles = pygame.sprite.Group()
         
         self.screen=screen
         self.game=game
@@ -38,9 +45,10 @@ class Map:
         self.num_zookeepers = 0
         self.max_zookeepers = 5
         
-        #self.tiles_wide = screen.get_width()/self.tile_size
-        #self.tiles_high = screen.get_height()/self.tile_size
-        #self.num_tiles = self.tiles_wide * self.tiles_high
+        self.first_visible_x = 0
+        self.last_visible_x = 0
+        self.first_visible_y = 0
+        self.last_visible_y = 0
 
     def intialize(self):
         file = open(self.fullname, 'r')
@@ -50,45 +58,60 @@ class Map:
         if index in self.events:
             self.events[index].fire(source)
 
+    def add_splat(self, x, y):
+        splat = Splat(x,y,self.game)
+        self.splats.append(splat)
+        if len(self.splats) >= self.max_splats:
+            self.splats.pop(0)
+
     def update_objects(self):
         # generate new visitors
         
-        first_visible_x = (self.game.player.x - (self.game.map_screen.get_width()/2))/32
-        last_visible_x = (self.game.player.x + (self.game.map_screen.get_width()/2))/32
-        first_visible_y = (self.game.player.y - (self.game.map_screen.get_height()/2))/32
-        last_visible_y = (self.game.player.y + (self.game.map_screen.get_height()/2))/32 
+        for obj in self.game_objects:
+            x = obj.x/32
+            y = obj.y/32
+            if (x >= self.first_visible_x and x <= self.last_visible_x) and \
+               (y >= self.first_visible_y and y <= self.last_visible_y):
+                obj.update()
+        
+        self.first_visible_x = (self.game.player.x - (self.game.map_screen.get_width()/2))/32
+        self.last_visible_x = (self.game.player.x + (self.game.map_screen.get_width()/2))/32
+        self.first_visible_y = (self.game.player.y - (self.game.map_screen.get_height()/2))/32
+        self.last_visible_y = (self.game.player.y + (self.game.map_screen.get_height()/2))/32 
         
         if self.num_visitors < self.max_visitors:
-            spawn_visitor = random.randint(0,1000)
-            if spawn_visitor < self.visitor_spawn_rate:
-                x = random.randint(0,self.tiles_wide-1);
-                y = random.randint(0,self.tiles_high-1);
-                if (x < first_visible_x or x > last_visible_x) and (y < first_visible_y or y > last_visible_y):
-                    if isinstance(self.tiles[y*self.tiles_wide + x], VisitorTile):
-                        visitor = Visitor(x, y, self.game);
-                        self.game_objects.add(visitor)
-                        
+            x = random.randint(0,self.tiles_wide-1);
+            y = random.randint(0,self.tiles_high-1);
+            if (x < self.first_visible_x or x > self.last_visible_x) and (y < self.first_visible_y or y >self. last_visible_y):
+                if isinstance(self.tiles[y*self.tiles_wide + x], VisitorTile):
+                    visitor = Visitor(x, y, self.game);
+                    self.game_objects.add(visitor)
+                  
         if self.num_zookeepers < self.max_zookeepers:
-            spawn_keeper = random.randint(0,1000)
-            if spawn_keeper < self.zookeeper_spawn_rate:
-                x = random.randint(0,self.tiles_wide-1);
-                y = random.randint(0,self.tiles_high-1);
-                if (x < first_visible_x or x > last_visible_x) and (y < first_visible_y or y > last_visible_y):
-                    if isinstance(self.tiles[y*self.tiles_wide + x], VisitorTile):
-                        zookeeper = Zookeeper(x, y, self.game);
-                        self.game_objects.add(zookeeper)
-        
-        for obj in self.game_objects:
-            obj.update()
+            x = random.randint(0,self.tiles_wide-1);
+            y = random.randint(0,self.tiles_high-1);
+            if (x < self.first_visible_x or x > self.last_visible_x) and (y < self.first_visible_y or y > self.last_visible_y):
+                if isinstance(self.tiles[y*self.tiles_wide + x], VisitorTile):
+                    zookeeper = Zookeeper(x, y, self.game);
+                    self.game_objects.add(zookeeper)
             
     def draw_tiles(self):
         for tile in self.tiles:
-            tile.draw()
+            if (tile.x >= self.first_visible_x and tile.x <= self.last_visible_x) and \
+               (tile.y >= self.first_visible_y and tile.y <= self.last_visible_y):
+                tile.draw()
+            
+        for splat in self.splats:
+                splat.draw()
         
     def draw_objects(self):
         for obj in self.game_objects:
-            obj.draw()
-
+            x = obj.x/32
+            y = obj.y/32
+            if (x >= self.first_visible_x and x <= self.last_visible_x) and \
+               (y >= self.first_visible_y and y <= self.last_visible_y):
+                obj.draw()
+    
     # Load the map from the text file
     # Maps are comma separated value files
     # where each value is an index into the array found
@@ -119,6 +142,8 @@ class Map:
                 self.tiles.append(tile)
                 if not tile.walkable:
                     self.unwalkable_tiles.add(tile)
+                if not tile.visible:
+                    self.unjumpable_tiles.add(tile)
                 x += 1
                
         index = self.tiles_high 
