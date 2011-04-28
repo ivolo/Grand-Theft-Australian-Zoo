@@ -23,9 +23,12 @@ class Visitor(GameObject):
             self.move(x, y)
             
         if self.shouldRemove:
-            self.game.current_map.num_visitors -= 1
-            self.game.current_map.add_splat(self.x, self.y)
-            self.kill()
+            self.die()
+        
+    def die(self):
+        self.game.current_map.num_visitors -= 1
+        self.game.current_map.add_splat(self.x, self.y)
+        self.kill()
         
     def attacked(self, source):
         self.shouldRemove = True

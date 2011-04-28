@@ -46,6 +46,7 @@ class Game:
     def reset(self):
         self.player_group.remove(self.player)
         self.player = self.player.newPlayer()
+        self.player.inUse = True
         self.player.current_image = self.player.image
         self.pressed = []
         for key in pygame.key.get_pressed():

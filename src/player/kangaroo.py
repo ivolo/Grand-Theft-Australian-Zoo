@@ -6,6 +6,7 @@ from pygame.sprite import Sprite
 from car.car import Car
 from utils.sprite_util import check_collision
 from game_constants.client import TILE_SIZE
+from visitor.visitor import Visitor
 
 class Kangaroo(Player):
     
@@ -155,6 +156,11 @@ class Kangaroo(Player):
     
     def land(self):
         self.current_image = self.image
+        
+        collisions = pygame.sprite.spritecollide(self, self.game.current_map.game_objects, False)
+        for collider in collisions:
+            if isinstance(collider, Visitor):
+                collider.die()
         
         if check_collision(self, self.game.current_map.unwalkable_tiles) \
             or check_collision(self, self.game.current_map.game_objects):
