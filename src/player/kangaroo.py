@@ -10,7 +10,7 @@ from visitor.visitor import Visitor
 
 class Kangaroo(Player):
     
-    def __init__(self, x, y, game):
+    def __init__(self, image, x, y, game):
         self.name = "Kangaroo"
         
         image = image_util.load_image("kangaroo.png")
@@ -51,7 +51,7 @@ class Kangaroo(Player):
         self.last_jump = -self.jump_time
     
     def newPlayer(self):
-        return Kangaroo(self.init_x, self.init_y, self.game)
+        return Kangaroo(None, self.init_x, self.init_y, self.game)
     
     def use_ability(self):
         pass
@@ -100,13 +100,15 @@ class Kangaroo(Player):
         old_rect = self.rect
         delta_x = x_change * self.speed
         self.rect = self.rect.move(delta_x, 0)
-        if check_collision(self, self.game.current_map.unjumpable_tiles):
+        if check_collision(self, self.game.current_map.unjumpable_tiles) or \
+            check_collision(self, self.game.current_map.unjumpable_objects) :
             self.rect = old_rect
             
         old_rect = self.rect
         delta_y = y_change * self.speed
         self.rect = self.rect.move(0, delta_y)
-        if check_collision(self, self.game.current_map.unjumpable_tiles):
+        if check_collision(self, self.game.current_map.unjumpable_tiles) or \
+            check_collision(self, self.game.current_map.unjumpable_objects) :
             self.rect = old_rect
             
         self.x = self.rect.left - self.left_offset

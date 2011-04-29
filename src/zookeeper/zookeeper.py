@@ -9,7 +9,7 @@ tile_size = 32
 
 class Zookeeper(GameObject):
     
-    def __init__(self, x, y, game):
+    def __init__(self, image, x, y, game):
         image = image_util.load_image("zookeeper.png")
         super(Zookeeper, self).__init__(image, (x*tile_size,y*tile_size), game)
         self.speed = 1

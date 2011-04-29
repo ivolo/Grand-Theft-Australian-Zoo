@@ -35,13 +35,13 @@ class Game:
         self.cursor = Sprite()
         self.cursor.rect = Rect(0,0,1,1)
         
+        self.hud = Hud(self)
+        
         self.player_group = Group()
-        self.player = Kangaroo(1, 1, self)
-        animals_freed[self.player.name] = self.player.image
+        self.player = Taz(None, 1, 1, self)
         self.player.inUse = True
         self.player.current_image = self.player.image
         
-        self.hud = Hud(self)
         self.hud.set_player(self.player)
         
         self.clock = pygame.time.Clock()
@@ -89,6 +89,10 @@ class Game:
         self.player.inUse = True
         self.player.current_image = self.player.image
         self.hud.set_player(self.player)
+    
+    def free_animal(self, animal_name):
+        animals_freed[animal_name] = image_util.load_image(animal_info.info[animal_name][0])
+        self.hud.draw()
     
     def gameloop(self):
         while(True):

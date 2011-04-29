@@ -29,6 +29,7 @@ class Map:
         self.splats = []
         
         self.game_objects = pygame.sprite.Group()
+        self.unjumpable_objects = pygame.sprite.Group()
         self.unwalkable_tiles = pygame.sprite.Group()
         self.unjumpable_tiles = pygame.sprite.Group()
         
@@ -84,7 +85,7 @@ class Map:
             y = random.randint(0,self.tiles_high-1);
             if (x < self.first_visible_x or x > self.last_visible_x) and (y < self.first_visible_y or y >self. last_visible_y):
                 if isinstance(self.tiles[y*self.tiles_wide + x], VisitorTile):
-                    visitor = Visitor(x, y, self.game);
+                    visitor = Visitor(None, x, y, self.game);
                     self.game_objects.add(visitor)
                   
         if self.num_zookeepers < self.max_zookeepers:
@@ -92,7 +93,7 @@ class Map:
             y = random.randint(0,self.tiles_high-1);
             if (x < self.first_visible_x or x > self.last_visible_x) and (y < self.first_visible_y or y > self.last_visible_y):
                 if isinstance(self.tiles[y*self.tiles_wide + x], VisitorTile):
-                    zookeeper = Zookeeper(x, y, self.game);
+                    zookeeper = Zookeeper(None, x, y, self.game);
                     self.game_objects.add(zookeeper)
             
     def draw_tiles(self):

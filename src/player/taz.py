@@ -7,7 +7,7 @@ from car.car import Car
 
 class Taz(Player):
     
-    def __init__(self, x, y, game):
+    def __init__(self, image, x, y, game):
         self.name = "Tasmanian Devil"
         
         self.init_image = image_util.load_image("taz.png")
@@ -42,7 +42,7 @@ class Taz(Player):
         self.canDriveCar = False
     
     def newPlayer(self):
-        return Taz(self.init_x, self.init_y, self.game)
+        return Taz(None, self.init_x, self.init_y, self.game)
     
     def attack(self):
         started = Player.attack(self)

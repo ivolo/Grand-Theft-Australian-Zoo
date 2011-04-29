@@ -56,8 +56,10 @@ class GameObject(pygame.sprite.Sprite):
         old_y = self.y
         
         radius = 1
+        amt = TILE_SIZE/32
+        
         while(True):
-            self.x = old_x + radius * TILE_SIZE
+            self.x = old_x + radius * amt
             self.y = old_y
             self.rect.top = self.y + self.top_offset
             self.rect.left = self.x + self.left_offset
@@ -66,14 +68,14 @@ class GameObject(pygame.sprite.Sprite):
                 return
             
             self.x = old_x
-            self.y = old_y + radius * TILE_SIZE
+            self.y = old_y + radius * amt
             self.rect.top = self.y + self.top_offset
             self.rect.left = self.x + self.left_offset
             if not (check_collision(self, self.game.current_map.game_objects) or 
                     check_collision(self, self.game.current_map.unwalkable_tiles)):
                 return
             
-            self.x = old_x - radius * TILE_SIZE
+            self.x = old_x - radius * amt
             self.y = old_y
             self.rect.top = self.y + self.top_offset
             self.rect.left = self.x + self.left_offset
@@ -82,12 +84,14 @@ class GameObject(pygame.sprite.Sprite):
                 return
             
             self.x = old_x
-            self.y = old_y - radius * TILE_SIZE
+            self.y = old_y - radius * amt
             self.rect.top = self.y + self.top_offset
             self.rect.left = self.x + self.left_offset
             if not (check_collision(self, self.game.current_map.game_objects) or 
                     check_collision(self, self.game.current_map.unwalkable_tiles)):
                 return
+            
+            radius += 1
         
     def update(self):
         pass

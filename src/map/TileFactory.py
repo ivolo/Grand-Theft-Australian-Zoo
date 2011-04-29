@@ -12,6 +12,9 @@ from car.car import Car
 from player.kangaroo import Kangaroo
 from tiles.visitorTile import VisitorTile
 from player.taz import Taz
+from specialObject.kangarooFence import KangarooFence
+from specialObject.tazFence import TazFence
+from specialObject.brokenTazFence import BrokenTazFence
 
 # The dictionary describing tiles
 # The form is: character : (tile image file, tile Class)
@@ -25,7 +28,31 @@ tiles = { '' : (os.path.join("tiles","grass.png"), FloorTile),
 # The form is: character : (sprite image file, sprite Class)
 sprites = { 'V' : (os.path.join("visitor.png"), Visitor),
             'Z' : (os.path.join("zookeeper.png"), Zookeeper),
+            
             'F' : (os.path.join("fence.png"), Fence),
+            'U' : (os.path.join("fence_verticle.png"), Fence),
+            'R' : (os.path.join("fence_LR.png"), Fence),
+            'L' : (os.path.join("fence_LL.png"), Fence),
+            'G' : (os.path.join("fence_UR.png"), Fence),
+            'H' : (os.path.join("fence_UL.png"), Fence),
+            
+            
+            'k' : (os.path.join("kangaroo_fence.png"), KangarooFence),
+            'r' : (os.path.join("kangaroo_fence_LR.png"), KangarooFence),
+            'l' : (os.path.join("kangaroo_fence_LL.png"), KangarooFence),
+            'v' : (os.path.join("kangaroo_fence_verticle_left.png"), KangarooFence),
+            'u' : (os.path.join("kangaroo_fence_verticle_right.png"), KangarooFence),
+            
+            'q' : (os.path.join("shortwall_UL.png"), TazFence),
+            'w' : (os.path.join("shortwall_top.png"), TazFence),
+            'e' : (os.path.join("shortwall_UR.png"), TazFence),
+            'd' : (os.path.join("shortwall_verticle_right.png"), TazFence),
+            'c' : (os.path.join("shortwall_LR.png"), TazFence),
+            'x' : (os.path.join("shortwall.png"), TazFence),
+            'z' : (os.path.join("shortwall_LL.png"), TazFence),
+            'a' : (os.path.join("shortwall_verticle_left.png"), TazFence),
+            's' : (os.path.join("shortwall_destroyed.png"), BrokenTazFence),
+            
             'C' : (os.path.join("car.png"), Car),
             'K' : (os.path.join("kangaroo.png"), Kangaroo),
             'T' : (os.path.join("taz.png"), Taz)}
@@ -53,7 +80,8 @@ def generateSprite(key,x,y,game):
     """
     Generates Tile object
     """
-    return sprites[key][1](x,y,game)
+    image = getSpriteImages(key)
+    return sprites[key][1](image, x,y,game)
 
 def getSpriteImages(key):
     """

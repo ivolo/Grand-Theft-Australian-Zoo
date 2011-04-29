@@ -15,8 +15,7 @@ tile_size = 32
 
 class Car(GameObject):
     
-    def __init__(self, x, y, game):
-        image = image_util.load_image("car.png")
+    def __init__(self, image, x, y, game):
         super(Car, self).__init__(image, (x*tile_size,y*tile_size), game)
         
         self.current_image = image
@@ -68,11 +67,10 @@ class Car(GameObject):
             self.driver.y = self.y
         
         collisions = pygame.sprite.spritecollide(self, self.game.current_map.game_objects, False)
+        self.fix_me()
         if collisions is not None:
             for collision in collisions:
                 collision.ranOver(self)
-        
-        self.fix_me()
         
     def update(self):
         drag = .2

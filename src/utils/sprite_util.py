@@ -3,9 +3,15 @@ import pygame
 
 
 def check_collision(sprite, group):
-    collision = pygame.sprite.spritecollideany(sprite, group)
-    if collision != None and collision != sprite:
-        return True
+    #collision = pygame.sprite.spritecollideany(sprite, group)
+    #if collision != None and collision != sprite:
+    #    return True
+    
+    collisions = pygame.sprite.spritecollide(sprite, group, False)
+    for collider in collisions:
+        if collider is not sprite:
+            return True
+    
     return False
 
 def get_distance(a, b):
