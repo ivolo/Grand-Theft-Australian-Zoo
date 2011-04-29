@@ -31,6 +31,7 @@ class Map:
         self.game_objects = pygame.sprite.Group()
         self.unjumpable_objects = pygame.sprite.Group()
         self.unwalkable_tiles = pygame.sprite.Group()
+        self.unswimmable_and_unwalkable_tiles = pygame.sprite.Group()
         self.unjumpable_tiles = pygame.sprite.Group()
         
         self.screen=screen
@@ -152,6 +153,8 @@ class Map:
                     self.unwalkable_tiles.add(tile)
                 if not tile.visible:
                     self.unjumpable_tiles.add(tile)
+                if not tile.swimmable and not tile.walkable:
+                    self.unswimmable_and_unwalkable_tiles.add(tile)
                 x += 1
                
         index = self.tiles_high 

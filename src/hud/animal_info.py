@@ -8,4 +8,5 @@ from player.taz import Taz
 
 
 info = {"Kangaroo" : ("kangaroo_portrait.png", "Jump", "Yes", "kangaroo.png"),
-        "Tasmanian Devil" : ("taz_portrait.png", "Spin", "No", "tasmanian.png")}
+        "Tasmanian Devil" : ("taz_portrait.png", "Spin", "No", "tasmanian.png"),
+        "Platypus" : ("platypus_portrait.png", "Spur + Swim", "No", "platypus.png")}

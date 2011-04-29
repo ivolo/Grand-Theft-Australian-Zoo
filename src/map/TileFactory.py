@@ -15,11 +15,12 @@ from player.taz import Taz
 from specialObject.kangarooFence import KangarooFence
 from specialObject.tazFence import TazFence
 from specialObject.brokenTazFence import BrokenTazFence
+from player.platypus import Platypus
 
 # The dictionary describing tiles
 # The form is: character : (tile image file, tile Class)
 tiles = { '' : (os.path.join("tiles","grass.png"), FloorTile),
-          'w': (os.path.join("tiles","water.png"), WaterTile),
+          'W': (os.path.join("tiles","water.png"), WaterTile),
           
           'q': (os.path.join("tiles","tallwall_UL.png"), WallTile),
           'w': (os.path.join("tiles","tallwall_horizontal.png"), WallTile),
@@ -65,7 +66,8 @@ sprites = { 'V' : (os.path.join("tourist.png"), Visitor),
             
             'C' : (os.path.join("cart.png"), Car),
             'K' : (os.path.join("kangaroo.png"), Kangaroo),
-            'T' : (os.path.join("taz.png"), Taz)}
+            'T' : (os.path.join("taz.png"), Taz),
+            'P' : (os.path.join("platypus.png"), Platypus)}
 
 loaded_sprites = {}
 loaded_tiles = {}
