@@ -8,6 +8,7 @@ import pygame
 from pygame.locals import *
 
 from utils import image_util
+from menus.controlScreen import ControlScreen
 
 CONTINUE = 0
 OPTIONS = 1
@@ -31,9 +32,11 @@ class PauseScreen:
         
         self.pressed = []
         for key in pygame.key.get_pressed():
-            self.pressed.append( False )
+            self.pressed.append( True )
             
         self.unpause = False
+        
+        self.control_screen = ControlScreen(self.game)
     
     def get_input(self):
         self.getEvents()
@@ -66,11 +69,11 @@ class PauseScreen:
         keys = pygame.key.get_pressed()
 
         # quit
-        #if(keys[K_ESCAPE]):
-        #    if not self.pressed[K_ESCAPE]:
-        #        self.cont()
-        #else:
-        #    self.pressed[K_ESCAPE] = False
+        if(keys[K_ESCAPE]):
+            if not self.pressed[K_ESCAPE]:
+                self.cont()
+        else:
+            self.pressed[K_ESCAPE] = False
     
         # select
         if(keys[K_SPACE]):
@@ -118,10 +121,13 @@ class PauseScreen:
         self.leave()
     
     def options(self):
-        pass
+        for x in xrange(len(self.pressed)):
+            self.pressed[x] = True
     
     def controls(self):
-        pass
+        self.control_screen.loop()
+        for x in xrange(len(self.pressed)):
+            self.pressed[x] = True
     
     def main_menu(self):
         self.leave()
@@ -151,9 +157,8 @@ class PauseScreen:
             self.main_menu()
 
     def leave(self):
-        self.pressed = []
-        for key in pygame.key.get_pressed():
-            self.pressed.append( False )
+        for x in xrange(len(self.pressed)):
+            self.pressed[x] = True
             
         self.unpause = True
 
@@ -171,9 +176,10 @@ class PauseScreen:
             
         pygame.display.flip()
     
-    def loop(self, pressed):
-        self.unpause = False
-        self.pressed = pressed
+    def loop(self):
+        for x in xrange(len(self.pressed)):
+            self.pressed[x] = True
         while self.unpause is False:
             self.draw()
             self.get_input()
+        self.unpause = False

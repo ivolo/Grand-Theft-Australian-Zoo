@@ -9,6 +9,7 @@ from pygame.locals import *
 
 from utils import image_util
 from gameloop import Game
+from menus.controlScreen import ControlScreen
 
 PLAY = 0
 OPTIONS = 1
@@ -29,6 +30,10 @@ class MenuScreen:
         self.options_rect = Rect(275,290,245,70)
         self.controls_rect = Rect(275,380,245,70)
         self.quit_rect = Rect(275,470,245,70)
+        
+        self.credits_rect = Rect(610, 530, 180, 60)
+        
+        self.controlScreen = ControlScreen(self.game)
         
         self.pressed = []
         for key in pygame.key.get_pressed():
@@ -59,6 +64,8 @@ class MenuScreen:
                 elif self.quit_rect.collidepoint(pos):
                     self.index = QUIT
                     self.quit()
+                elif self.credits_rect.collidepoint(pos):
+                    self.credits()
     
     def getButtonPresses(self):
         keys = pygame.key.get_pressed()
@@ -116,10 +123,13 @@ class MenuScreen:
         pass
     
     def controls(self):
-        pass
+        self.controlScreen.loop()
     
     def quit(self):
         sys.exit()
+
+    def credits(self):
+        pass
 
     def up(self):
         self.index -= 1

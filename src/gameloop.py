@@ -136,7 +136,7 @@ class Game:
         if(keys[K_ESCAPE]):
             if not self.pressed[K_ESCAPE]:
                 self.pressed[K_ESCAPE] = True
-                self.pauseMenu.loop(self.pressed)
+                self.pauseMenu.loop()
                 #figure out what we wanted to do
                 if self.pauseMenu.index is CONTINUE:
                     self.hud.draw()
