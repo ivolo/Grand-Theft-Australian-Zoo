@@ -17,6 +17,7 @@ from hud.hud import Hud
 from hud import animal_info
 from game_variables import animals_freed
 from utils import image_util
+from menus.pauseScreen import PauseScreen
 
 class Game:
     
@@ -31,6 +32,8 @@ class Game:
         #pygame.display.set_icon(pygame.image.load(os.path.join("images", "ui","icon.png")))
         pygame.display.set_caption("Grand Theft Australian Zoo")
         pygame.mouse.set_visible(1);        
+        
+        self.pauseMenu = PauseScreen(self)
         
         self.cursor = Sprite()
         self.cursor.rect = Rect(0,0,1,1)
@@ -129,13 +132,16 @@ class Game:
         # quit
         if(keys[K_ESCAPE]):
             if not self.pressed[K_ESCAPE]:
-                sys.exit()
+                self.pressed[K_ESCAPE] = True
+                self.pauseMenu.loop(self.pressed)
+                self.hud.draw()
         else:
             self.pressed[K_ESCAPE] = False
     
         # attack
         if(keys[K_SPACE]):
             if not self.pressed[K_SPACE]:
+                self.pressed[K_SPACE] = True
                 self.player.attack()
         else:
             self.pressed[K_SPACE] = False
@@ -143,6 +149,7 @@ class Game:
         # use ability
         if(keys[K_RETURN]):
             if not self.pressed[K_RETURN]:
+                self.pressed[K_RETURN] = True
                 self.player.use_ability()
         else:
             self.pressed[K_RETURN] = False
@@ -150,6 +157,7 @@ class Game:
         # get into car
         if(keys[K_UP]):
             if not self.pressed[K_UP]:
+                self.pressed[K_UP] = True
                 self.player.get_into_car()
         else:
             self.pressed[K_UP] = False
@@ -157,6 +165,7 @@ class Game:
         # get out of car
         if(keys[K_DOWN]):
             if not self.pressed[K_DOWN]:
+                self.pressed[K_DOWN] = True
                 self.player.leave_car()
         else:
             self.pressed[K_DOWN] = False
