@@ -8,32 +8,31 @@ import pygame
 from pygame.locals import *
 
 from utils import image_util
+from gameloop import Game
 
-CONTINUE = 0
+PLAY = 0
 OPTIONS = 1
 CONTROLS = 2
-MAIN_MENU = 3
+QUIT = 3
 MAX_INDEX = 3
 
-class PauseScreen:
+class MenuScreen:
     
-    def __init__(self, game):
-        self.game = game
+    def __init__(self):
+        self.game = Game()
         self.screen = self.game.screen
-        self.image = image_util.load_image("pause_screen.png")
+        self.image = image_util.load_image("mainmenu.png")
         
         self.index = 0
     
-        self.continue_rect = Rect(275,200,245,70)
+        self.play_rect = Rect(275,200,245,70)
         self.options_rect = Rect(275,290,245,70)
         self.controls_rect = Rect(275,380,245,70)
-        self.mainmenu_rect = Rect(275,470,245,70)
+        self.quit_rect = Rect(275,470,245,70)
         
         self.pressed = []
         for key in pygame.key.get_pressed():
-            self.pressed.append( False )
-            
-        self.unpause = False
+            self.pressed.append( True )
     
     def get_input(self):
         self.getEvents()
@@ -41,14 +40,14 @@ class PauseScreen:
     
     def getEvents(self):
         for event in pygame.event.get():
-            if event.type == QUIT:
+            if event.type == pygame.QUIT:
                 sys.exit()
             elif event.type == MOUSEBUTTONUP:
                 pos = pygame.mouse.get_pos()
-                if self.continue_rect.collidepoint(pos):
-                    self.index = CONTINUE
+                if self.play_rect.collidepoint(pos):
+                    self.index = PLAY
                     self.draw()
-                    self.cont()
+                    self.play()
                 elif self.options_rect.collidepoint(pos):
                     self.index = OPTIONS
                     self.draw()
@@ -57,30 +56,24 @@ class PauseScreen:
                     self.index = CONTROLS
                     self.draw()
                     self.controls()
-                elif self.mainmenu_rect.collidepoint(pos):
-                    self.index = MAIN_MENU
-                    self.draw()
-                    self.main_menu()
+                elif self.quit_rect.collidepoint(pos):
+                    self.index = QUIT
+                    self.quit()
     
     def getButtonPresses(self):
         keys = pygame.key.get_pressed()
 
-        # quit
-        #if(keys[K_ESCAPE]):
-        #    if not self.pressed[K_ESCAPE]:
-        #        self.cont()
-        #else:
-        #    self.pressed[K_ESCAPE] = False
-    
         # select
         if(keys[K_SPACE]):
             if not self.pressed[K_SPACE]:
+                self.pressed[K_SPACE] = True
                 self.select()
         else:
             self.pressed[K_SPACE] = False
 
         if(keys[K_RETURN]):
             if not self.pressed[K_RETURN]:
+                self.pressed[K_RETURN] = True
                 self.select()
         else:
             self.pressed[K_RETURN] = False
@@ -114,8 +107,10 @@ class PauseScreen:
         else:
             self.pressed[K_s] = False
 
-    def cont(self):
-        self.leave()
+    def play(self):
+        self.game.gameloop()
+        for x in xrange(len(self.pressed)):
+            self.pressed[x] = True
     
     def options(self):
         pass
@@ -123,8 +118,8 @@ class PauseScreen:
     def controls(self):
         pass
     
-    def main_menu(self):
-        self.leave()
+    def quit(self):
+        sys.exit()
 
     def up(self):
         self.index -= 1
@@ -141,39 +136,34 @@ class PauseScreen:
         self.draw()
     
     def select(self):
-        if self.index is CONTINUE:
-            self.cont()
+        if self.index is PLAY:
+            self.play()
         elif self.index is OPTIONS:
             self.options()
         elif self.index is CONTROLS:
             self.controls()
-        elif self.index is MAIN_MENU:
-            self.main_menu()
-
-    def leave(self):
-        self.pressed = []
-        for key in pygame.key.get_pressed():
-            self.pressed.append( False )
-            
-        self.unpause = True
+        elif self.index is QUIT:
+            self.quit()
 
     def draw(self):
         self.screen.blit(self.image, (0,0))
         
-        if self.index is CONTINUE:
-            pygame.draw.rect(self.screen, (255,255,0), self.continue_rect, 5)
+        if self.index is PLAY:
+            pygame.draw.rect(self.screen, (255,255,0), self.play_rect, 5)
         elif self.index is OPTIONS:
             pygame.draw.rect(self.screen, (255,255,0), self.options_rect, 5)
         elif self.index is CONTROLS:
             pygame.draw.rect(self.screen, (255,255,0), self.controls_rect, 5)
-        elif self.index is MAIN_MENU:
-            pygame.draw.rect(self.screen, (255,255,0), self.mainmenu_rect, 5)
+        elif self.index is QUIT:
+            pygame.draw.rect(self.screen, (255,255,0), self.quit_rect, 5)
             
         pygame.display.flip()
     
-    def loop(self, pressed):
-        self.unpause = False
-        self.pressed = pressed
-        while self.unpause is False:
+    def loop(self):
+        while True:
             self.draw()
             self.get_input()
+
+if __name__ == '__main__':
+    menu = MenuScreen()
+    menu.loop()

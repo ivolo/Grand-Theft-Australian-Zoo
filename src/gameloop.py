@@ -17,7 +17,7 @@ from hud.hud import Hud
 from hud import animal_info
 from game_variables import animals_freed
 from utils import image_util
-from menus.pauseScreen import PauseScreen
+from menus.pauseScreen import PauseScreen, CONTINUE, MAIN_MENU
 
 class Game:
     
@@ -54,6 +54,8 @@ class Game:
             self.pressed.append( False )
             
         self.loadLevel("inn.txt")
+        
+        self.returnToMainMenu = False
         
     def reset(self):
         self.player_group.remove(self.player)
@@ -98,12 +100,13 @@ class Game:
         self.hud.draw()
     
     def gameloop(self):
-        while(True):
+        self.returnToMainMenu = False
+        self.hud.draw()
+        while self.returnToMainMenu is False:
             self.clock.tick(60)
             self.get_input()
             self.update_state()
             self.draw()
-        return
     
     def get_input(self):
         self.getEvents()
@@ -134,7 +137,11 @@ class Game:
             if not self.pressed[K_ESCAPE]:
                 self.pressed[K_ESCAPE] = True
                 self.pauseMenu.loop(self.pressed)
-                self.hud.draw()
+                #figure out what we wanted to do
+                if self.pauseMenu.index is CONTINUE:
+                    self.hud.draw()
+                elif self.pauseMenu.index is MAIN_MENU:
+                    self.returnToMainMenu = True
         else:
             self.pressed[K_ESCAPE] = False
     
