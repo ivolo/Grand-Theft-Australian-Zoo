@@ -142,6 +142,12 @@ class Player(GameObject):
         
         GameObject.move(self, x_change, y_change)
     
+    def toggle_car(self):
+        if not self.isInCar:
+            self.get_into_car()
+        else:
+            self.leave_car()
+    
     def get_into_car(self):
         if not self.canDriveCar:
             return

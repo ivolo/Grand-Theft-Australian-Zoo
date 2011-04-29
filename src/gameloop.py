@@ -161,21 +161,13 @@ class Game:
         else:
             self.pressed[K_RETURN] = False
     
-        # get into car
-        if(keys[K_UP]):
-            if not self.pressed[K_UP]:
-                self.pressed[K_UP] = True
-                self.player.get_into_car()
+        # get into and out of car
+        if(keys[K_q]):
+            if not self.pressed[K_q]:
+                self.pressed[K_q] = True
+                self.player.toggle_car()
         else:
-            self.pressed[K_UP] = False
-        
-        # get out of car
-        if(keys[K_DOWN]):
-            if not self.pressed[K_DOWN]:
-                self.pressed[K_DOWN] = True
-                self.player.leave_car()
-        else:
-            self.pressed[K_DOWN] = False
+            self.pressed[K_q] = False
         
         # move
         if(keys[K_w]):

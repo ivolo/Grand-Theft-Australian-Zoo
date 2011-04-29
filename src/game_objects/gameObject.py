@@ -40,7 +40,7 @@ class GameObject(pygame.sprite.Sprite):
         if (check_collision(self, self.game.current_map.game_objects) or 
             check_collision(self, self.game.current_map.unwalkable_tiles)):
             self.rect = old_rect
-            
+        
         old_rect = self.rect
         delta_y = y_change * self.speed
         self.rect = self.rect.move(0, delta_y)
@@ -67,33 +67,41 @@ class GameObject(pygame.sprite.Sprite):
             self.y = old_y
             self.rect.top = self.y + self.top_offset
             self.rect.left = self.x + self.left_offset
-            if not (check_collision(self, self.game.current_map.game_objects) or 
-                    check_collision(self, self.game.current_map.unwalkable_tiles)):
-                return
+            if self.rect.left >= 0 and self.rect.left + self.rect.width < self.game.current_map.width and \
+                self.rect.top >= 0 and self.rect.top + self.rect.height < self.game.current_map.height:
+                if not (check_collision(self, self.game.current_map.game_objects) or 
+                        check_collision(self, self.game.current_map.unwalkable_tiles)):
+                    return
             
             self.x = old_x
             self.y = old_y + radius * amt
             self.rect.top = self.y + self.top_offset
             self.rect.left = self.x + self.left_offset
-            if not (check_collision(self, self.game.current_map.game_objects) or 
-                    check_collision(self, self.game.current_map.unwalkable_tiles)):
-                return
+            if self.rect.left >= 0 and self.rect.left + self.rect.width < self.game.current_map.width and \
+                self.rect.top >= 0 and self.rect.top + self.rect.height < self.game.current_map.height:
+                if not (check_collision(self, self.game.current_map.game_objects) or 
+                        check_collision(self, self.game.current_map.unwalkable_tiles)):
+                    return
             
             self.x = old_x - radius * amt
             self.y = old_y
             self.rect.top = self.y + self.top_offset
             self.rect.left = self.x + self.left_offset
-            if not (check_collision(self, self.game.current_map.game_objects) or 
-                    check_collision(self, self.game.current_map.unwalkable_tiles)):
-                return
+            if self.rect.left >= 0 and self.rect.left + self.rect.width < self.game.current_map.width and \
+                self.rect.top >= 0 and self.rect.top + self.rect.height < self.game.current_map.height:
+                if not (check_collision(self, self.game.current_map.game_objects) or 
+                        check_collision(self, self.game.current_map.unwalkable_tiles)):
+                    return
             
             self.x = old_x
             self.y = old_y - radius * amt
             self.rect.top = self.y + self.top_offset
             self.rect.left = self.x + self.left_offset
-            if not (check_collision(self, self.game.current_map.game_objects) or 
-                    check_collision(self, self.game.current_map.unwalkable_tiles)):
-                return
+            if self.rect.left >= 0 and self.rect.left + self.rect.width < self.game.current_map.width and \
+                self.rect.top >= 0 and self.rect.top + self.rect.height < self.game.current_map.height:
+                if not (check_collision(self, self.game.current_map.game_objects) or 
+                        check_collision(self, self.game.current_map.unwalkable_tiles)):
+                    return
             
             radius += 1
         

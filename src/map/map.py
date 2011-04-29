@@ -51,6 +51,9 @@ class Map:
         self.last_visible_x = 0
         self.first_visible_y = 0
         self.last_visible_y = 0
+        
+        self.width = 0
+        self.height = 0
 
     def intialize(self):
         file = open(self.fullname, 'r')
@@ -134,6 +137,7 @@ class Map:
             line = lines[idx]
             if line == " \n":
                 self.tiles_high = idx
+                self.height = self.tiles_high * self.tile_size
         
         for y in xrange(0, self.tiles_high):
             line = lines[y]
@@ -143,6 +147,7 @@ class Map:
             line_tiles = parsed_comments[0].replace(' ','').replace('\n','').split(',')
             
             self.tiles_wide = len(line_tiles)
+            self.width = self.tiles_wide * self.tile_size
             self.num_tiles = self.tiles_wide * self.tiles_high
             
             x = 0
