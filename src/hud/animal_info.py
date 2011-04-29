@@ -7,5 +7,5 @@ from player.kangaroo import Kangaroo
 from player.taz import Taz
 
 
-info = {"Kangaroo" : ("kangaroo.png", "Jump", "Yes"),
-        "Tasmanian Devil" : ("taz.png", "Spin", "No")}
+info = {"Kangaroo" : ("kangaroo_portrait.png", "Jump", "Yes", "kangaroo.png"),
+        "Tasmanian Devil" : ("taz_portrait.png", "Spin", "No", "tasmanian.png")}

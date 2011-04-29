@@ -91,7 +91,7 @@ class Game:
         self.hud.set_player(self.player)
     
     def free_animal(self, animal_name):
-        animals_freed[animal_name] = image_util.load_image(animal_info.info[animal_name][0])
+        animals_freed[animal_name] = image_util.load_image(animal_info.info[animal_name][3])
         self.hud.draw()
     
     def gameloop(self):

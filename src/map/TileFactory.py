@@ -20,17 +20,27 @@ from specialObject.brokenTazFence import BrokenTazFence
 # The form is: character : (tile image file, tile Class)
 tiles = { '' : (os.path.join("tiles","grass.png"), FloorTile),
           'w': (os.path.join("tiles","water.png"), WaterTile),
-          's': (os.path.join("tiles","stone_wall.png"), WallTile),
+          
+          'q': (os.path.join("tiles","tallwall_UL.png"), WallTile),
+          'w': (os.path.join("tiles","tallwall_horizontal.png"), WallTile),
+          'e': (os.path.join("tiles","tallwall_UR.png"), WallTile),
+          'd': (os.path.join("tiles","tallwall_LR.png"), WallTile),
+          's': (os.path.join("tiles","tallwall_verticle.png"), WallTile),
+          'a': (os.path.join("tiles","tallwall_LL.png"), WallTile),
+          
           'p': (os.path.join("tiles","path.png"), VisitorTile)
         }
 
 # The dictionary describing sprites (non-Player)
 # The form is: character : (sprite image file, sprite Class)
-sprites = { 'V' : (os.path.join("visitor.png"), Visitor),
+sprites = { 'V' : (os.path.join("tourist.png"), Visitor),
+            'V2' : (os.path.join("tourist2.png"), Visitor),
+            'V3' : (os.path.join("tourist3.png"), Visitor),
             'Z' : (os.path.join("zookeeper.png"), Zookeeper),
             
             'F' : (os.path.join("fence.png"), Fence),
-            'U' : (os.path.join("fence_verticle.png"), Fence),
+            'I' : (os.path.join("fence_verticle_left.png"), Fence),
+            'U' : (os.path.join("fence_verticle_right.png"), Fence),
             'R' : (os.path.join("fence_LR.png"), Fence),
             'L' : (os.path.join("fence_LL.png"), Fence),
             'G' : (os.path.join("fence_UR.png"), Fence),
@@ -53,7 +63,7 @@ sprites = { 'V' : (os.path.join("visitor.png"), Visitor),
             'a' : (os.path.join("shortwall_verticle_left.png"), TazFence),
             's' : (os.path.join("shortwall_destroyed.png"), BrokenTazFence),
             
-            'C' : (os.path.join("car.png"), Car),
+            'C' : (os.path.join("cart.png"), Car),
             'K' : (os.path.join("kangaroo.png"), Kangaroo),
             'T' : (os.path.join("taz.png"), Taz)}
 

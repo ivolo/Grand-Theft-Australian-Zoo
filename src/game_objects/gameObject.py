@@ -29,6 +29,10 @@ class GameObject(pygame.sprite.Sprite):
         self.top_offset = 0
         
     def move(self, x_change, y_change):
+        if (check_collision(self, self.game.current_map.game_objects) or 
+            check_collision(self, self.game.current_map.unwalkable_tiles)):
+            self.fix_me()
+             
         # check x
         old_rect = self.rect
         delta_x = x_change * self.speed

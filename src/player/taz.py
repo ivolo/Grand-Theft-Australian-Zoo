@@ -10,14 +10,14 @@ class Taz(Player):
     def __init__(self, image, x, y, game):
         self.name = "Tasmanian Devil"
         
-        self.init_image = image_util.load_image("taz.png")
+        self.init_image = image_util.load_image("tasmanian.png")
         self.init_x = x
         self.init_y = y
         
-        image = image_util.load_image("taz.png")
-        attack_image = image_util.load_image("taz_attack.png")
+        image = image_util.load_image("tasmanian.png")
+        attack_image = image_util.load_image("tasmanian_attack.png")
         
-        unselected_images = image_util.load_sliced_sprites(32, 32, "taz_unselected.png")
+        unselected_images = image_util.load_sliced_sprites(32, 32, "tasmanian_unselected.png")
         
         rect = image.get_rect()
         rect.left = 5

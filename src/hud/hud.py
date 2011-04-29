@@ -32,7 +32,7 @@ class Hud:
         
     def set_player(self, player):
         self.name = player.name
-        (self.portrait, self.ability, self.canDrive) = info[player.name]
+        (self.portrait, self.ability, self.canDrive, animal_image) = info[player.name]
         self.portrait = image_util.load_image(self.portrait)
         self.draw()
     

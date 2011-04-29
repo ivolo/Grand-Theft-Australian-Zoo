@@ -9,7 +9,6 @@ tile_size = 32
 class Visitor(GameObject):
     
     def __init__(self, image, x, y, game):
-        image = image_util.load_image("visitor.png")
         super(Visitor, self).__init__(image, (x*tile_size,y*tile_size), game)
         self.speed = 2
         self.game.current_map.num_visitors += 1

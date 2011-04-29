@@ -37,6 +37,9 @@ class Car(GameObject):
         
         self.driving = False
         
+        self.health = 10
+        self.damage = 0
+        
         
     def inCar(self, source):
         self.driver = source
@@ -73,6 +76,9 @@ class Car(GameObject):
                 collision.ranOver(self)
         
     def update(self):
+        if self.damage >= self.health:
+            self.kill()
+        
         drag = .2
         
         if not self.driving:
