@@ -3,6 +3,8 @@ from utils.image_util import load_image
 from utils.sprite_util import get_distance
 from utils import image_util
 from splat import Splat
+import pygame
+from player.player import Player
 
 tile_size = 32
 
@@ -31,7 +33,38 @@ class Visitor(GameObject):
             
         if self.shouldRemove:
             self.die()
+    
+    def check_collision(self, group):
+        collisions = pygame.sprite.spritecollide(self, group, False)
+        for collider in collisions:
+            if not isinstance(collider, Visitor) and not isinstance(collider, Player):
+                return True
         
+        return False
+    
+    def move(self, x_change, y_change):
+        if (self.check_collision(self.game.current_map.game_objects) or 
+            self.check_collision(self.game.current_map.unwalkable_tiles)):
+            self.fix_me()
+             
+        # check x
+        old_rect = self.rect
+        delta_x = x_change * self.speed
+        self.rect = self.rect.move(delta_x, 0)
+        if (self.check_collision(self.game.current_map.game_objects) or 
+            self.check_collision(self.game.current_map.unwalkable_tiles)):
+            self.rect = old_rect
+        
+        old_rect = self.rect
+        delta_y = y_change * self.speed
+        self.rect = self.rect.move(0, delta_y)
+        if (self.check_collision(self.game.current_map.game_objects) or 
+            self.check_collision(self.game.current_map.unwalkable_tiles)):
+            self.rect = old_rect
+            
+        self.x = self.rect.left - self.left_offset
+        self.y = self.rect.top - self.top_offset
+    
     def die(self):
         self.game.hud.add_visitor_killed()
         self.game.current_map.num_visitors -= 1

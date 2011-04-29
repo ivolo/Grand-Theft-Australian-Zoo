@@ -51,7 +51,7 @@ class Game:
         
         self.pressed = []
         for key in pygame.key.get_pressed():
-            self.pressed.append( False )
+            self.pressed.append( True )
             
         self.loadLevel("inn.txt")
         
@@ -194,7 +194,31 @@ class Game:
         else:
             self.pressed[K_d] = False
         
+        if(keys[K_UP]):
+            if not self.pressed[K_UP]:
+                self.player.move(0, -1)
+        else:
+            self.pressed[K_UP] = False
     
+        if(keys[K_DOWN]):
+            if not self.pressed[K_DOWN]:
+                self.player.move(0, 1)
+        else:
+            self.pressed[K_DOWN] = False
+            
+        if(keys[K_LEFT]):
+            if not self.pressed[K_LEFT]:
+                self.player.move(-1, 0)
+        else:
+            self.pressed[K_LEFT] = False
+            
+        if(keys[K_RIGHT]):
+            if not self.pressed[K_RIGHT]:
+                self.player.move(1, 0)
+        else:
+            self.pressed[K_RIGHT] = False
+            
+            
     def update_state(self):
         if self.current_map is not None:
             self.current_map.update_objects()
