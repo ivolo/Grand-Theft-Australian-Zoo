@@ -16,6 +16,7 @@ from specialObject.kangarooFence import KangarooFence
 from specialObject.tazFence import TazFence
 from specialObject.brokenTazFence import BrokenTazFence
 from player.platypus import Platypus
+from specialObject.platypusFence import PlatypusFence
 
 # The dictionary describing tiles
 # The form is: character : (tile image file, tile Class)
@@ -39,13 +40,13 @@ sprites = { 'V' : (os.path.join("tourist.png"), Visitor),
             'V3' : (os.path.join("tourist3.png"), Visitor),
             'Z' : (os.path.join("zookeeper.png"), Zookeeper),
             
-            'F' : (os.path.join("fence.png"), Fence),
-            'I' : (os.path.join("fence_verticle_left.png"), Fence),
-            'U' : (os.path.join("fence_verticle_right.png"), Fence),
-            'R' : (os.path.join("fence_LR.png"), Fence),
-            'L' : (os.path.join("fence_LL.png"), Fence),
-            'G' : (os.path.join("fence_UR.png"), Fence),
-            'H' : (os.path.join("fence_UL.png"), Fence),
+            'F' : (os.path.join("fence.png"), PlatypusFence),
+            'I' : (os.path.join("fence_verticle_left.png"), PlatypusFence),
+            'U' : (os.path.join("fence_verticle_right.png"), PlatypusFence),
+            'R' : (os.path.join("fence_LR.png"), PlatypusFence),
+            'L' : (os.path.join("fence_LL.png"), PlatypusFence),
+            'G' : (os.path.join("fence_UR.png"), PlatypusFence),
+            'H' : (os.path.join("fence_UL.png"), PlatypusFence),
             
             
             'k' : (os.path.join("kangaroo_fence.png"), KangarooFence),
