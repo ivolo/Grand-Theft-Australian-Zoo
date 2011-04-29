@@ -10,6 +10,7 @@ from pygame.locals import *
 from utils import image_util
 from gameloop import Game
 from menus.controlScreen import ControlScreen
+from menus.creditsScreen import CreditsScreen
 
 PLAY = 0
 OPTIONS = 1
@@ -34,6 +35,7 @@ class MenuScreen:
         self.credits_rect = Rect(610, 530, 180, 60)
         
         self.controlScreen = ControlScreen(self.game)
+        self.creditsScreen = CreditsScreen(self.game)
         
         self.pressed = []
         for key in pygame.key.get_pressed():
@@ -124,12 +126,16 @@ class MenuScreen:
     
     def controls(self):
         self.controlScreen.loop()
+        for x in xrange(len(self.pressed)):
+            self.pressed[x] = True
     
     def quit(self):
         sys.exit()
 
     def credits(self):
-        pass
+        self.creditsScreen.loop()
+        for x in xrange(len(self.pressed)):
+            self.pressed[x] = True
 
     def up(self):
         self.index -= 1
