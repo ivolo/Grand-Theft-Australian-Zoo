@@ -9,16 +9,18 @@ from pygame.locals import *
 from game_objects.gameObject import GameObject
 from utils.sprite_util import check_collision
 from utils import image_util
-
+from game_constants.client import *
 
 tile_size = 32
 
 class Car(GameObject):
     
     def __init__(self, image, x, y, game):
-        super(Car, self).__init__(image, (x*tile_size,y*tile_size), game)
+        self.images = image_util.load_sliced_sprites(32, 64, "red_car.png")
         
-        self.current_image = image
+        super(Car, self).__init__(self.images[0], (x*tile_size,y*tile_size), game)
+        
+        self.current_image = self.images[0]
         
         self.speed = 1
         
@@ -33,13 +35,18 @@ class Car(GameObject):
         self.forward_acceleration = 0
         self.side_acceleration = 0
         
+        self.direction = UP
+        
         self.driver = None
         
         self.driving = False
         
-        self.health = 10
+        self.health = 30
         self.damage = 0
-        
+        self.damage_index = 0
+        self.first_damage_point = 10
+        self.second_damage_point = 20
+        self.third_damage_point = 25
         
     def inCar(self, source):
         self.driver = source
@@ -50,17 +57,21 @@ class Car(GameObject):
         self.driver = None
         
     def move(self, x_change, y_change):
+        new_damage = 0
+        
         # check x
         old_rect = self.rect
         delta_x = x_change * self.speed
         self.rect = self.rect.move(delta_x, 0)
         if (check_collision(self, self.game.current_map.unwalkable_tiles)):
+            new_damage = .1
             self.rect = old_rect
             
         old_rect = self.rect
         delta_y = y_change * self.speed
         self.rect = self.rect.move(0, delta_y)
         if (check_collision(self, self.game.current_map.unwalkable_tiles)):
+            new_damage = .1
             self.rect = old_rect
             
         self.x = self.rect.left - self.left_offset
@@ -73,11 +84,23 @@ class Car(GameObject):
         self.fix_me()
         if collisions is not None:
             for collision in collisions:
-                collision.ranOver(self)
+                if collision is not self:
+                    new_damage = 1
+                    collision.ranOver(self)
+        
+        self.damage += new_damage
         
     def update(self):
         if self.damage >= self.health:
+            self.driver.leave_car()
             self.kill()
+        
+        if self.damage >= self.first_damage_point:
+            self.damage_index = 1
+        if self.damage >= self.second_damage_point:
+            self.damage_index = 2
+        if self.damage >= self.third_damage_point:
+            self.damage_index = 3
         
         drag = .2
         
@@ -141,14 +164,18 @@ class Car(GameObject):
         
         if(abs(self.side_acceleration) > abs(self.forward_acceleration)):
             if(self.side_acceleration > 0):
-                self.current_image = pygame.transform.rotate(self.image, -90)
+                self.current_image = pygame.transform.rotate(self.images[self.damage_index], -90)
+                self.direction = RIGHT
             else:
-                self.current_image = pygame.transform.rotate(self.image, 90)
+                self.current_image = pygame.transform.rotate(self.images[self.damage_index], 90)
+                self.direction = LEFT
         elif(abs(self.side_acceleration) < abs(self.forward_acceleration)):
             if(self.forward_acceleration > 0):
-                self.current_image = pygame.transform.rotate(self.image, 180)
+                self.current_image = pygame.transform.rotate(self.images[self.damage_index], 180)
+                self.direction = DOWN
             else:
-                self.current_image = self.image
+                self.current_image = self.images[self.damage_index]
+                self.direction = UP
         self.rect = self.current_image.get_rect()
         self.rect.top += self.y
         self.rect.left += self.x
