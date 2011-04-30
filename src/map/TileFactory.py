@@ -17,6 +17,9 @@ from specialObject.tazFence import TazFence
 from specialObject.brokenTazFence import BrokenTazFence
 from player.platypus import Platypus
 from specialObject.platypusFence import PlatypusFence
+from specialObject.tree import Tree
+from specialObject.koalaFence import KoalaFence
+from player.koala import Koala
 
 # The dictionary describing tiles
 # The form is: character : (tile image file, tile Class)
@@ -65,10 +68,17 @@ sprites = { 'V' : (os.path.join("tourist.png"), Visitor),
             'a' : (os.path.join("shortwall_verticle_left.png"), TazFence),
             's' : (os.path.join("shortwall_destroyed.png"), BrokenTazFence),
             
+            '1' : (os.path.join("kangaroo_fence.png"), KoalaFence),
+            '2' : (os.path.join("kangaroo_fence_UR.png"), KoalaFence),
+            '3' : (os.path.join("kangaroo_fence_verticle_right.png"), KoalaFence),
+            
             'C' : (os.path.join("cart.png"), Car),
             'K' : (os.path.join("kangaroo.png"), Kangaroo),
             'T' : (os.path.join("taz.png"), Taz),
-            'P' : (os.path.join("platypus.png"), Platypus)}
+            'P' : (os.path.join("platypus.png"), Platypus),
+            'A' : (os.path.join("koala.png"), Koala),
+            
+            '|' : (os.path.join("tree.png"), Tree)}
 
 loaded_sprites = {}
 loaded_tiles = {}

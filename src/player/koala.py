@@ -5,19 +5,19 @@ import pygame
 from pygame.sprite import Sprite
 from car.car import Car
 
-class Taz(Player):
+class Koala(Player):
     
     def __init__(self, image, x, y, game):
-        self.name = "Tasmanian Devil"
+        self.name = "Koala"
         
-        self.init_image = image_util.load_image("tasmanian.png")
+        self.init_image = image_util.load_image("koala.png")
         self.init_x = x
         self.init_y = y
         
-        image = image_util.load_image("tasmanian.png")
-        attack_image = image_util.load_image("tasmanian_attack.png")
+        image = image_util.load_image("koala.png")
+        attack_image = image_util.load_image("koala_attack.png")
         
-        unselected_images = image_util.load_sliced_sprites(32, 32, "tasmanian_unselected.png")
+        unselected_images = image_util.load_sliced_sprites(32, 32, "koala_unselected.png")
         
         rect = image.get_rect()
         rect.left = 5
@@ -44,7 +44,7 @@ class Taz(Player):
         self.canDriveCar = False
     
     def newPlayer(self):
-        return Taz(self.init_image, self.init_x, self.init_y, self.game)
+        return Koala(self.init_image, self.init_x, self.init_y, self.game)
     
     def attack(self):
         started = Player.attack(self)

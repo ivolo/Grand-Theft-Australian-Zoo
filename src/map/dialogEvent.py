@@ -29,6 +29,8 @@ class DialogEvent(MapEvent):
             pygame.display.flip()
             while not any(map(lambda x: x.type == KEYDOWN and x.key == K_RETURN, pygame.event.get())):
                 self.prev = pygame.time.get_ticks()
+                
+        return True
         
     def create_dialog(self):
         f = font.Font(font.get_default_font(), 30)

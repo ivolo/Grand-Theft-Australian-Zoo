@@ -61,7 +61,8 @@ class Map:
 
     def fire_tile(self, index, source):
         if index in self.events:
-            self.events[index].fire(source)
+            return self.events[index].fire(source)
+        return True
 
     def add_splat(self, x, y):
         splat = Splat(x,y,self.game)

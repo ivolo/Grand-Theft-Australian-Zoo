@@ -73,26 +73,34 @@ class Player(GameObject):
         self.fire_tiles()
     
     def fire_tiles(self):
-        x = self.x
-        y = self.y
+        x = self.x + self.left_offset
+        y = self.y + self.top_offset
+        
+        new_tile_idx = (y+self.rect.height)/self.game.current_map.tile_size * self.game.current_map.tiles_wide \
+                           + x/self.game.current_map.tile_size
+        do_continue = self.game.current_map.fire_tile(new_tile_idx, self)
+        if not do_continue:
+            return
+        
+        new_tile_idx = (y+self.rect.height)/self.game.current_map.tile_size * self.game.current_map.tiles_wide \
+                           + (x+self.rect.width)/self.game.current_map.tile_size
+        do_continue = self.game.current_map.fire_tile(new_tile_idx, self)
+        if not do_continue:
+            return
         
         # check all four corners
         new_tile_idx = y/self.game.current_map.tile_size * self.game.current_map.tiles_wide \
                            + x/self.game.current_map.tile_size
-        self.game.current_map.fire_tile(new_tile_idx, self)
+        do_continue = self.game.current_map.fire_tile(new_tile_idx, self)
+        if not do_continue:
+            return
         
         new_tile_idx = y/self.game.current_map.tile_size * self.game.current_map.tiles_wide \
                            + (x+self.rect.width)/self.game.current_map.tile_size
-        self.game.current_map.fire_tile(new_tile_idx, self)
+        do_continue = self.game.current_map.fire_tile(new_tile_idx, self)
+        if not do_continue:
+            return
         
-        new_tile_idx = (y+self.rect.height)/self.game.current_map.tile_size * self.game.current_map.tiles_wide \
-                           + x/self.game.current_map.tile_size
-        self.game.current_map.fire_tile(new_tile_idx, self)
-        
-        new_tile_idx = (y+self.rect.height)/self.game.current_map.tile_size * self.game.current_map.tiles_wide \
-                           + (x+self.rect.width)/self.game.current_map.tile_size
-        self.game.current_map.fire_tile(new_tile_idx, self)
-    
     def collides_with_tiles(self, x, y):
         x += self.rect.left
         y += self.rect.top

@@ -17,3 +17,5 @@ class LinkEvent(MapEvent):
     def fire(self, source):
         if isinstance(source, Player):
             self.game.change_maps(self.dest, self.dest_x, self.dest_y)
+            return False
+        return True
