@@ -20,17 +20,23 @@ class Zookeeper(GameObject):
         self.game.current_map.num_zookeepers += 1
     
     def update(self):
-        player = self.game.player        
-        if get_distance(self, player) <= 200:
+        player = self.game.player       
+        if player.isInCar:
+            if get_distance(self, player.car) <= 100:
+                # move away
+                x = 1 if self.rect.left - player.car.rect.left > 0 else - 1 
+                y = 1 if self.rect.top - player.car.rect.top > 0 else - 1
+                self.move(x, y) 
+        elif get_distance(self, player) <= 200:
             # move away
             x = 1 if self.rect.left - player.rect.left < 0 else - 1 
             y = 1 if self.rect.top - player.rect.top < 0 else - 1
             self.move(x, y)
         
-        rectangle = pygame.Rect(player.x, player.y, TILE_SIZE, TILE_SIZE)
-        
-        if self.rect.colliderect(rectangle):
-            self.game.reset()
+            rectangle = pygame.Rect(player.x, player.y, TILE_SIZE, TILE_SIZE)
+            
+            if self.rect.colliderect(rectangle):
+                self.game.reset()
             
         if self.shouldRemove:
             self.die()
