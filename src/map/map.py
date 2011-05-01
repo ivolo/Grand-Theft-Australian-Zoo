@@ -180,8 +180,8 @@ class Map:
             for key in line_tiles:
                 if key is not None and key is not '':
                     object = TileFactory.generateSprite(key,x,y - index,self.game)
-                    if not isinstance(object, Player):
-                        self.game_objects.add( object )
+                    #if not isinstance(object, Player):
+                    self.game_objects.add( object )
                 x += 1
         
         # special commands        

@@ -5,17 +5,19 @@ import pygame
 from pygame.sprite import Sprite
 from car.car import Car
 
-class Koala(Player):
+class Dingo(Player):
     
     def __init__(self, image, x, y, game):
-        self.name = "Koala"
+        self.name = "Dingo"
         
-        self.init_image = image
+        self.init_image = image_util.load_image("dingo.png")
         self.init_x = x
         self.init_y = y
         
-        attack_image = image_util.load_image("koala_attack.png")
-        unselected_images = image_util.load_sliced_sprites(32, 32, "koala_unselected.png")
+        image = image_util.load_image("dingo.png")
+        attack_image = image_util.load_image("dingo_attack.png")
+        
+        unselected_images = image_util.load_sliced_sprites(32, 32, "dingo_unselected.png")
         
         rect = image.get_rect()
         rect.left = 5
@@ -42,7 +44,7 @@ class Koala(Player):
         self.canDriveCar = False
     
     def newPlayer(self):
-        return Koala(self.init_image, self.init_x, self.init_y, self.game)
+        return Dingo(self.init_image, self.init_x, self.init_y, self.game)
     
     def attack(self):
         started = Player.attack(self)

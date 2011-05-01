@@ -53,7 +53,7 @@ class Game:
         for key in pygame.key.get_pressed():
             self.pressed.append( True )
             
-        self.loadLevel("second_map.txt")
+        self.loadLevel("inn.txt")
         
         self.returnToMainMenu = False
         
@@ -83,8 +83,8 @@ class Game:
     
     def change_maps(self, dest, x, y):
         self.loadLevel(dest)
-        self.player.x = x * 32
-        self.player.y = y * 32
+        self.player.x = x * TILE_SIZE
+        self.player.y = y * TILE_SIZE
         self.player.rect.left = self.player.x + self.player.left_offset
         self.player.rect.top = self.player.y + self.player.top_offset
     
@@ -233,8 +233,9 @@ class Game:
             self.current_map.draw_tiles()
             self.current_map.draw_objects()
         
-        for p in self.player_group:
-            p.draw()
+        #for p in self.player_group:
+        #    p.draw()
+        self.player.draw()
         pygame.display.flip()
 
 if __name__ == '__main__':

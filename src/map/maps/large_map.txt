@@ -56,6 +56,6 @@ a,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,
 
 link 2,0 inn.txt 3,4
 link 3,0 inn.txt 4,4
-link 58,15 second_map.txt 1,14
-link 58,16 second_map.txt 1,15
-link 58,17 second_map.txt 1,16
+link 57,15 second_map.txt 1,14
+link 57,16 second_map.txt 1,15
+link 57,17 second_map.txt 1,16
