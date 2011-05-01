@@ -21,6 +21,7 @@ from specialObject.tree import Tree
 from specialObject.koalaFence import KoalaFence
 from player.koala import Koala
 from player.dingo import Dingo
+from specialObject.dingoFence import DingoFence
 
 # The dictionary describing tiles
 # The form is: character : (tile image file, tile Class)
@@ -72,6 +73,11 @@ sprites = { 'V' : (os.path.join("tourist.png"), Visitor),
             '1' : (os.path.join("kangaroo_fence.png"), KoalaFence),
             '2' : (os.path.join("kangaroo_fence_UR.png"), KoalaFence),
             '3' : (os.path.join("kangaroo_fence_verticle_right.png"), KoalaFence),
+            
+            '4' : (os.path.join("fence.png"), DingoFence),
+            '5' : (os.path.join("fence_UL.png"), DingoFence),
+            '6' : (os.path.join("fence_verticle_left.png"), DingoFence),
+            '7' : (os.path.join("fence_LL.png"), DingoFence),
             
             'C' : (os.path.join("cart.png"), Car),
             'K' : (os.path.join("kangaroo.png"), Kangaroo),

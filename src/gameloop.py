@@ -59,6 +59,7 @@ class Game:
         
     def reset(self):
         self.player_group.remove(self.player)
+        self.current_map.game_objects.remove(self.player)
         self.player = self.player.newPlayer()
         self.player.inUse = True
         self.player.current_image = self.player.image
@@ -91,6 +92,7 @@ class Game:
     def change_player(self, newPlayer):
         self.player.inUse = False
         self.player.leave_car()
+        self.current_map.game_objects.add(self.player)
         self.player = newPlayer;
         self.player.inUse = True
         self.player.current_image = self.player.image

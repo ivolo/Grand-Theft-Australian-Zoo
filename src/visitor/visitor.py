@@ -51,14 +51,18 @@ class Visitor(GameObject):
         old_rect = self.rect
         delta_x = x_change * self.speed
         self.rect = self.rect.move(delta_x, 0)
-        if (self.check_collision(self.game.current_map.game_objects) or 
+        if self.rect.left < 0 or self.rect.left + self.rect.width >= self.game.current_map.width:
+            self.rect = old_rect
+        elif (self.check_collision(self.game.current_map.game_objects) or 
             self.check_collision(self.game.current_map.unwalkable_tiles)):
             self.rect = old_rect
         
         old_rect = self.rect
         delta_y = y_change * self.speed
         self.rect = self.rect.move(0, delta_y)
-        if (self.check_collision(self.game.current_map.game_objects) or 
+        if self.rect.top < 0 or self.rect.top + self.rect.height >= self.game.current_map.height:
+            self.rect = old_rect
+        elif (self.check_collision(self.game.current_map.game_objects) or 
             self.check_collision(self.game.current_map.unwalkable_tiles)):
             self.rect = old_rect
             

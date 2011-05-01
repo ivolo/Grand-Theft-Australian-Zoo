@@ -33,13 +33,8 @@ class Kangaroo(Player):
         
         Player.__init__(self, game, x, y, image, attack_image, unselected_images, rect, speed, attack_length, attack_delay)
     
-        self.left_offset = 5
-        self.top_offset = 5
-    
         self.attack_sprite = Sprite()
         self.attack_sprite.rect = image.get_rect()
-        self.attack_sprite.rect.width += 10
-        self.attack_sprite.rect.height += 10
         
         self.canDriveCar = True
     

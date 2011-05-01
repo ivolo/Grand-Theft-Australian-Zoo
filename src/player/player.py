@@ -41,6 +41,11 @@ class Player(GameObject):
         
         self.inUse = False
         self.game.player_group.add(self)
+        
+        self.left_offset = 5
+        self.top_offset = 5
+        self.rect.width = 32 - self.left_offset * 2
+        self.rect.height = self.rect.width
     
     def newPlayer(self):
         pass
