@@ -9,6 +9,7 @@ from visitor.visitor import Visitor
 from zookeeper.zookeeper import Zookeeper
 from specialObject.fence import Fence
 from car.car import Car
+from car.police import PoliceCar
 from player.kangaroo import Kangaroo
 from tiles.visitorTile import VisitorTile
 from player.taz import Taz
@@ -88,6 +89,7 @@ sprites = { 'V' : (os.path.join("tourist.png"), Visitor),
             
             'C' : (os.path.join("cart.png"), Car),
             'SC' : (os.path.join("cart.png"), ImperviousCar),
+            '<' : (os.path.join("cart.png"), PoliceCar),
             'K' : (os.path.join("kangaroo.png"), Kangaroo),
             'T' : (os.path.join("taz.png"), Taz),
             'P' : (os.path.join("platypus.png"), Platypus),

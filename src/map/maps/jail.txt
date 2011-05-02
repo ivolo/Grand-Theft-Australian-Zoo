@@ -30,6 +30,8 @@ a,w,w,w,w,w,P,P,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,d
  , , , , , , , , , , , , , , , , , , , , , , , , 
  , , , , , ,HSF,HSF, , , , , , , , , , , , , , , , , 
 
+link 6,14 large_map.txt 2,1
+link 7,14 large_map.txt 3,1
 cutscene start first jail_1.png jail_2.png
 cutscene 2,8 free_taz jail_3.png
 cutscene 3,8 free_taz jail_3.png

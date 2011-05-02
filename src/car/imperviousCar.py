@@ -158,4 +158,9 @@ class ImperviousCar(GameObject):
         
         self.move(self.side_speed, self.forward_speed)
 
-        
+    def use(self, source):
+        if not self.driving and source.canDriveCar:
+            source.isInCar = True
+            self.inCar(source)
+            source.car = self
+            self.game.current_map.game_objects.remove(source)

@@ -47,6 +47,7 @@ class Car(GameObject):
         self.first_damage_point = 10
         self.second_damage_point = 20
         self.third_damage_point = 25
+        self.drag = 0.2
         
     def inCar(self, source):
         self.driver = source
@@ -90,9 +91,13 @@ class Car(GameObject):
         
         self.damage += new_damage
         
+    def ranOver(self, source):
+        self.damage += 1
+        
     def update(self):
         if self.damage >= self.health:
-            self.driver.leave_car()
+            if self.driver:
+                self.driver.leave_car()
             self.kill()
         
         if self.damage >= self.first_damage_point:
@@ -102,21 +107,20 @@ class Car(GameObject):
         if self.damage >= self.third_damage_point:
             self.damage_index = 3
         
-        drag = .2
         
         if not self.driving:
             if(self.forward_speed == 0 and self.side_speed == 0):
                 return
 
             if self.forward_speed > 0:
-                self.forward_speed = max(0, self.forward_speed - drag)
+                self.forward_speed = max(0, self.forward_speed - self.drag)
             elif self.forward_speed < 0:
-                self.forward_speed = min(0, self.forward_speed + drag)
+                self.forward_speed = min(0, self.forward_speed + self.drag)
         
             if self.side_speed > 0:
-                self.side_speed = max(0, self.side_speed - drag)
+                self.side_speed = max(0, self.side_speed - self.drag)
             elif self.side_speed < 0:
-                self.side_speed = min(0, self.side_speed + drag)
+                self.side_speed = min(0, self.side_speed + self.drag)
                 
             #self.rect.top += self.y
             #self.rect.left += self.x
@@ -124,38 +128,18 @@ class Car(GameObject):
             self.move(self.side_speed, self.forward_speed)
             return
         
-        # check collisions with objects
-        keys = pygame.key.get_pressed()
         
-        if(keys[K_s]):
-            self.forward_acceleration = min(self.max_forward_acceleration, self.forward_acceleration + .1)
-        elif self.forward_acceleration > 0:
-            self.forward_acceleration = max(0, self.forward_acceleration - .05)
-    
-        if(keys[K_w]):
-            self.forward_acceleration = max(-self.max_forward_acceleration, self.forward_acceleration - .1)
-        elif self.forward_acceleration < 0:
-            self.forward_acceleration = min(0, self.forward_acceleration + .05)
-        
-        if(keys[K_a]):
-            self.side_acceleration = max(-self.max_side_acceleration, self.side_acceleration - .1)
-        elif self.side_acceleration < 0:
-            self.side_acceleration = min(0, self.side_acceleration + .05)
-           
-        if(keys[K_d]):
-            self.side_acceleration = min(self.max_side_acceleration, self.side_acceleration + .1)
-        elif self.side_acceleration > 0:
-            self.side_acceleration = max(0, self.side_acceleration - .05)
+        self.handle_input()
         
         if self.forward_speed > 0:
-            self.forward_speed = max(0, self.forward_speed - drag)
+            self.forward_speed = max(0, self.forward_speed - self.drag)
         elif self.forward_speed < 0:
-            self.forward_speed = min(0, self.forward_speed + drag)
+            self.forward_speed = min(0, self.forward_speed + self.drag)
         
         if self.side_speed > 0:
-            self.side_speed = max(0, self.side_speed - drag)
+            self.side_speed = max(0, self.side_speed - self.drag)
         elif self.side_speed < 0:
-            self.side_speed = min(0, self.side_speed + drag)
+            self.side_speed = min(0, self.side_speed + self.drag)
                 
         self.forward_speed = min( self.forward_speed + self.forward_acceleration, self.max_speed)
         self.forward_speed = max( self.forward_speed, -self.max_speed)
@@ -181,5 +165,36 @@ class Car(GameObject):
         self.rect.left += self.x
         
         self.move(self.side_speed, self.forward_speed)
+        
+    def handle_input(self):
+        keys = pygame.key.get_pressed()
+        
+        if(keys[K_s]):
+            self.forward_acceleration = min(self.max_forward_acceleration, self.forward_acceleration + .1)
+        elif self.forward_acceleration > 0:
+            self.forward_acceleration = max(0, self.forward_acceleration - .05)
+    
+        if(keys[K_w]):
+            self.forward_acceleration = max(-self.max_forward_acceleration, self.forward_acceleration - .1)
+        elif self.forward_acceleration < 0:
+            self.forward_acceleration = min(0, self.forward_acceleration + .05)
+        
+        if(keys[K_a]):
+            self.side_acceleration = max(-self.max_side_acceleration, self.side_acceleration - .1)
+        elif self.side_acceleration < 0:
+            self.side_acceleration = min(0, self.side_acceleration + .05)
+           
+        if(keys[K_d]):
+            self.side_acceleration = min(self.max_side_acceleration, self.side_acceleration + .1)
+        elif self.side_acceleration > 0:
+            self.side_acceleration = max(0, self.side_acceleration - .05)
+            
+    def use(self, source):
+        if not self.driving and source.canDriveCar:
+            source.isInCar = True
+            self.inCar(source)
+            source.car = self
+            self.game.current_map.game_objects.remove(source)
+
 
         
