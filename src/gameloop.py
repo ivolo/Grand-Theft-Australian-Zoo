@@ -53,7 +53,7 @@ class Game:
         for key in pygame.key.get_pressed():
             self.pressed.append( True )
             
-        self.loadLevel("inn.txt")
+        self.loadLevel("jail.txt")
         
         self.returnToMainMenu = False
         
@@ -67,7 +67,7 @@ class Game:
         for key in pygame.key.get_pressed():
             self.pressed.append( False )
             
-        self.loadLevel("large_map.txt")
+        self.loadLevel("jail.txt")
     
     def loadLevel(self, file):
         print "loading", file

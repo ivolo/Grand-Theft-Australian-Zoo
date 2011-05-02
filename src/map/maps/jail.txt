@@ -1,0 +1,55 @@
+q,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,e
+s, , , , , ,_,_,_, , , , , , ,_,_,_,_,_,P,P,_,_,s
+s, , , , , ,_,_,_, , , , , , ,_,_,_,_,_,P,P,_,_,s
+s, , , , , ,_,_,_, , , , , , ,_,_,_,_,_,P,P,_,_,s
+s, , , , , ,_,_,_, , , , , , ,_,_,_,_,_,P,P,_,_,s
+s, , , , , ,_,_,_, , , , , , ,_,_,_,_,_,P,P,_,_,s
+s, , , , , ,_,_,_, , , , , , ,_,_,_,_,_,P,P,_,_,s
+s, , , , , ,_,_,_, , , , , , ,_,_,_,_,_,P,P,_,_,s
+s,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,P,P,_,_,s
+s,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,P,P,_,_,s
+s,_,_,_,_,_,P,P,P,P,P,P,P,P,P,P,P,P,P,P,P,P,_,_,s
+s,_,_,_,_,_,P,P,P,P,P,P,P,P,P,P,P,P,P,P,P,P,_,_,s
+s,_,_,_,_,_,P,P,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,s
+s,_,_,_,_,_,P,P,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,s
+a,w,w,w,w,w,P,P,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,d
+ 
+ , , , , , , , , , , , , , , , , , , , , , , , , 
+ , , , , , ,d, , ,v, , , , ,u, , , , , , ,SC, , , 
+ , , , , , ,d, , ,v, ,K, , ,u, , , , , , , , , , 
+ , , , , , ,d, , ,v, , , , ,u, , , , , , , , , , 
+ , , , , , ,d, , ,v, , , , ,u, , , , , , , , , , 
+ , , , , , ,d, , ,v, , , , ,u, , , , , , , , , , 
+ , , , , , ,d, , ,v, , , , ,u, , , , , , , , , , 
+ ,x,s,s,s,x,c, , ,l,k,k,k,k,r, , , , , , , , , , 
+ , , , , , , , , , , , , , , , , , , , , , , , , 
+ , , , , , , , , , , , , , , , , , , , , , , , , 
+ , , , , , , , , , , , , , , , , , , , , , , , , 
+ , , , , , , , , , , , , , , , , , , , , , , , , 
+ , , , , , , , , , , , , , , , , , , , , , , , , 
+ , , , , , , , , , , , , , , , , , , , , , , , , 
+ , , , , , ,HSF,HSF, , , , , , , , , , , , , , , , , 
+
+cutscene start first jail_1.png jail_2.png
+cutscene 2,8 free_taz jail_3.png
+cutscene 3,8 free_taz jail_3.png
+cutscene 4,8 free_taz jail_3.png
+cutscene 9,1 free_kang jail_4.png
+cutscene 9,2 free_kang jail_4.png
+cutscene 9,3 free_kang jail_4.png
+cutscene 9,4 free_kang jail_4.png
+cutscene 9,5 free_kang jail_4.png
+cutscene 9,6 free_kang jail_4.png
+cutscene 9,7 free_kang jail_4.png
+cutscene 10,7 free_kang jail_4.png
+cutscene 11,7 free_kang jail_4.png
+cutscene 12,7 free_kang jail_4.png
+cutscene 13,7 free_kang jail_4.png
+cutscene 14,7 free_kang jail_4.png
+cutscene 14,6 free_kang jail_4.png
+cutscene 14,5 free_kang jail_4.png
+cutscene 14,4 free_kang jail_4.png
+cutscene 14,3 free_kang jail_4.png
+cutscene 14,2 free_kang jail_4.png
+cutscene 14,1 free_kang jail_4.png
+

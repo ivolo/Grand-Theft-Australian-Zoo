@@ -14,6 +14,7 @@ from tiles.visitorTile import VisitorTile
 from zookeeper.zookeeper import Zookeeper
 from Queue import Queue
 from visitor.splat import Splat
+from cutscene import Cutscene
 
 class Map:
     tile_size = 32   
@@ -54,6 +55,9 @@ class Map:
         
         self.width = 0
         self.height = 0
+        
+        self.start_cutscenes = []
+        self.played_cutscenes = dict()
 
     def intialize(self):
         file = open(self.fullname, 'r')
@@ -61,6 +65,11 @@ class Map:
 
     def fire_tile(self, index, source):
         if index in self.events:
+            if isinstance(self.events[index], Cutscene):
+                if self.played_cutscenes[self.events[index].name]:
+                    return
+                else:
+                    self.played_cutscenes[self.events[index].name] = True
             return self.events[index].fire(source)
         return True
 
@@ -116,6 +125,10 @@ class Map:
             
         for splat in self.splats:
                 splat.draw()
+                
+        for cutscene in self.start_cutscenes:
+            cutscene.fire(self.game.player)
+            self.start_cutscenes.remove(cutscene)
         
     def draw_objects(self):
         for obj in self.game_objects:
@@ -202,6 +215,14 @@ class Map:
                 start_coords = command[1].split(',')
                 text = " ".join(command[2:])
                 self.events[int(start_coords[1])*self.tiles_wide+int(start_coords[0])] = DialogEvent(text, self.game)
+            elif command[0] == 'cutscene':
+                cutscene = Cutscene(self.game, command[2], [os.path.join("cutscenes",image).replace('\n','') for image in command[3:]])
+                self.played_cutscenes[cutscene.name] = False
+                if command[1] == "start":
+                    self.start_cutscenes.append(cutscene)
+                else:
+                    coords = command[1].split(',')
+                    self.events[int(coords[1])*self.tiles_wide+int(coords[0])] = cutscene
   
             index += 1
             

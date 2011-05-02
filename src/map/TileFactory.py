@@ -22,6 +22,8 @@ from specialObject.koalaFence import KoalaFence
 from player.koala import Koala
 from player.dingo import Dingo
 from specialObject.dingoFence import DingoFence
+from specialObject.highStrongFence import HighStrongFence
+from car.imperviousCar import ImperviousCar
 
 # The dictionary describing tiles
 # The form is: character : (tile image file, tile Class)
@@ -35,7 +37,10 @@ tiles = { '' : (os.path.join("tiles","grass.png"), FloorTile),
           's': (os.path.join("tiles","tallwall_verticle.png"), WallTile),
           'a': (os.path.join("tiles","tallwall_LL.png"), WallTile),
           
-          'p': (os.path.join("tiles","path.png"), VisitorTile)
+          'p': (os.path.join("tiles","path.png"), VisitorTile),
+          'P': (os.path.join("tiles","path.png"), FloorTile),
+          
+          '_': (os.path.join("tiles","indoor_floor.png"), FloorTile),
         }
 
 # The dictionary describing sprites (non-Player)
@@ -79,7 +84,10 @@ sprites = { 'V' : (os.path.join("tourist.png"), Visitor),
             '6' : (os.path.join("fence_verticle_left.png"), DingoFence),
             '7' : (os.path.join("fence_LL.png"), DingoFence),
             
+            'HSF' : (os.path.join("strong_door.png"), HighStrongFence),
+            
             'C' : (os.path.join("cart.png"), Car),
+            'SC' : (os.path.join("cart.png"), ImperviousCar),
             'K' : (os.path.join("kangaroo.png"), Kangaroo),
             'T' : (os.path.join("taz.png"), Taz),
             'P' : (os.path.join("platypus.png"), Platypus),

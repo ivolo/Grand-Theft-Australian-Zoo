@@ -4,6 +4,7 @@ from game_objects.gameObject import GameObject
 from pygame import time
 from car.car import Car
 from utils.sprite_util import check_collision
+from car.imperviousCar import ImperviousCar
 
 tile_size = 32
 
@@ -173,7 +174,7 @@ class Player(GameObject):
         collisions = pygame.sprite.spritecollide(self.attack_sprite, self.game.current_map.game_objects, False)
         if collisions is not None:
             for collision in collisions:
-                if isinstance(collision, Car):
+                if isinstance(collision, Car) or isinstance(collision,ImperviousCar):
                     self.isInCar = True
                     collision.inCar(self)
                     self.car = collision
