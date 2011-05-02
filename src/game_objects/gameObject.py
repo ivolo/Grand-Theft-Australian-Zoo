@@ -123,3 +123,10 @@ class GameObject(pygame.sprite.Sprite):
     
     def ranOver(self, source):
         pass
+    
+    def use(self, source):
+        '''
+            when you want to press "Q" to
+            use an object, this method is called
+        '''
+        pass

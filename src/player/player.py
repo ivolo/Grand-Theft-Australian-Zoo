@@ -155,35 +155,18 @@ class Player(GameObject):
         
         GameObject.move(self, x_change, y_change)
     
-    def toggle_car(self):
+    def use_object(self):
         if not self.isInCar:
-            self.get_into_car()
+            self.attack_sprite.rect.top = self.y - 5
+            self.attack_sprite.rect.left = self.x - 5
+            collisions = pygame.sprite.spritecollide(self.attack_sprite, self.game.current_map.game_objects, False)
+            if collisions is not None:
+                for collision in collisions:
+                    if not self.isInCar and collision != self: # if a previous use put us in car, do nothing
+                        collision.use(self)
         else:
             self.leave_car()
-    
-    def get_into_car(self):
-        if not self.canDriveCar:
-            return
-        
-        if(self.isInCar):
-            return;
-        
-        self.attack_sprite.rect.top = self.y - 5
-        self.attack_sprite.rect.left = self.x - 5
-        collisions = pygame.sprite.spritecollide(self.attack_sprite, self.game.current_map.game_objects, False)
-        if collisions is not None:
-            for collision in collisions:
-                if isinstance(collision, Car):
-                    self.isInCar = True
-                    collision.inCar(self)
-                    self.car = collision
-                    self.game.current_map.game_objects.remove(self)
-                    self.x = -1000
-                    self.y = -1000
-                    self.rect.top = -1000
-                    self.rect.left = -1000
-                    break;
-                    
+          
     def leave_car(self):
         if self.isInCar:
             #find some spot to put myself
@@ -217,3 +200,8 @@ class Player(GameObject):
             self.car = None
             self.game.current_map.game_objects.add(self)
             
+    def use(self, source):
+        '''
+            Players are 'used' to change
+        '''
+        self.game.change_player(self)

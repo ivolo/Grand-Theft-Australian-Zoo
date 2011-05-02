@@ -120,17 +120,6 @@ class Game:
         for event in pygame.event.get():
             if event.type == QUIT:
                 sys.exit()
-            elif event.type == MOUSEBUTTONDOWN:
-                pass
-            elif event.type == MOUSEBUTTONUP:
-                pos = pygame.mouse.get_pos()
-                x_diff = self.player.x - (self.map_screen.get_width() / 2)
-                y_diff = self.player.y - (self.map_screen.get_height() / 2)
-                self.cursor.rect.left = pos[0] + x_diff
-                self.cursor.rect.top = pos[1] + y_diff
-                collision = pygame.sprite.spritecollideany(self.cursor, self.player_group)
-                if collision != None:
-                    self.change_player(collision)
     
     def getButtonPresses(self):
         keys = pygame.key.get_pressed()
@@ -168,7 +157,7 @@ class Game:
         if(keys[K_q]):
             if not self.pressed[K_q]:
                 self.pressed[K_q] = True
-                self.player.toggle_car()
+                self.player.use_object()
         else:
             self.pressed[K_q] = False
         
