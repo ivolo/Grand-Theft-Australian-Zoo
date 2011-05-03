@@ -30,9 +30,6 @@ class Taz(Player):
         attack_delay = 200
         
         Player.__init__(self, game, x, y, image, attack_image, unselected_images, rect, speed, attack_length, attack_delay)
-    
-        self.attack_sprite = Sprite()
-        self.attack_sprite.rect = image.get_rect()
         
         self.canDriveCar = False
     

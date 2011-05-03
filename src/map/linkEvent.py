@@ -1,5 +1,4 @@
 from mapEvent import MapEvent
-from player.player import Player
 
 class LinkEvent(MapEvent):
     
@@ -15,7 +14,7 @@ class LinkEvent(MapEvent):
         self.game = game
     
     def fire(self, source):
-        if isinstance(source, Player):
+        if source is self.game.player or source is self.game.player.car:
             self.game.change_maps(self.dest, self.dest_x, self.dest_y)
             return False
         return True

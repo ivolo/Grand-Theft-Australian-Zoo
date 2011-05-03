@@ -5,6 +5,8 @@ from pygame import time
 from car.car import Car
 from utils.sprite_util import check_collision
 from car.imperviousCar import ImperviousCar
+from game_constants.client import TILE_SIZE
+from pygame.sprite import Sprite
 
 tile_size = 32
 
@@ -45,11 +47,15 @@ class Player(GameObject):
         
         self.left_offset = 5
         self.top_offset = 5
-        self.rect.width = 32 - self.left_offset * 2
+        self.rect.width = TILE_SIZE - (self.left_offset * 2)
         self.rect.height = self.rect.width
+        
+        self.attack_sprite = Sprite()
+        self.attack_sprite.rect = image.get_rect()
     
     def newPlayer(self):
         pass
+        
     
     def draw(self):
         if(self.isInCar):
@@ -158,8 +164,8 @@ class Player(GameObject):
     
     def use_object(self):
         if not self.isInCar:
-            self.attack_sprite.rect.top = self.y - 5
-            self.attack_sprite.rect.left = self.x - 5
+            self.attack_sprite.rect.top = self.y# - 5
+            self.attack_sprite.rect.left = self.x# - 5
             collisions = pygame.sprite.spritecollide(self.attack_sprite, self.game.current_map.game_objects, False)
             if collisions is not None:
                 for collision in collisions:

@@ -18,6 +18,8 @@ from hud import animal_info
 from game_variables import animals_freed
 from utils import image_util
 from menus.pauseScreen import PauseScreen, CONTINUE, MAIN_MENU
+from car.imperviousCar import ImperviousCar
+from car.car import Car
 
 class Game:
     
@@ -53,7 +55,7 @@ class Game:
         for key in pygame.key.get_pressed():
             self.pressed.append( True )
             
-        self.loadLevel("jail.txt")
+        self.loadLevel("koala.txt")
         
         self.returnToMainMenu = False
         
@@ -70,7 +72,6 @@ class Game:
         self.loadLevel("jail.txt")
     
     def loadLevel(self, file):
-        print "loading", file
         self.pressed = []
         for key in pygame.key.get_pressed():
             self.pressed.append( False )
@@ -83,11 +84,26 @@ class Game:
             self.current_map.intialize()
     
     def change_maps(self, dest, x, y):
+        if self.player.isInCar:
+            self.current_map.game_objects.remove(self.player.car)
+        
         self.loadLevel(dest)
         self.player.x = x * TILE_SIZE
         self.player.y = y * TILE_SIZE
         self.player.rect.left = self.player.x + self.player.left_offset
         self.player.rect.top = self.player.y + self.player.top_offset
+        
+        if self.player.isInCar:
+            if isinstance(self.player.car, ImperviousCar):
+                self.player.car = Car(None,0,0,self)
+                self.player.car.driver = self.player
+                self.player.car.driving = True
+            self.player.car.x = x * TILE_SIZE
+            self.player.car.y = y * TILE_SIZE
+            self.player.car.rect.left = self.player.car.x
+            self.player.car.rect.top = self.player.car.y
+            self.player.car.avoidMapLinks()
+            self.current_map.game_objects.add(self.player.car)
     
     def change_player(self, newPlayer):
         self.player.inUse = False

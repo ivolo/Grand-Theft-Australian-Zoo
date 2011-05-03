@@ -15,6 +15,7 @@ from zookeeper.zookeeper import Zookeeper
 from Queue import Queue
 from visitor.splat import Splat
 from cutscene import Cutscene
+from utils import image_util
 
 class Map:
     tile_size = 32   
@@ -28,12 +29,14 @@ class Map:
         self.splat_idx = 0
         self.max_splats = 20
         self.splats = []
-        
+          
         self.game_objects = pygame.sprite.Group()
         self.unjumpable_objects = pygame.sprite.Group()
         self.unwalkable_tiles = pygame.sprite.Group()
         self.unswimmable_and_unwalkable_tiles = pygame.sprite.Group()
         self.unjumpable_tiles = pygame.sprite.Group()
+        self.high_level = pygame.sprite.Group()
+        self.loaded_cutscenes = dict()
         
         self.screen=screen
         self.game=game
@@ -58,6 +61,8 @@ class Map:
         
         self.start_cutscenes = []
         self.played_cutscenes = dict()
+        
+        self.press_enter = image_util.load_sliced_sprites(210, 80, os.path.join("cutscenes","press_enter.png"))
 
     def intialize(self):
         file = open(self.fullname, 'r')
@@ -216,7 +221,16 @@ class Map:
                 text = " ".join(command[2:])
                 self.events[int(start_coords[1])*self.tiles_wide+int(start_coords[0])] = DialogEvent(text, self.game)
             elif command[0] == 'cutscene':
-                cutscene = Cutscene(self.game, command[2], [os.path.join("cutscenes",image).replace('\n','') for image in command[3:]])
+                slides = []
+                for image in [os.path.join("cutscenes",image).replace('\n','') for image in command[3:]]:
+                    if(self.loaded_cutscenes.has_key(image)):
+                        slides.append(self.loaded_cutscenes.get(image))
+                    else:
+                        loaded_image = image_util.load_image(image) 
+                        slides.append(loaded_image)
+                        self.loaded_cutscenes[image] = loaded_image
+                    
+                cutscene = Cutscene(self.game, command[2], slides, self.press_enter)
                 self.played_cutscenes[cutscene.name] = False
                 if command[1] == "start":
                     self.start_cutscenes.append(cutscene)

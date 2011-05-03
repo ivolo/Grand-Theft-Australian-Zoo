@@ -10,6 +10,7 @@ from game_objects.gameObject import GameObject
 from utils.sprite_util import check_collision
 from utils import image_util
 from game_constants.client import *
+from map.linkEvent import LinkEvent
 
 tile_size = 32
 
@@ -166,6 +167,37 @@ class Car(GameObject):
         
         self.move(self.side_speed, self.forward_speed)
         
+        self.fire_tiles()
+        
+    def fire_tiles(self):
+        x = self.x + self.left_offset
+        y = self.y + self.top_offset
+        
+        new_tile_idx = (y+self.rect.height)/self.game.current_map.tile_size * self.game.current_map.tiles_wide \
+                           + x/self.game.current_map.tile_size
+        do_continue = self.game.current_map.fire_tile(new_tile_idx, self)
+        if not do_continue:
+            return
+        
+        new_tile_idx = (y+self.rect.height)/self.game.current_map.tile_size * self.game.current_map.tiles_wide \
+                           + (x+self.rect.width)/self.game.current_map.tile_size
+        do_continue = self.game.current_map.fire_tile(new_tile_idx, self)
+        if not do_continue:
+            return
+        
+        # check all four corners
+        new_tile_idx = y/self.game.current_map.tile_size * self.game.current_map.tiles_wide \
+                           + x/self.game.current_map.tile_size
+        do_continue = self.game.current_map.fire_tile(new_tile_idx, self)
+        if not do_continue:
+            return
+        
+        new_tile_idx = y/self.game.current_map.tile_size * self.game.current_map.tiles_wide \
+                           + (x+self.rect.width)/self.game.current_map.tile_size
+        do_continue = self.game.current_map.fire_tile(new_tile_idx, self)
+        if not do_continue:
+            return
+        
     def handle_input(self):
         keys = pygame.key.get_pressed()
         
@@ -196,5 +228,33 @@ class Car(GameObject):
             source.car = self
             self.game.current_map.game_objects.remove(source)
 
-
+    def avoidMapLinks(self):
+        x = self.x - 1
+        y = self.y - 1
         
+        index = int((y + self.current_image.get_height())/32)*self.game.current_map.tiles_wide + int(x/32)
+        if index in self.game.current_map.events:
+            if isinstance(self.game.current_map.events[index], LinkEvent):
+                self.y -= TILE_SIZE
+                self.rect.top -= TILE_SIZE
+                y = self.y
+        index = int((y + self.current_image.get_height())/32)*self.game.current_map.tiles_wide + int((x + self.current_image.get_width())/32)
+        if index in self.game.current_map.events:
+            if isinstance(self.game.current_map.events[index], LinkEvent):
+                self.y -= TILE_SIZE
+                self.rect.top -= TILE_SIZE
+                y = self.y
+                
+        index = int(y/32)*self.game.current_map.tiles_wide + int(x/32)
+        if index in self.game.current_map.events:
+            if isinstance(self.game.current_map.events[index], LinkEvent):
+                self.x += TILE_SIZE
+                self.rect.top += TILE_SIZE
+                x = self.x
+                
+        index = int((y + self.current_image.get_height())/32)*self.game.current_map.tiles_wide + int(x/32)
+        if index in self.game.current_map.events:
+            if isinstance(self.game.current_map.events[index], LinkEvent):
+                self.x += TILE_SIZE
+                self.rect.top += TILE_SIZE
+                x = self.x

@@ -7,20 +7,20 @@ from pygame import time
 
 class Cutscene(MapEvent):
     
-    def __init__(self, game, name, slides):
+    def __init__(self, game, name, slides, press_enter):
         '''
         Slides is an array list of strings (the files that make up the slides).
         '''
         self.name = name
         
-        self.images = [image_util.load_image(slide)for slide in slides]
+        self.images = slides #[image_util.load_image(slide)for slide in slides]
         self.slide = 0
         self.done = False
         self.game = game
         self.clock = pygame.time.Clock()
         self.screen = game.screen
         
-        self.press_enter = image_util.load_sliced_sprites(210, 80, os.path.join("cutscenes","press_enter.png"))
+        self.press_enter = press_enter
         self.current_press_enter_index = 0
         self.start_time = time.get_ticks()
         self.last_change = self.start_time

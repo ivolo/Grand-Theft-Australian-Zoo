@@ -10,15 +10,16 @@ from game_objects.gameObject import GameObject
 from utils.sprite_util import check_collision
 from utils import image_util
 from game_constants.client import *
+from car import Car
 
 tile_size = 32
 
-class ImperviousCar(GameObject):
+class ImperviousCar(Car):
     
     def __init__(self, image, x, y, game):
         self.image = image
         
-        super(ImperviousCar, self).__init__(self.image, (x*tile_size,y*tile_size), game)
+        super(ImperviousCar, self).__init__(self.image, x, y, game)
         
         self.current_image = self.image
         
@@ -76,6 +77,8 @@ class ImperviousCar(GameObject):
             for collision in collisions:
                 if collision is not self:
                     collision.ranOver(self)
+                    
+        self.fire_tiles()
         
     def update(self):
         drag = .2
