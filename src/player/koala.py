@@ -85,6 +85,8 @@ class Koala(Player):
             
         self.x = self.rect.left - self.left_offset
         self.y = self.rect.top - self.top_offset
+        
+        self.fire_tiles()
     
     def climbIntoTree(self, tree):
         if self.isInTree:

@@ -69,7 +69,7 @@ class Game:
         for key in pygame.key.get_pressed():
             self.pressed.append( False )
             
-        self.loadLevel("jail.txt")
+        self.loadLevel("reptileland.txt")
     
     def loadLevel(self, file):
         self.pressed = []

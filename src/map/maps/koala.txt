@@ -56,9 +56,9 @@ a,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,
 
 link 11,0 jail.txt 6,13
 link 12,0 jail.txt 7,13
-link 56,15 reptileland.txt 32,26
-link 56,16 reptileland.txt 33,26
-link 56,17 reptileland.txt 34,26
+link 57,15 reptileland.txt 1,4
+link 57,16 reptileland.txt 1,5
+link 57,17 reptileland.txt 1,6
 cutscene start koala_1 koala_1.png
 cutscene 37,1 koala_intro koala_intro.png
 cutscene 37,2 koala_intro koala_intro.png

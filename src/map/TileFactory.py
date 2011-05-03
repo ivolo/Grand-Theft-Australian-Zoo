@@ -26,6 +26,8 @@ from player.dingo import Dingo
 from specialObject.dingoFence import DingoFence
 from specialObject.highStrongFence import HighStrongFence
 from car.imperviousCar import ImperviousCar
+from player.snake import Snake
+from specialObject.snakeFence import SnakeFence
 
 # The dictionary describing tiles
 # The form is: character : (tile image file, tile Class)
@@ -88,6 +90,11 @@ sprites = { 'V' : (os.path.join("tourist.png"), Visitor),
             '6' : (os.path.join("fence_verticle_left.png"), DingoFence),
             '7' : (os.path.join("fence_LL.png"), DingoFence),
             
+            '(' : (os.path.join("reptilefence_verticle.png"), SnakeFence),
+            '-' : (os.path.join("reptilefence.png"), SnakeFence),
+            '&' : (os.path.join("reptilefence_UL.png"), SnakeFence),
+            '*' : (os.path.join("reptilefence_UR.png"), SnakeFence),
+            
             'HSF' : (os.path.join("strong_door.png"), HighStrongFence),
             
             'C' : (os.path.join("cart.png"), Car),
@@ -98,10 +105,17 @@ sprites = { 'V' : (os.path.join("tourist.png"), Visitor),
             'P' : (os.path.join("platypus.png"), Platypus),
             'A' : (os.path.join("koala.png"), Koala),
             'D' : (os.path.join("dingo.png"), Dingo),
+            'BS' : (os.path.join("snake.png"), Snake),
             
             'TK' : (os.path.join("ticket_kiosk.png"), Building),
             'SK' : (os.path.join("snacks_kiosk.png"), Building),
             'DK' : (os.path.join("drink_kiosk.png"), Building),
+            
+            'RHR' : (os.path.join("reptilehouse_roof.png"), Building),
+            'RHF' : (os.path.join("reptilehouse_front.png"), Building),
+            'RB1' : (os.path.join("reptilehouse_base_1.png"), Building),
+            'RB2' : (os.path.join("reptilehouse_base_2.png"), Building),
+            
             '|' : (os.path.join("tree.png"), Tree)}
 
 loaded_sprites = {}
