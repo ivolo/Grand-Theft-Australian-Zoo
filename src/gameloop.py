@@ -218,7 +218,7 @@ class Game:
         for p in self.player_group:
             p.update()
     
-    def draw(self):
+    def draw_without_flip(self):
         self.map_screen.fill((0,0,0))
         if self.current_map is not None:
             self.current_map.draw_tiles()
@@ -227,6 +227,9 @@ class Game:
         #for p in self.player_group:
         #    p.draw()
         self.player.draw()
+    
+    def draw(self):
+        self.draw_without_flip()
         pygame.display.flip()
 
 if __name__ == '__main__':

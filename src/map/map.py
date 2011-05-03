@@ -127,8 +127,8 @@ class Map:
                 splat.draw()
                 
         for cutscene in self.start_cutscenes:
-            cutscene.fire(self.game.player)
             self.start_cutscenes.remove(cutscene)
+            cutscene.fire(self.game.player)
         
     def draw_objects(self):
         for obj in self.game_objects:
