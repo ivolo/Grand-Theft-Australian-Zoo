@@ -134,8 +134,8 @@ class Map:
         for obj in self.game_objects:
             x = obj.x/32
             y = obj.y/32
-            if (x >= self.first_visible_x and x <= self.last_visible_x) and \
-               (y >= self.first_visible_y and y <= self.last_visible_y):
+            if (x + obj.image.get_width()/32 >= self.first_visible_x and x <= self.last_visible_x) and \
+               (y + obj.image.get_height()/32 >= self.first_visible_y and y <= self.last_visible_y):
                 obj.draw()
     
     # Load the map from the text file

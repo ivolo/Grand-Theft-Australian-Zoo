@@ -19,6 +19,7 @@ from specialObject.brokenTazFence import BrokenTazFence
 from player.platypus import Platypus
 from specialObject.platypusFence import PlatypusFence
 from specialObject.tree import Tree
+from specialObject.building import Building
 from specialObject.koalaFence import KoalaFence
 from player.koala import Koala
 from player.dingo import Dingo
@@ -76,9 +77,11 @@ sprites = { 'V' : (os.path.join("tourist.png"), Visitor),
             'a' : (os.path.join("shortwall_verticle_left.png"), TazFence),
             's' : (os.path.join("shortwall_destroyed.png"), BrokenTazFence),
             
+            '-1' : (os.path.join("kangaroo_fence_LL.png"), KoalaFence),
+            '0' : (os.path.join("kangaroo_fence_LR.png"), KoalaFence),
             '1' : (os.path.join("kangaroo_fence.png"), KoalaFence),
-            '2' : (os.path.join("kangaroo_fence_UR.png"), KoalaFence),
-            '3' : (os.path.join("kangaroo_fence_verticle_right.png"), KoalaFence),
+            '2' : (os.path.join("kangaroo_fence_UL.png"), KoalaFence),
+            '3' : (os.path.join("kangaroo_fence_verticle_left.png"), KoalaFence),
             
             '4' : (os.path.join("fence.png"), DingoFence),
             '5' : (os.path.join("fence_UL.png"), DingoFence),
@@ -96,6 +99,10 @@ sprites = { 'V' : (os.path.join("tourist.png"), Visitor),
             'A' : (os.path.join("koala.png"), Koala),
             'D' : (os.path.join("dingo.png"), Dingo),
             
+            
+            'TK' : (os.path.join("ticket_kiosk.png"), Building),
+            'SK' : (os.path.join("snacks_kiosk.png"), Building),
+            'DK' : (os.path.join("drink_kiosk.png"), Building),
             '|' : (os.path.join("tree.png"), Tree)}
 
 loaded_sprites = {}
