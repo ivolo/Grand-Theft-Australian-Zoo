@@ -16,11 +16,6 @@ class KoalaFence(GameObject):
     def __init__(self, image, x, y, game):
         super(KoalaFence, self).__init__(image, (x*TILE_SIZE, y*TILE_SIZE), game)
         self.game.current_map.unjumpable_objects.add(self)
-        
-    def attacked(self, source):
-        if isinstance(source, Taz):
-            self.game.free_animal("Koala")
-            self.kill()
             
     def ranOver(self, source):
         self.game.free_animal("Koala")
