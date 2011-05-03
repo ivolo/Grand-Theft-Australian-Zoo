@@ -52,6 +52,7 @@ sprites = { 'V' : (os.path.join("tourist.png"), Visitor),
             'V3' : (os.path.join("tourist3.png"), Visitor),
             'Z' : (os.path.join("zookeeper.png"), Zookeeper),
             
+            'f' : (os.path.join("fence.png"), Fence),
             'F' : (os.path.join("fence.png"), PlatypusFence),
             'I' : (os.path.join("fence_verticle_left.png"), PlatypusFence),
             'U' : (os.path.join("fence_verticle_right.png"), PlatypusFence),
@@ -59,7 +60,6 @@ sprites = { 'V' : (os.path.join("tourist.png"), Visitor),
             'L' : (os.path.join("fence_LL.png"), PlatypusFence),
             'G' : (os.path.join("fence_UR.png"), PlatypusFence),
             'H' : (os.path.join("fence_UL.png"), PlatypusFence),
-            
             
             'k' : (os.path.join("kangaroo_fence.png"), KangarooFence),
             'r' : (os.path.join("kangaroo_fence_LR.png"), KangarooFence),
@@ -98,7 +98,6 @@ sprites = { 'V' : (os.path.join("tourist.png"), Visitor),
             'P' : (os.path.join("platypus.png"), Platypus),
             'A' : (os.path.join("koala.png"), Koala),
             'D' : (os.path.join("dingo.png"), Dingo),
-            
             
             'TK' : (os.path.join("ticket_kiosk.png"), Building),
             'SK' : (os.path.join("snacks_kiosk.png"), Building),
