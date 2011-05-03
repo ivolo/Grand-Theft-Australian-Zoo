@@ -5,8 +5,12 @@ from utils import image_util
 from splat import Splat
 import pygame
 from player.player import Player
+import random
 
 tile_size = 32
+
+directions = [1] + ([0] * 4)  + [-1]
+MOVEMENT_TIME = 40
 
 class Visitor(GameObject):
     
@@ -14,6 +18,8 @@ class Visitor(GameObject):
         super(Visitor, self).__init__(image, (x*tile_size,y*tile_size), game)
         self.speed = 2
         self.game.current_map.num_visitors += 1
+        self.reset_move()
+        self.ticks = MOVEMENT_TIME
     
     def update(self):
         player = self.game.player
@@ -30,9 +36,20 @@ class Visitor(GameObject):
             x = 1 if self.rect.left - player.rect.left > 0 else - 1 
             y = 1 if self.rect.top - player.rect.top > 0 else - 1
             self.move(x, y)
+        
+        else:
+            self.ticks -= 1
+            if self.ticks == 0:
+                self.reset_move()
+            x, y = self.heading
+            self.move(x, y) 
             
         if self.shouldRemove:
             self.die()
+    
+    def reset_move(self):
+        self.ticks = MOVEMENT_TIME
+        self.heading = random.choice(directions), random.choice(directions)
     
     def check_collision(self, group):
         collisions = pygame.sprite.spritecollide(self, group, False)
