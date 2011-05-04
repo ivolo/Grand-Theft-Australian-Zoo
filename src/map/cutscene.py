@@ -26,14 +26,10 @@ class Cutscene(MapEvent):
         self.last_change = self.start_time
         self.wait_time = 200
         
-        #self.sounds = slides[1]
-        #load_sound(self.sounds[self.slide])
-        #play_sound()
-        
         self.game = game
         
-        #self.game.soundUtil.LoadSound(self.sounds[self.slide], "slideshow")
-        #self.game.soundUtil.PlaySound("slideshow")
+        self.game.soundUtil.LoadSound('sounds/jungle.wav', "slideshow")
+        self.game.soundUtil.PlaySound("slideshow")
         
         #if not pygame.mixer: print 'Warning, sound disabled'
 
