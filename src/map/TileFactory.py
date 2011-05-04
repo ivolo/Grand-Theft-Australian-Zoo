@@ -28,6 +28,7 @@ from specialObject.highStrongFence import HighStrongFence
 from car.imperviousCar import ImperviousCar
 from player.snake import Snake
 from specialObject.snakeFence import SnakeFence
+from specialObject.walkableRoof import WalkableRoof
 
 # The dictionary describing tiles
 # The form is: character : (tile image file, tile Class)
@@ -111,7 +112,7 @@ sprites = { 'V' : (os.path.join("tourist.png"), Visitor),
             'SK' : (os.path.join("snacks_kiosk.png"), Building),
             'DK' : (os.path.join("drink_kiosk.png"), Building),
             
-            'RHR' : (os.path.join("reptilehouse_roof.png"), Building),
+            'RHR' : (os.path.join("reptilehouse_roof.png"), WalkableRoof),
             'RHF' : (os.path.join("reptilehouse_front.png"), Building),
             'RB1' : (os.path.join("reptilehouse_base_1.png"), Building),
             'RB2' : (os.path.join("reptilehouse_base_2.png"), Building),

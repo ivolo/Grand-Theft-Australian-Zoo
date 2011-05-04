@@ -16,6 +16,7 @@ from Queue import Queue
 from visitor.splat import Splat
 from cutscene import Cutscene
 from utils import image_util
+from koalaDoorEvent import KoalaDoorEvent
 
 class Map:
     tile_size = 32   
@@ -237,6 +238,9 @@ class Map:
                 else:
                     coords = command[1].split(',')
                     self.events[int(coords[1])*self.tiles_wide+int(coords[0])] = cutscene
+            elif command[0] == 'koaladoor':
+                coords = command[1].split(',')
+                self.events[int(coords[1])*self.tiles_wide+int(coords[0])] = KoalaDoorEvent(int(coords[0]), int(coords[1]), self.game)
   
             index += 1
             

@@ -20,6 +20,7 @@ from utils import image_util
 from menus.pauseScreen import PauseScreen, CONTINUE, MAIN_MENU
 from car.imperviousCar import ImperviousCar
 from car.car import Car
+from player.koala import Koala
 
 class Game:
     
@@ -43,7 +44,7 @@ class Game:
         self.hud = Hud(self)
         
         self.player_group = Group()
-        self.player = Taz(None, 1, 1, self)
+        self.player = Koala(image_util.load_image("koala.png"), 1, 1, self)
         self.player.inUse = True
         self.player.current_image = self.player.image
         
@@ -55,7 +56,7 @@ class Game:
         for key in pygame.key.get_pressed():
             self.pressed.append( True )
             
-        self.loadLevel("koala.txt")
+        self.loadLevel("reptileland.txt")
         
         self.returnToMainMenu = False
         
@@ -104,6 +105,11 @@ class Game:
             self.player.car.rect.top = self.player.car.y
             self.player.car.avoidMapLinks()
             self.current_map.game_objects.add(self.player.car)
+        elif self.player.isInTree:
+            self.player.rect = self.player.normal_rect
+            self.player.left_offset = self.player.normal_left_offset
+            self.player.top_offset = self.player.normal_top_offset
+            self.player.isInTree = False
     
     def change_player(self, newPlayer):
         self.player.inUse = False

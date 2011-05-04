@@ -1,4 +1,4 @@
-q,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,e
+q,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w, ,w,w,w,e
 s, , , , , , , , , , , , , , , , , , , ,s
 s, , , , , , , , , , , , , , , , , , , ,s
 s, , , , , , , , , , , , , , , , , , , ,s 
@@ -30,3 +30,8 @@ a,w,w,w,w,w,w,w,P,P,w,w,w,w,w,w,w,w,w,w,d
  , , , , ,(, , , , , , , , , ,(, , ,BS,, 
  , , , , , , , , , , , , , , , , , , , , 
 
+link 8,14 reptileland.txt 40,13
+link 8,15 reptileland.txt 40,13
+link 16,0 reptileland.txt 41,8
+cutscene start snake snake.png
+koaladoor 16,1
