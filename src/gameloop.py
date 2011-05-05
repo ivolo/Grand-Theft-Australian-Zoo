@@ -240,6 +240,15 @@ class Game:
                 self.player.move(1, 0)
         else:
             self.pressed[K_RIGHT] = False
+        
+        if(keys[K_o]):
+            if not self.pressed[K_o]:
+                if self.soundUtil.sound_on:
+                    self.soundUtil.sound_on = False
+                else:
+                    self.soundUtil.sound_on = True
+        else:
+            self.pressed[K_o] = False
             
             
     def update_state(self):
