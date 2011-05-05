@@ -63,7 +63,7 @@ class Game:
         for key in pygame.key.get_pressed():
             self.pressed.append( True )
             
-        self.loadLevel("reptileland.txt")
+        self.loadLevel("jail.txt")
         
         self.returnToMainMenu = False
         
@@ -77,7 +77,11 @@ class Game:
         for key in pygame.key.get_pressed():
             self.pressed.append( False )
             
-        self.loadLevel("reptileland.txt")
+        self.loadLevel("jail.txt")
+        self.player.x = TILE_SIZE
+        self.player.y = TILE_SIZE
+        self.player.rect.left = self.player.x + self.player.left_offset
+        self.player.rect.top = self.player.y + self.player.top_offset
     
     def loadLevel(self, file):
         self.pressed = []
@@ -95,6 +99,7 @@ class Game:
     def change_maps(self, dest, x, y):
         if self.player.isInCar:
             self.current_map.game_objects.remove(self.player.car)
+            self.current_map.not_player.remove(self.player.car)
         
         self.loadLevel(dest)
         self.player.x = x * TILE_SIZE
@@ -261,6 +266,9 @@ class Game:
     
     def draw(self):
         self.draw_without_flip()
+        for cutscene in self.current_map.start_cutscenes:
+            self.current_map.start_cutscenes.remove(cutscene)
+            cutscene.fire(self.player)
         pygame.display.flip()
 
 if __name__ == '__main__':
