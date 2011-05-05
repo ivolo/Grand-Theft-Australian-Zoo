@@ -1,1 +1,42 @@
-Some files go here!
+-----------------------
+| System Requirements |
+-----------------------
++ Tested on Windows 7.
++ Requires at least 700MHz CPU with 1GB of RAM.
++ Requires a screen with at least resolution 800x600, 24 bit color.
++ Requires a Python installation.
+
+-----------------------
+|    Installation     |
+-----------------------
++ Install Python 2.6 from http://python.org/download/
++ Double click executable: the game executable comes bundled with pygame.
+
+-----------------------
+|Playing Instructions |
+-----------------------
+The goal of the game is to get all of the animals out of their compounds and escape from the Zoo.
++ Your player may be a Koala, Kangaroo, Dingo, Tasmanian Devil, or Snake.
++ Your player will be highlighted by a white halo.
++ Press the W-A-S-D keys or arrow keys to move your player around the map.
++ Press the Space Bar to attack Zoo visitors.
++ Zookeepers with nets can capture you and send you back to your starting point.
++ You can press the Q key when you are next to an animal with a yellow halo to switch animals.
++ You can press the Q key to ingress-egress from the car.
+
+-----------------------
+|    Known Issues     |
+-----------------------
+There are no known issues or bugs. Please report them to gamergirl774@gmail.com. Thanks!
+
+-----------------------
+|         About       |
+-----------------------
+Grand Theft Australian Zoo
+5/4/2011
+Caryn Krakauer
+Calvin French-Owen
+Ilya Volodarsky
+Peter Reinhardt
+
+GAMBIT, MIT, Spring 2011

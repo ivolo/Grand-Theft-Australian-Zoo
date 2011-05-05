@@ -38,6 +38,8 @@ class Car(GameObject):
         
         self.direction = UP
         
+        self.start_time = pygame.time.get_ticks()
+        
         self.driver = None
         
         self.driving = False
@@ -53,10 +55,15 @@ class Car(GameObject):
     def inCar(self, source):
         self.driver = source
         self.driving = True
+        self.game.soundUtil.LoadSound('engine.wav', "car")
+        self.game.soundUtil.PlaySound("car")
+        self.start_time = pygame.time.get_ticks()
         
     def leaveCar(self):
         self.driving = None
         self.driver = None
+        self.game.soundUtil.LoadSound('cardoorshut.wav', "car")
+        self.game.soundUtil.PlaySound("car")
         
     def move(self, x_change, y_change):
         new_damage = 0
@@ -90,6 +97,10 @@ class Car(GameObject):
                     collision.ranOver(self)
         
         self.damage += new_damage
+    
+        if (pygame.time.get_ticks() > (self.start_time + 1600)) and self.driving and self.driver:
+                self.game.soundUtil.LoadSound('idle.wav', "car")
+                self.game.soundUtil.PlaySound("car")
     
     def fix_me(self):
         if not (check_collision(self, self.game.current_map.not_player) or 
@@ -144,7 +155,7 @@ class Car(GameObject):
                     return
             
             radius += 1
-    
+        
     def ranOver(self, source):
         self.damage += 1
         

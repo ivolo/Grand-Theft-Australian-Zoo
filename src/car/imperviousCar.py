@@ -42,14 +42,6 @@ class ImperviousCar(Car):
         
         self.driving = False
         
-    def inCar(self, source):
-        self.driver = source
-        self.driving = True
-        
-    def leaveCar(self):
-        self.driving = None
-        self.driver = None
-        
     def move(self, x_change, y_change):
         
         # check x
@@ -79,6 +71,10 @@ class ImperviousCar(Car):
                     collision.ranOver(self)
                     
         self.fire_tiles()
+        
+        if (pygame.time.get_ticks() > (self.start_time + 1600)) and self.driving and self.driver:
+                self.game.soundUtil.LoadSound('idle.wav', "car")
+                self.game.soundUtil.PlaySound("car")
         
     def update(self):
         drag = .2

@@ -11,6 +11,7 @@ from map.map import Map
 from player.taz import Taz
 from pygame.sprite import Group, Sprite
 from player.kangaroo import Kangaroo
+from player.snake import Snake
 
 from game_constants.client import *
 from hud.hud import Hud
@@ -21,6 +22,8 @@ from menus.pauseScreen import PauseScreen, CONTINUE, MAIN_MENU
 from car.imperviousCar import ImperviousCar
 from car.car import Car
 from player.koala import Koala
+from player.taz import Taz
+from player.dingo import Dingo
 from utils.sound_util import SoundUtil
 
 class Game:

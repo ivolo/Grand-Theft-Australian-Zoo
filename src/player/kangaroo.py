@@ -129,5 +129,8 @@ class Kangaroo(Player):
         
         self.is_jumping = True
         self.last_jump = time.get_ticks()
+        
+        self.game.soundUtil.LoadSound('thwap.wav', "player")
+        self.game.soundUtil.PlaySound("player")
     
     

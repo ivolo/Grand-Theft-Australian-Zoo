@@ -39,6 +39,9 @@ class Snake(Player):
     def attack(self):
         started = Player.attack(self)
         
+        self.game.soundUtil.LoadSound('snake.wav', "player")
+        self.game.soundUtil.PlaySound("player")
+        
         if not started:
             return
         
