@@ -111,12 +111,11 @@ class Game:
             self.player.car.avoidMapLinks()
             self.current_map.game_objects.add(self.player.car)
         elif self.player.isInTree:
-            self.player.rect = self.player.normal_rect
-            self.player.left_offset = self.player.normal_left_offset
-            self.player.top_offset = self.player.normal_top_offset
-            self.player.isInTree = False
+            self.player.getOutOfTree()
             self.player.x = TILE_SIZE
             self.player.y = TILE_SIZE
+            self.player.rect.left = self.player.x + self.player.left_offset
+            self.player.rect.top = self.player.y + self.player.top_offset
     
     def change_player(self, newPlayer):
         self.player.inUse = False
