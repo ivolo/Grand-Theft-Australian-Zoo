@@ -87,6 +87,8 @@ class Visitor(GameObject):
         self.y = self.rect.top - self.top_offset
     
     def die(self):
+        self.game.soundUtil.LoadSound('gasp.wav', "gasp")
+        self.game.soundUtil.PlaySound("gasp")
         self.game.hud.add_visitor_killed()
         self.game.current_map.num_visitors -= 1
         self.game.current_map.add_splat(self.x, self.y)

@@ -50,3 +50,5 @@ class Taz(Player):
             for collision in collisions:
                 collision.attacked(self)
         
+        self.game.soundUtil.LoadSound('taz.wav', "player")
+        self.game.soundUtil.PlaySound("player")

@@ -59,4 +59,7 @@ class Dingo(Player):
         if collisions is not None:
             for collision in collisions:
                 collision.attacked(self)
+                
+        self.game.soundUtil.LoadSound('dingo.wav', "player")
+        self.game.soundUtil.PlaySound("player")
         

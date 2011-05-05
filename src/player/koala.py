@@ -60,6 +60,9 @@ class Koala(Player):
         if collisions is not None:
             for collision in collisions:
                 collision.attacked(self)
+                
+        self.game.soundUtil.LoadSound('wildcat.wav', "player")
+        self.game.soundUtil.PlaySound("player")
     
     def move(self, x_change, y_change):
         if not self.isInTree:
