@@ -54,6 +54,9 @@ a,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,w,
  , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , ,3, , ,A, , , , , , , , , , , , , , , , , 
  , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , 
 
+visitors
+zookeepers
+animals
 link 11,0 jail.txt 6,13
 link 12,0 jail.txt 7,13
 link 57,15 reptileland.txt 1,4

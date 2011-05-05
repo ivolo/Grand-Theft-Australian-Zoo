@@ -87,7 +87,6 @@ class Car(GameObject):
         if collisions is not None:
             for collision in collisions:
                 if collision is not self:
-                    new_damage = 1
                     collision.ranOver(self)
         
         self.damage += new_damage
@@ -201,22 +200,22 @@ class Car(GameObject):
     def handle_input(self):
         keys = pygame.key.get_pressed()
         
-        if(keys[K_s]):
+        if(keys[K_s] or keys[K_DOWN]):
             self.forward_acceleration = min(self.max_forward_acceleration, self.forward_acceleration + .1)
         elif self.forward_acceleration > 0:
             self.forward_acceleration = max(0, self.forward_acceleration - .05)
     
-        if(keys[K_w]):
+        if(keys[K_w] or keys[K_UP]):
             self.forward_acceleration = max(-self.max_forward_acceleration, self.forward_acceleration - .1)
         elif self.forward_acceleration < 0:
             self.forward_acceleration = min(0, self.forward_acceleration + .05)
         
-        if(keys[K_a]):
+        if(keys[K_a] or keys[K_LEFT]):
             self.side_acceleration = max(-self.max_side_acceleration, self.side_acceleration - .1)
         elif self.side_acceleration < 0:
             self.side_acceleration = min(0, self.side_acceleration + .05)
            
-        if(keys[K_d]):
+        if(keys[K_d] or keys[K_RIGHT]):
             self.side_acceleration = min(self.max_side_acceleration, self.side_acceleration + .1)
         elif self.side_acceleration > 0:
             self.side_acceleration = max(0, self.side_acceleration - .05)
