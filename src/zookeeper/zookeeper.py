@@ -18,6 +18,7 @@ class Zookeeper(GameObject):
         super(Zookeeper, self).__init__(image, (x*tile_size,y*tile_size), game)
         self.speed = 1
         self.game.current_map.num_zookeepers += 1
+        self.tracking_player = False
     
     def update(self):
         if self.shouldRemove:
@@ -43,6 +44,13 @@ class Zookeeper(GameObject):
             
             if self.rect.colliderect(rectangle):
                 self.game.reset()
+            
+            if not self.tracking_player:
+                self.tracking_player = True
+                self.game.soundUtil.LoadSound('zookeeper.wav', "player")
+                self.game.soundUtil.PlaySound("player")
+        else:
+            self.tracking_layer = False
 
     def move(self, x_change, y_change):
         if (check_collision(self, self.game.current_map.game_objects) or 
