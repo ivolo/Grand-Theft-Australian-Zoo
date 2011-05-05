@@ -46,6 +46,7 @@ tiles = { '' : (os.path.join("tiles","grass.png"), FloorTile),
           'P': (os.path.join("tiles","path.png"), FloorTile),
           
           '_': (os.path.join("tiles","indoor_floor.png"), FloorTile),
+          '-': (os.path.join("tiles","indoor_floor.png"), VisitorTile),
         }
 
 # The dictionary describing sprites (non-Player)
