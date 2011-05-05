@@ -15,6 +15,8 @@ class Player(GameObject):
     def __init__(self, game, x, y, image, attack_image, unselected_images, rect, speed, attack_length, attack_delay):
         super(Player, self).__init__(image, (x*tile_size,y*tile_size), game)
         
+        self.isInTree = False
+        
         self.screen = game.screen
         self.rect = self.image.get_rect()
         self.speed = 1
@@ -44,6 +46,8 @@ class Player(GameObject):
         
         self.inUse = False
         self.game.player_group.add(self)
+        if self.game.current_map is not None:
+            self.game.current_map.num_animals += 1
         
         self.left_offset = 5
         self.top_offset = 5

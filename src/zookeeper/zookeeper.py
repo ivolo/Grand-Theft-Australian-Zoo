@@ -20,7 +20,13 @@ class Zookeeper(GameObject):
         self.game.current_map.num_zookeepers += 1
     
     def update(self):
-        player = self.game.player       
+        if self.shouldRemove:
+            self.die()
+        
+        player = self.game.player
+        if player.isInTree:
+            return
+        
         if player.isInCar:
             if get_distance(self, player.car) <= 100:
                 # move away
@@ -37,9 +43,6 @@ class Zookeeper(GameObject):
             
             if self.rect.colliderect(rectangle):
                 self.game.reset()
-            
-        if self.shouldRemove:
-            self.die()
 
     def move(self, x_change, y_change):
         if (check_collision(self, self.game.current_map.game_objects) or 

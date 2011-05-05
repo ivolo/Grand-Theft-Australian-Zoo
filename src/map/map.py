@@ -17,6 +17,7 @@ from visitor.splat import Splat
 from cutscene import Cutscene
 from utils import image_util
 from koalaDoorEvent import KoalaDoorEvent
+from game_variables import animals_freed
 
 class Map:
     tile_size = 32   
@@ -48,9 +49,11 @@ class Map:
         self.num_visitors = 0
         self.max_visitors = 50
         
-        self.zookeeper_spawn_rate= 1000
         self.num_zookeepers = 0
         self.max_zookeepers = 5
+        
+        self.num_animals = 0
+        self.max_animals = 20
         
         self.first_visible_x = 0
         self.last_visible_x = 0
@@ -62,12 +65,17 @@ class Map:
         
         self.start_cutscenes = []
         self.played_cutscenes = dict()
+
+        self.shouldCreateVisitors = False
+        self.shouldCreateZookeepers = False
+        self.shouldCreateAnimals = False
         
         self.press_enter = image_util.load_sliced_sprites(210, 80, os.path.join("cutscenes","press_enter.png"))
 
     def intialize(self):
         file = open(self.fullname, 'r')
         self.load_map(file)
+        self.randomize_people()
 
     def fire_tile(self, index, source):
         if index in self.events:
@@ -95,33 +103,62 @@ class Map:
                (y >= self.first_visible_y and y <= self.last_visible_y):
                 obj.update()
         
+        
+        
         self.first_visible_x = (self.game.player.x - (self.game.map_screen.get_width()/2))/32
         self.last_visible_x = (self.game.player.x + (self.game.map_screen.get_width()/2))/32
         self.first_visible_y = (self.game.player.y - (self.game.map_screen.get_height()/2))/32
         self.last_visible_y = (self.game.player.y + (self.game.map_screen.get_height()/2))/32 
+            
+        if self.shouldCreateAnimals:
+            if self.num_animals < self.max_animals:
+                x = random.randint(0,self.tiles_wide-1);
+                y = random.randint(0,self.tiles_high-1);
+                if (x < self.first_visible_x or x > self.last_visible_x) and (y < self.first_visible_y or y >self. last_visible_y):
+                    if self.tiles[y*self.tiles_wide + x].walkable:
+                        pick = random.randint(0,4)
+                        animal = None
+                        if pick is 0:
+                            animal = TileFactory.generateSprite("K", x, y, self.game);
+                        elif pick is 1:
+                            animal = TileFactory.generateSprite("T", x, y, self.game);
+                        elif pick is 2:
+                            animal = TileFactory.generateSprite("BS", x, y, self.game);
+                        elif pick is 3:
+                            animal = TileFactory.generateSprite("A", x, y, self.game);
+                        elif pick is 4:
+                            animal = TileFactory.generateSprite("D", x, y, self.game);
+                        #elif pick is 5:
+                        #    animal = TileFactory.generateSprite("P", x, y, self.game);
+                               
+                        if animal is not None: 
+                            self.game_objects.add(animal)
+                            animal.move(0,1)
         
-        if self.num_visitors < self.max_visitors:
-            x = random.randint(0,self.tiles_wide-1);
-            y = random.randint(0,self.tiles_high-1);
-            if (x < self.first_visible_x or x > self.last_visible_x) and (y < self.first_visible_y or y >self. last_visible_y):
-                if isinstance(self.tiles[y*self.tiles_wide + x], VisitorTile):
-                    pick = random.randint(0,2)
-                    visitor = None
-                    if pick is 0:
-                        visitor = TileFactory.generateSprite("V", x, y, self.game);
-                    elif pick is 1:
-                        visitor = TileFactory.generateSprite("V2", x, y, self.game);
-                    else:
-                        visitor = TileFactory.generateSprite("V3", x, y, self.game);
-                    self.game_objects.add(visitor)
-                  
-        if self.num_zookeepers < self.max_zookeepers:
-            x = random.randint(0,self.tiles_wide-1);
-            y = random.randint(0,self.tiles_high-1);
-            if (x < self.first_visible_x or x > self.last_visible_x) and (y < self.first_visible_y or y > self.last_visible_y):
-                if isinstance(self.tiles[y*self.tiles_wide + x], VisitorTile):
-                    zookeeper = TileFactory.generateSprite("Z", x, y, self.game);
-                    self.game_objects.add(zookeeper)
+        if self.shouldCreateVisitors:
+            if self.num_visitors < self.max_visitors:
+                x = random.randint(0,self.tiles_wide-1);
+                y = random.randint(0,self.tiles_high-1);
+                if (x < self.first_visible_x or x > self.last_visible_x) and (y < self.first_visible_y or y >self. last_visible_y):
+                    if isinstance(self.tiles[y*self.tiles_wide + x], VisitorTile):
+                        pick = random.randint(0,2)
+                        visitor = None
+                        if pick is 0:
+                            visitor = TileFactory.generateSprite("V", x, y, self.game);
+                        elif pick is 1:
+                            visitor = TileFactory.generateSprite("V2", x, y, self.game);
+                        else:
+                            visitor = TileFactory.generateSprite("V3", x, y, self.game);
+                        self.game_objects.add(visitor)
+                      
+        if self.shouldCreateZookeepers:
+            if self.num_zookeepers < self.max_zookeepers:
+                x = random.randint(0,self.tiles_wide-1);
+                y = random.randint(0,self.tiles_high-1);
+                if (x < self.first_visible_x or x > self.last_visible_x) and (y < self.first_visible_y or y > self.last_visible_y):
+                    if isinstance(self.tiles[y*self.tiles_wide + x], VisitorTile):
+                        zookeeper = TileFactory.generateSprite("Z", x, y, self.game);
+                        self.game_objects.add(zookeeper)
             
     def draw_tiles(self):
         for tile in self.tiles:
@@ -143,6 +180,73 @@ class Map:
             if (x + obj.image.get_width()/32 >= self.first_visible_x and x <= self.last_visible_x) and \
                (y + obj.image.get_height()/32 >= self.first_visible_y and y <= self.last_visible_y):
                 obj.draw()
+    
+    def randomize_people(self):
+        if self.shouldCreateVisitors:
+            for i in xrange(self.max_visitors * 3):
+                if self.num_visitors >= self.max_visitors:
+                    break;
+                x = random.randint(0,self.tiles_wide-1);
+                y = random.randint(0,self.tiles_high-1);
+                if isinstance(self.tiles[y*self.tiles_wide + x], VisitorTile):
+                    pick = random.randint(0,2)
+                    visitor = None
+                    if pick is 0:
+                        visitor = TileFactory.generateSprite("V", x, y, self.game);
+                    elif pick is 1:
+                        visitor = TileFactory.generateSprite("V2", x, y, self.game);
+                    else:
+                        visitor = TileFactory.generateSprite("V3", x, y, self.game);
+                    self.game_objects.add(visitor)
+                  
+        if self.shouldCreateZookeepers:
+            for i in xrange(self.max_zookeepers * 3):
+                if self.num_visitors >= self.max_zookeepers:
+                    break;
+                x = random.randint(0,self.tiles_wide-1);
+                y = random.randint(0,self.tiles_high-1);
+                if isinstance(self.tiles[y*self.tiles_wide + x], VisitorTile):
+                    zookeeper = TileFactory.generateSprite("Z", x, y, self.game);
+                    self.game_objects.add(zookeeper)
+        
+        if self.shouldCreateAnimals:
+            for i in xrange(self.max_animals):        
+                if self.num_animals >= self.max_animals:
+                    break;
+                x = random.randint(0,self.tiles_wide-1);
+                y = random.randint(0,self.tiles_high-1);
+                if (x < self.first_visible_x or x > self.last_visible_x) and (y < self.first_visible_y or y >self. last_visible_y):
+                    if self.tiles[y*self.tiles_wide + x].walkable:
+                        pick = random.randint(0,4)
+                        animal = None
+                        if pick is 0:
+                            animal = TileFactory.generateSprite("K", x, y, self.game);
+                        elif pick is 1:
+                            animal = TileFactory.generateSprite("T", x, y, self.game);
+                        elif pick is 2:
+                            animal = TileFactory.generateSprite("BS", x, y, self.game);
+                        elif pick is 3:
+                            animal = TileFactory.generateSprite("A", x, y, self.game);
+                        elif pick is 4:
+                            animal = TileFactory.generateSprite("D", x, y, self.game);
+                        #elif pick is 5:
+                        #    animal = TileFactory.generateSprite("P", x, y, self.game);            
+                           
+                    if animal is not None: 
+                        self.game_objects.add(animal)
+                        animal.move(0,1)
+    
+    def remove_people(self):
+        for obj in self.game_objects:
+            if isinstance(obj, Visitor) or isinstance(obj, Zookeeper) or isinstance(obj,Player):
+                self.game_objects.remove(obj)
+    
+    def reset(self):
+        self.remove_people()
+        self.num_visitors = 0
+        self.num_zookeepers = 0
+        self.num_animals = 0
+        self.randomize_people()
     
     # Load the map from the text file
     # Maps are comma separated value files
@@ -241,6 +345,12 @@ class Map:
             elif command[0] == 'koaladoor':
                 coords = command[1].split(',')
                 self.events[int(coords[1])*self.tiles_wide+int(coords[0])] = KoalaDoorEvent(int(coords[0]), int(coords[1]), self.game)
+            elif command[0] == 'visitors\n':
+                self.shouldCreateVisitors = True
+            elif command[0] == 'zookeepers\n':
+                self.shouldCreateZookeepers = True
+            elif command[0] == 'animals\n':
+                self.shouldCreateAnimals = True
   
             index += 1
             

@@ -86,6 +86,7 @@ class Game:
         
         if file in self.loaded_maps:
             self.current_map = self.loaded_maps[file]
+            self.current_map.reset()
         else:
             self.current_map = Map(file, self.screen, self)
             self.loaded_maps[file] = self.current_map
@@ -117,6 +118,8 @@ class Game:
             self.player.left_offset = self.player.normal_left_offset
             self.player.top_offset = self.player.normal_top_offset
             self.player.isInTree = False
+            self.player.x = TILE_SIZE
+            self.player.y = TILE_SIZE
     
     def change_player(self, newPlayer):
         self.player.inUse = False
