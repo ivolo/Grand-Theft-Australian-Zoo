@@ -21,6 +21,7 @@ from menus.pauseScreen import PauseScreen, CONTINUE, MAIN_MENU
 from car.imperviousCar import ImperviousCar
 from car.car import Car
 from player.koala import Koala
+from utils.sound_util import SoundUtil
 
 class Game:
     
@@ -35,6 +36,9 @@ class Game:
         #pygame.display.set_icon(pygame.image.load(os.path.join("images", "ui","icon.png")))
         pygame.display.set_caption("Grand Theft Australian Zoo")
         pygame.mouse.set_visible(1);        
+        
+        self.soundUtil = SoundUtil()
+        self.soundUtil.sound_on = True
         
         self.pauseMenu = PauseScreen(self)
         
