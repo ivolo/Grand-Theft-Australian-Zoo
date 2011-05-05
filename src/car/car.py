@@ -90,7 +90,61 @@ class Car(GameObject):
                     collision.ranOver(self)
         
         self.damage += new_damage
+    
+    def fix_me(self):
+        if not (check_collision(self, self.game.current_map.not_player) or 
+                check_collision(self, self.game.current_map.unwalkable_tiles)):
+            return
         
+        old_x = self.x
+        old_y = self.y
+        
+        radius = 1
+        amt = TILE_SIZE/32
+        
+        while(True):
+            self.x = old_x + radius * amt
+            self.y = old_y
+            self.rect.top = self.y + self.top_offset
+            self.rect.left = self.x + self.left_offset
+            if self.rect.left >= 0 and self.rect.left + self.rect.width < self.game.current_map.width and \
+                self.rect.top >= 0 and self.rect.top + self.rect.height < self.game.current_map.height:
+                if not (check_collision(self, self.game.current_map.not_player) or 
+                        check_collision(self, self.game.current_map.unwalkable_tiles)):
+                    return
+            
+            self.x = old_x
+            self.y = old_y + radius * amt
+            self.rect.top = self.y + self.top_offset
+            self.rect.left = self.x + self.left_offset
+            if self.rect.left >= 0 and self.rect.left + self.rect.width < self.game.current_map.width and \
+                self.rect.top >= 0 and self.rect.top + self.rect.height < self.game.current_map.height:
+                if not (check_collision(self, self.game.current_map.not_player) or 
+                        check_collision(self, self.game.current_map.unwalkable_tiles)):
+                    return
+            
+            self.x = old_x - radius * amt
+            self.y = old_y
+            self.rect.top = self.y + self.top_offset
+            self.rect.left = self.x + self.left_offset
+            if self.rect.left >= 0 and self.rect.left + self.rect.width < self.game.current_map.width and \
+                self.rect.top >= 0 and self.rect.top + self.rect.height < self.game.current_map.height:
+                if not (check_collision(self, self.game.current_map.not_player) or 
+                        check_collision(self, self.game.current_map.unwalkable_tiles)):
+                    return
+            
+            self.x = old_x
+            self.y = old_y - radius * amt
+            self.rect.top = self.y + self.top_offset
+            self.rect.left = self.x + self.left_offset
+            if self.rect.left >= 0 and self.rect.left + self.rect.width < self.game.current_map.width and \
+                self.rect.top >= 0 and self.rect.top + self.rect.height < self.game.current_map.height:
+                if not (check_collision(self, self.game.current_map.not_player) or 
+                        check_collision(self, self.game.current_map.unwalkable_tiles)):
+                    return
+            
+            radius += 1
+    
     def ranOver(self, source):
         self.damage += 1
         

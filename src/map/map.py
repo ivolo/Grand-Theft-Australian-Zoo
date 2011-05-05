@@ -38,6 +38,7 @@ class Map:
         self.unswimmable_and_unwalkable_tiles = pygame.sprite.Group()
         self.unjumpable_tiles = pygame.sprite.Group()
         self.high_level = pygame.sprite.Group()
+        self.not_player = pygame.sprite.Group()
         self.loaded_cutscenes = dict()
         
         self.screen=screen
@@ -118,15 +119,15 @@ class Map:
                     if self.tiles[y*self.tiles_wide + x].walkable:
                         pick = random.randint(0,4)
                         animal = None
-                        if pick is 0:
+                        if pick is 0 and "Kangaroo" in animals_freed:
                             animal = TileFactory.generateSprite("K", x, y, self.game);
-                        elif pick is 1:
+                        elif pick is 1 and "Tasmanian Devil" in animals_freed:
                             animal = TileFactory.generateSprite("T", x, y, self.game);
-                        elif pick is 2:
+                        elif pick is 2 and "Brown Snake" in animals_freed:
                             animal = TileFactory.generateSprite("BS", x, y, self.game);
-                        elif pick is 3:
+                        elif pick is 3 and "Koala" in animals_freed:
                             animal = TileFactory.generateSprite("A", x, y, self.game);
-                        elif pick is 4:
+                        elif pick is 4 and "Dingo" in animals_freed:
                             animal = TileFactory.generateSprite("D", x, y, self.game);
                         #elif pick is 5:
                         #    animal = TileFactory.generateSprite("P", x, y, self.game);
@@ -219,27 +220,30 @@ class Map:
                     if self.tiles[y*self.tiles_wide + x].walkable:
                         pick = random.randint(0,4)
                         animal = None
-                        if pick is 0:
+                        if pick is 0 and "Kangaroo" in animals_freed:
                             animal = TileFactory.generateSprite("K", x, y, self.game);
-                        elif pick is 1:
+                        elif pick is 1 and "Tasmanian Devil" in animals_freed:
                             animal = TileFactory.generateSprite("T", x, y, self.game);
-                        elif pick is 2:
+                        elif pick is 2 and "Brown Snake" in animals_freed:
                             animal = TileFactory.generateSprite("BS", x, y, self.game);
-                        elif pick is 3:
+                        elif pick is 3 and "Koala" in animals_freed:
                             animal = TileFactory.generateSprite("A", x, y, self.game);
-                        elif pick is 4:
+                        elif pick is 4 and "Dingo" in animals_freed:
                             animal = TileFactory.generateSprite("D", x, y, self.game);
                         #elif pick is 5:
                         #    animal = TileFactory.generateSprite("P", x, y, self.game);            
                            
-                    if animal is not None: 
-                        self.game_objects.add(animal)
-                        animal.move(0,1)
+                        if animal is not None: 
+                            self.game_objects.add(animal)
+                            animal.move(0,1)
     
     def remove_people(self):
         for obj in self.game_objects:
             if isinstance(obj, Visitor) or isinstance(obj, Zookeeper) or isinstance(obj,Player):
                 self.game_objects.remove(obj)
+        for obj in self.not_player:
+            if isinstance(obj, Visitor) or isinstance(obj, Zookeeper) or isinstance(obj,Player):
+                self.not_player.remove(obj)
     
     def reset(self):
         self.remove_people()
@@ -303,7 +307,8 @@ class Map:
             for key in line_tiles:
                 if key is not None and key is not '':
                     object = TileFactory.generateSprite(key,x,y - index,self.game)
-                    #if not isinstance(object, Player):
+                    if not isinstance(object, Player):
+                        self.not_player.add( object )
                     self.game_objects.add( object )
                 x += 1
         

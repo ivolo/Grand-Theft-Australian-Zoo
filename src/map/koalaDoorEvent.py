@@ -11,3 +11,4 @@ class KoalaDoorEvent:
     def fire(self, source):
         if source is self.game.player and isinstance(source, Koala):
             self.door.end(source)
+            self.game.free_animal("Brown Snake")

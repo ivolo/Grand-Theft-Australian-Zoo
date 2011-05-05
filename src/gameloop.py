@@ -48,7 +48,7 @@ class Game:
         self.hud = Hud(self)
         
         self.player_group = Group()
-        self.player = Koala(image_util.load_image("koala.png"), 1, 1, self)
+        self.player = Taz(image_util.load_image("tasmanian.png"), 1, 1, self)
         self.player.inUse = True
         self.player.current_image = self.player.image
         
@@ -60,7 +60,7 @@ class Game:
         for key in pygame.key.get_pressed():
             self.pressed.append( True )
             
-        self.loadLevel("reptileland.txt")
+        self.loadLevel("jail.txt")
         
         self.returnToMainMenu = False
         

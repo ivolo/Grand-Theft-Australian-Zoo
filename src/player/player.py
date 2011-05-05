@@ -16,6 +16,7 @@ class Player(GameObject):
         super(Player, self).__init__(image, (x*tile_size,y*tile_size), game)
         
         self.isInTree = False
+        self.car = None
         
         self.screen = game.screen
         self.rect = self.image.get_rect()
