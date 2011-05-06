@@ -118,6 +118,8 @@ sprites = { 'V' : (os.path.join("tourist.png"), Visitor),
             'RB1' : (os.path.join("reptilehouse_base_1.png"), Building),
             'RB2' : (os.path.join("reptilehouse_base_2.png"), Building),
             
+            'ZKH' : (os.path.join("zookeeper_hut.png"), Building),
+            
             '|' : (os.path.join("tree.png"), Tree)}
 
 loaded_sprites = {}
