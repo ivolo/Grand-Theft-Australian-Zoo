@@ -78,7 +78,8 @@ class Map:
     def intialize(self):
         file = open(self.fullname, 'r')
         self.load_map(file)
-        self.randomize_people()
+        if self.shouldCreateAnimals or self.shouldCreateVisitors or self.shouldCreateZookeepers:
+            self.randomize_people()
 
     def fire_tile(self, index, source):
         if index in self.events:
@@ -244,11 +245,12 @@ class Map:
                 self.not_player.remove(obj)
     
     def reset(self):
-        self.remove_people()
-        self.num_visitors = 0
-        self.num_zookeepers = 0
-        self.num_animals = 0
-        self.randomize_people()
+        if self.shouldCreateAnimals or self.shouldCreateVisitors or self.shouldCreateZookeepers:
+            self.remove_people()
+            self.num_visitors = 0
+            self.num_zookeepers = 0
+            self.num_animals = 0
+            self.randomize_people()
     
     # Load the map from the text file
     # Maps are comma separated value files
