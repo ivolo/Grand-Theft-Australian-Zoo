@@ -32,7 +32,6 @@ class Game:
     
     
     def __init__(self, screen):
-        print "New screen created!"
         self.screen = screen
         self.map_screen = self.screen.subsurface(0, 0, MAP_WIDTH, MAP_HEIGHT)
         #pygame.display.set_icon(pygame.image.load(os.path.join("images", "ui","icon.png")))

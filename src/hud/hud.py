@@ -82,7 +82,6 @@ class Hud:
                 x = x_start
                 
         if self.game.hasKey:
-            print "drawing"
             self.screen.blit(self.key_image, (self.x + x_start + TILE_SIZE * 2, self.y + y_start + TILE_SIZE * 1))
             
             

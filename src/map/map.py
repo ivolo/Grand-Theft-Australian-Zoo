@@ -22,6 +22,7 @@ from dingoDoorEvent import DingoDoorEvent
 from snakeLinkEvent import SnakeLinkEvent
 from gameOverEvent import GameOverEvent
 from pushbackLinkEvent import PushbackLinkEvent
+from specialObject.highStrongFence import HighStrongFence
 
 class Map:
     tile_size = 32   
@@ -258,6 +259,10 @@ class Map:
         if self.shouldCreateZookeepers:
             self.num_zookeepers = 0    
         self.randomize_people()
+        for obj in self.game_objects:
+            if isinstance(obj, HighStrongFence):
+                self.game_objects.remove(obj)
+                self.not_player.remove(obj)
     
     # Load the map from the text file
     # Maps are comma separated value files
