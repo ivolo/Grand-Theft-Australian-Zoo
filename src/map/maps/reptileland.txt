@@ -59,9 +59,9 @@ zookeepers
 animals
 link 39,9 reptilehouse.txt 2,6
 link 40,12 reptilehouse.txt 8,13
-link 0,4 koala.txt 57,15
-link 0,5 koala.txt 57,16
-link 0,6 koala.txt 57,17
+link 0,4 koala.txt 55,15
+link 0,5 koala.txt 55,16
+link 0,6 koala.txt 55,17
 link 32,26 zookeeperland.txt 51,1
 link 33,26 zookeeperland.txt 52,1
 link 34,26 zookeeperland.txt 52,1

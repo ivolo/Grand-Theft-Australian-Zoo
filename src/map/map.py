@@ -236,21 +236,26 @@ class Map:
                             self.game_objects.add(animal)
                             animal.move(0,1)
     
-    def remove_people(self):
+    def remove_stuff(self):
         for obj in self.game_objects:
-            if isinstance(obj, Visitor) or isinstance(obj, Zookeeper) or isinstance(obj,Player):
+            if (self.shouldCreateVisitors and isinstance(obj, Visitor)) \
+                or (self.shouldCreateZookeepers and isinstance(obj, Zookeeper)) \
+                or (self.shouldCreateAnimals and isinstance(obj,Player) and (obj is not self.game.player)):
                 self.game_objects.remove(obj)
         for obj in self.not_player:
-            if isinstance(obj, Visitor) or isinstance(obj, Zookeeper) or isinstance(obj,Player):
+            if (self.shouldCreateVisitors and isinstance(obj, Visitor)) \
+                or (self.shouldCreateZookeepers and isinstance(obj, Zookeeper)):
                 self.not_player.remove(obj)
     
     def reset(self):
-        if self.shouldCreateAnimals or self.shouldCreateVisitors or self.shouldCreateZookeepers:
-            self.remove_people()
-            self.num_visitors = 0
-            self.num_zookeepers = 0
+        self.remove_stuff()
+        if self.shouldCreateAnimals:
             self.num_animals = 0
-            self.randomize_people()
+        if self.shouldCreateVisitors:
+            self.num_visitors = 0
+        if self.shouldCreateZookeepers:
+            self.num_zookeepers = 0    
+        self.randomize_people()
     
     # Load the map from the text file
     # Maps are comma separated value files
