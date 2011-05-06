@@ -53,11 +53,14 @@ class Game:
         self.hud = Hud(self)
         
         self.player_group = Group()
-        self.player = Snake(image_util.load_image("snake.png"), 1, 1, self)
+        self.player = Taz(image_util.load_image("tasmanian.png"), 1, 1, self)
         self.player.inUse = True
         self.player.current_image = self.player.image
         
         self.hud.set_player(self.player)
+        
+        self.last_rendered_achievement = 0
+        self.achievement_countdown = 0
         
         self.clock = pygame.time.Clock()
         
@@ -65,7 +68,7 @@ class Game:
         for key in pygame.key.get_pressed():
             self.pressed.append( True )
             
-        self.loadLevel("zookeeper_hut.txt")
+        self.loadLevel("reptileland.txt")
         
         self.returnToMainMenu = False
         
@@ -148,6 +151,30 @@ class Game:
             self.get_input()
             self.update_state()
             self.draw()
+            
+    def achievement(self):
+        killed = self.hud.visitors_killed
+        if killed == 1000 and not killed == self.last_rendered_achievement:
+            self.last_rendered_achievement = killed
+            self.achievement_image = image_util.load_image("achievement_1000.png")
+            self.achievement_countdown = 200
+        elif killed == 500 and not killed == self.last_rendered_achievement:
+            self.last_rendered_achievement = killed
+            self.achievement_image = image_util.load_image("achievement_500.png")
+            self.achievement_countdown = 200
+        elif killed == 100 and not killed == self.last_rendered_achievement:
+            self.last_rendered_achievement = killed
+            self.achievement_image = image_util.load_image("achievement_100.png")
+            self.achievement_countdown = 200
+        elif killed == 10 and not killed == self.last_rendered_achievement:
+            self.last_rendered_achievement = killed
+            self.achievement_image = image_util.load_image("achievement_10.png")
+            self.achievement_countdown = 200
+        
+        
+        if self.achievement_countdown > 0:
+            self.screen.blit(self.achievement_image, (250,100))
+            self.achievement_countdown -= 1
     
     def get_input(self):
         self.getEvents()
@@ -247,6 +274,16 @@ class Game:
                 self.player.move(1, 0)
         else:
             self.pressed[K_RIGHT] = False
+        
+        if(keys[K_o]):
+            if not self.pressed[K_o]:
+                self.pressed[K_o] = True
+                if self.soundUtil.sound_on:
+                    self.soundUtil.sound_on = False
+                else:
+                    self.soundUtil.sound_on = True
+        else:
+            self.pressed[K_o] = False
             
             
     def update_state(self):
@@ -265,6 +302,7 @@ class Game:
         #for p in self.player_group:
         #    p.draw()
         self.player.draw()
+        self.achievement()
     
     def draw(self):
         self.draw_without_flip()
