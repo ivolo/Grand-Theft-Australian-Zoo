@@ -21,9 +21,9 @@ class PushbackLinkEvent(MapEvent):
             if len(animals_freed) == 5:
                 self.game.change_maps(self.dest, self.dest_x, self.dest_y)
             else:
-                self.player.y -= TILE_SIZE
-                self.player.rect.top = self.player.y - self.player.top_offset
+                self.game.player.y -= TILE_SIZE
+                self.game.player.rect.top = self.game.player.y - self.game.player.top_offset
                 dialog = DialogEvent("You cannot leave until you've freed all the animals!", self.game)
-                dialog.fire()
+                dialog.fire(source)
             return False
         return True

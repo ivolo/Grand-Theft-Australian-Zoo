@@ -5,6 +5,7 @@ from pygame.locals import *
 from player.player import Player
 
 from mapEvent import MapEvent
+from car.car import Car
 
 class DialogEvent(MapEvent):
     
@@ -18,11 +19,11 @@ class DialogEvent(MapEvent):
     def fire(self, source):
         
         # Sorta hacky, doesn't really reset player's move
-        if pygame.time.get_ticks() - self.prev < 1500:
-            return
+        #if pygame.time.get_ticks() - self.prev < 1500:
+        #    return
         
         # Pause while player reads
-        if isinstance(source, Player):
+        if isinstance(source, Player) or isinstance(source, Car):
             dialog = self.create_dialog()
             self.game.map_screen.blit(dialog, ((self.game.map_screen.get_width() - dialog.get_width()) / 2, 
                                                              (self.game.map_screen.get_height() - dialog.get_height()) / 2))
