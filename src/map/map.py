@@ -20,6 +20,7 @@ from koalaDoorEvent import KoalaDoorEvent
 from game_variables import animals_freed
 from dingoDoorEvent import DingoDoorEvent
 from snakeLinkEvent import SnakeLinkEvent
+from pushbackLinkEvent import PushbackLinkEvent
 
 class Map:
     tile_size = 32   
@@ -363,6 +364,11 @@ class Map:
                 end_map = command[2]
                 end_coords = command[3].split(',')
                 self.events[int(start_coords[1])*self.tiles_wide+int(start_coords[0])] = SnakeLinkEvent(start_coords, end_coords, end_map, self.game)
+            elif command[0] == 'pushbacklink':
+                start_coords = command[1].split(',')
+                end_map = command[2]
+                end_coords = command[3].split(',')
+                self.events[int(start_coords[1])*self.tiles_wide+int(start_coords[0])] = PushbackLinkEvent(start_coords, end_coords, end_map, self.game)
             elif command[0] == 'visitors\n':
                 self.shouldCreateVisitors = True
             elif command[0] == 'zookeepers\n':

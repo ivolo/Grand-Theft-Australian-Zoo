@@ -141,6 +141,13 @@ class Game:
         self.player.current_image = self.player.image
         self.hud.set_player(self.player)
     
+    def free_all_animals(self):
+        self.free_animal("Koala")
+        self.free_animal("Tasmanian Devil")
+        self.free_animal("Kangaroo")
+        self.free_animal("Brown Snake")
+        self.free_animal("Dingo")
+    
     def free_animal(self, animal_name):
         animals_freed[animal_name] = image_util.load_image(animal_info.info[animal_name][3])
         self.hud.draw()
@@ -225,6 +232,14 @@ class Game:
                 self.player.use_ability()
         else:
             self.pressed[K_RETURN] = False
+            
+        # use ability
+        if(keys[K_F1]):
+            if not self.pressed[K_F1]:
+                self.pressed[K_F1] = True
+                self.free_all_animals()
+        else:
+            self.pressed[K_F1] = False
     
         # get into and out of car
         if(keys[K_q]):
