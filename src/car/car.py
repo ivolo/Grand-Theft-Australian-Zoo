@@ -11,6 +11,8 @@ from utils.sprite_util import check_collision
 from utils import image_util
 from game_constants.client import *
 from map.linkEvent import LinkEvent
+from visitor.visitor import Visitor
+from zookeeper.zookeeper import Zookeeper
 
 tile_size = 32
 
@@ -82,6 +84,7 @@ class Car(GameObject):
         if (check_collision(self, self.game.current_map.unwalkable_tiles)):
             new_damage = .1
             self.rect = old_rect
+            self.side_speed = -self.side_speed
             
         old_rect = self.rect
         delta_y = y_change * self.speed
@@ -89,6 +92,7 @@ class Car(GameObject):
         if (check_collision(self, self.game.current_map.unwalkable_tiles)):
             new_damage = .1
             self.rect = old_rect
+            self.forward_speed = -self.forward_speed
             
         self.x = self.rect.left - self.left_offset
         self.y = self.rect.top - self.top_offset
@@ -130,7 +134,8 @@ class Car(GameObject):
                 self.rect.top >= 0 and self.rect.top + self.rect.height < self.game.current_map.height:
                 if not (check_collision(self, self.game.current_map.not_player) or 
                         check_collision(self, self.game.current_map.unwalkable_tiles)):
-                    self.side_speed = -self.side_speed
+                    #self.side_speed = -self.side_speed
+                    #self.side_acceleration = -self.side_acceleration
                     return
             
             self.x = old_x
@@ -141,7 +146,8 @@ class Car(GameObject):
                 self.rect.top >= 0 and self.rect.top + self.rect.height < self.game.current_map.height:
                 if not (check_collision(self, self.game.current_map.not_player) or 
                         check_collision(self, self.game.current_map.unwalkable_tiles)):
-                    self.side_speed = -self.side_speed
+                    #self.side_speed = -self.side_speed
+                    #self.side_acceleration = -self.side_acceleration
                     return
             
             self.x = old_x - radius * amt
@@ -152,7 +158,8 @@ class Car(GameObject):
                 self.rect.top >= 0 and self.rect.top + self.rect.height < self.game.current_map.height:
                 if not (check_collision(self, self.game.current_map.not_player) or 
                         check_collision(self, self.game.current_map.unwalkable_tiles)):
-                    self.foward_speed = -self.forward_speed
+                    #self.foward_speed = -self.forward_speed
+                    #self.forward_acceleration = -self.forward_acceleration
                     return
             
             self.x = old_x
@@ -163,7 +170,8 @@ class Car(GameObject):
                 self.rect.top >= 0 and self.rect.top + self.rect.height < self.game.current_map.height:
                 if not (check_collision(self, self.game.current_map.not_player) or 
                         check_collision(self, self.game.current_map.unwalkable_tiles)):
-                    self.foward_speed = -self.forward_speed
+                    #self.foward_speed = -self.forward_speed
+                    #self.forward_acceleration = -self.forward_acceleration
                     return
             
             radius += 1
@@ -174,7 +182,11 @@ class Car(GameObject):
     def update(self):
         if self.damage >= self.health:
             if self.driver:
-                self.driver.leave_car()
+                self.driver.x = self.x
+                self.driver.y = self.y
+                self.driver.isInCar = False
+                self.driver.car = None
+                self.game.current_map.game_objects.add(self.driver)
             self.kill()
         
         if self.damage >= self.first_damage_point:

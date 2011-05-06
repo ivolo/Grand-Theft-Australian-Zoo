@@ -2,9 +2,7 @@ import pygame
 
 from game_objects.gameObject import GameObject
 from pygame import time
-from car.car import Car
 from utils.sprite_util import check_collision
-from car.imperviousCar import ImperviousCar
 from game_constants.client import TILE_SIZE
 from pygame.sprite import Sprite
 

@@ -20,6 +20,7 @@ from koalaDoorEvent import KoalaDoorEvent
 from game_variables import animals_freed
 from dingoDoorEvent import DingoDoorEvent
 from snakeLinkEvent import SnakeLinkEvent
+from gameOverEvent import GameOverEvent
 
 class Map:
     tile_size = 32   
@@ -364,6 +365,10 @@ class Map:
                 self.shouldCreateZookeepers = True
             elif command[0] == 'animals\n':
                 self.shouldCreateAnimals = True
+            elif command[0] == 'gameover':
+                start_coords = command[1].split(',')
+                self.events[int(start_coords[1])*self.tiles_wide+int(start_coords[0])] = GameOverEvent(self.game)
+ 
   
             index += 1
             

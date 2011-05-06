@@ -70,8 +70,9 @@ class Game:
         for key in pygame.key.get_pressed():
             self.pressed.append( True )
             
-        self.loadLevel("jail.txt")
+        self.loadLevel("car_chase.txt")
         
+        self.isGameOver = False
         self.returnToMainMenu = False
         
     def reset(self):
@@ -84,7 +85,7 @@ class Game:
         for key in pygame.key.get_pressed():
             self.pressed.append( False )
             
-        self.loadLevel("jail.txt")
+        self.loadLevel("car_chase.txt")
         self.player.x = TILE_SIZE
         self.player.y = TILE_SIZE
         self.player.rect.left = self.player.x + self.player.left_offset

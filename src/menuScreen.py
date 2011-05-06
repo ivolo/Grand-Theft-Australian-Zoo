@@ -112,6 +112,8 @@ class MenuScreen:
 
     def play(self):
         self.game.gameloop()
+        if self.game.isGameOver:
+            self.game = Game()
         for x in xrange(len(self.pressed)):
             self.pressed[x] = True
     
