@@ -121,6 +121,7 @@ class Car(GameObject):
         amt = TILE_SIZE/32
         
         while(True):
+            # Checks Right, Left, Top, Bottom
             self.x = old_x + radius * amt
             self.y = old_y
             self.rect.top = self.y + self.top_offset
@@ -129,6 +130,7 @@ class Car(GameObject):
                 self.rect.top >= 0 and self.rect.top + self.rect.height < self.game.current_map.height:
                 if not (check_collision(self, self.game.current_map.not_player) or 
                         check_collision(self, self.game.current_map.unwalkable_tiles)):
+                    self.side_speed = -self.side_speed
                     return
             
             self.x = old_x
@@ -139,6 +141,7 @@ class Car(GameObject):
                 self.rect.top >= 0 and self.rect.top + self.rect.height < self.game.current_map.height:
                 if not (check_collision(self, self.game.current_map.not_player) or 
                         check_collision(self, self.game.current_map.unwalkable_tiles)):
+                    self.side_speed = -self.side_speed
                     return
             
             self.x = old_x - radius * amt
@@ -149,6 +152,7 @@ class Car(GameObject):
                 self.rect.top >= 0 and self.rect.top + self.rect.height < self.game.current_map.height:
                 if not (check_collision(self, self.game.current_map.not_player) or 
                         check_collision(self, self.game.current_map.unwalkable_tiles)):
+                    self.foward_speed = -self.forward_speed
                     return
             
             self.x = old_x
@@ -159,6 +163,7 @@ class Car(GameObject):
                 self.rect.top >= 0 and self.rect.top + self.rect.height < self.game.current_map.height:
                 if not (check_collision(self, self.game.current_map.not_player) or 
                         check_collision(self, self.game.current_map.unwalkable_tiles)):
+                    self.foward_speed = -self.forward_speed
                     return
             
             radius += 1
