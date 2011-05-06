@@ -13,10 +13,9 @@ from menus.controlScreen import ControlScreen
 from menus.creditsScreen import CreditsScreen
 
 PLAY = 0
-OPTIONS = 1
-CONTROLS = 2
-QUIT = 3
-MAX_INDEX = 3
+CONTROLS = 1
+QUIT = 2
+MAX_INDEX = 2
 
 class MenuScreen:
     
@@ -28,9 +27,8 @@ class MenuScreen:
         self.index = 0
     
         self.play_rect = Rect(275,200,245,70)
-        self.options_rect = Rect(275,290,245,70)
-        self.controls_rect = Rect(275,380,245,70)
-        self.quit_rect = Rect(275,470,245,70)
+        self.controls_rect = Rect(275,290,245,70)
+        self.quit_rect = Rect(275,380,245,70)
         
         self.credits_rect = Rect(610, 530, 180, 60)
         
@@ -55,10 +53,6 @@ class MenuScreen:
                     self.index = PLAY
                     self.draw()
                     self.play()
-                elif self.options_rect.collidepoint(pos):
-                    self.index = OPTIONS
-                    self.draw()
-                    self.options()
                 elif self.controls_rect.collidepoint(pos):
                     self.index = CONTROLS
                     self.draw()
@@ -121,9 +115,6 @@ class MenuScreen:
         for x in xrange(len(self.pressed)):
             self.pressed[x] = True
     
-    def options(self):
-        pass
-    
     def controls(self):
         self.controlScreen.loop()
         for x in xrange(len(self.pressed)):
@@ -154,8 +145,6 @@ class MenuScreen:
     def select(self):
         if self.index is PLAY:
             self.play()
-        elif self.index is OPTIONS:
-            self.options()
         elif self.index is CONTROLS:
             self.controls()
         elif self.index is QUIT:
@@ -166,8 +155,6 @@ class MenuScreen:
         
         if self.index is PLAY:
             pygame.draw.rect(self.screen, (255,255,0), self.play_rect, 5)
-        elif self.index is OPTIONS:
-            pygame.draw.rect(self.screen, (255,255,0), self.options_rect, 5)
         elif self.index is CONTROLS:
             pygame.draw.rect(self.screen, (255,255,0), self.controls_rect, 5)
         elif self.index is QUIT:

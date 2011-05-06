@@ -17,6 +17,10 @@ tile_size = 32
 class Car(GameObject):
     
     def __init__(self, image, x, y, game):
+        self.init_x = x
+        self.init_y = y
+        self.init_image = None
+        
         self.images = image_util.load_sliced_sprites(32, 64, "red_car.png")
         
         super(Car, self).__init__(self.images[0], (x*tile_size,y*tile_size), game)
@@ -52,6 +56,9 @@ class Car(GameObject):
         self.third_damage_point = 25
         self.drag = 0.2
         
+    def newCar(self):
+        return Car(self.init_image, self.init_x, self.init_y, self.game)
+    
     def inCar(self, source):
         self.driver = source
         self.driving = True
@@ -160,7 +167,7 @@ class Car(GameObject):
                     return
             
             radius += 1
-        
+
     def ranOver(self, source):
         self.damage += 1
         
@@ -235,6 +242,13 @@ class Car(GameObject):
         self.rect.left += self.x
         
         self.move(self.side_speed, self.forward_speed)
+        
+        collisions = pygame.sprite.spritecollide(self, self.game.current_map.game_objects, False)
+        self.fix_me()
+        if collisions is not None:
+            for collision in collisions:
+                if collision is not self:
+                    collision.ranOver(self)
         
         self.fire_tiles()
         

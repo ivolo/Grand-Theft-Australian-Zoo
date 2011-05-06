@@ -25,6 +25,7 @@ from player.koala import Koala
 from player.taz import Taz
 from player.dingo import Dingo
 from utils.sound_util import SoundUtil
+from map.cutscene import Cutscene
 
 class Game:
     
@@ -39,6 +40,9 @@ class Game:
         #pygame.display.set_icon(pygame.image.load(os.path.join("images", "ui","icon.png")))
         pygame.display.set_caption("Grand Theft Australian Zoo")
         pygame.mouse.set_visible(1);        
+        
+        self.hasKey = False
+        self.animalsFreed = False
         
         self.soundUtil = SoundUtil()
         self.soundUtil.sound_on = True
@@ -56,6 +60,9 @@ class Game:
         self.player.current_image = self.player.image
         
         self.hud.set_player(self.player)
+        
+        self.last_rendered_achievement = 0
+        self.achievement_countdown = 0
         
         self.clock = pygame.time.Clock()
         
@@ -77,7 +84,11 @@ class Game:
         for key in pygame.key.get_pressed():
             self.pressed.append( False )
             
-        self.loadLevel("reptileland.txt")
+        self.loadLevel("jail.txt")
+        self.player.x = TILE_SIZE
+        self.player.y = TILE_SIZE
+        self.player.rect.left = self.player.x + self.player.left_offset
+        self.player.rect.top = self.player.y + self.player.top_offset
     
     def loadLevel(self, file):
         self.pressed = []
@@ -95,6 +106,7 @@ class Game:
     def change_maps(self, dest, x, y):
         if self.player.isInCar:
             self.current_map.game_objects.remove(self.player.car)
+            self.current_map.not_player.remove(self.player.car)
         
         self.loadLevel(dest)
         self.player.x = x * TILE_SIZE
@@ -132,6 +144,12 @@ class Game:
     def free_animal(self, animal_name):
         animals_freed[animal_name] = image_util.load_image(animal_info.info[animal_name][3])
         self.hud.draw()
+        if len(animals_freed) is 5 and self.animalsFreed is False:
+            cutscene = Cutscene(self, "escape the zoo", \
+                                 [image_util.load_image(os.path.join("cutscenes","escape_the_zoo.png"))], \
+                                 image_util.load_sliced_sprites(210, 80, os.path.join("cutscenes","press_enter.png")));
+            cutscene.fire(self.player)
+            self.animalsFreed = True
     
     def gameloop(self):
         self.returnToMainMenu = False
@@ -141,6 +159,30 @@ class Game:
             self.get_input()
             self.update_state()
             self.draw()
+            
+    def achievement(self):
+        killed = self.hud.visitors_killed
+        if killed == 1000 and not killed == self.last_rendered_achievement:
+            self.last_rendered_achievement = killed
+            self.achievement_image = image_util.load_image("achievement_1000.png")
+            self.achievement_countdown = 200
+        elif killed == 500 and not killed == self.last_rendered_achievement:
+            self.last_rendered_achievement = killed
+            self.achievement_image = image_util.load_image("achievement_500.png")
+            self.achievement_countdown = 200
+        elif killed == 100 and not killed == self.last_rendered_achievement:
+            self.last_rendered_achievement = killed
+            self.achievement_image = image_util.load_image("achievement_100.png")
+            self.achievement_countdown = 200
+        elif killed == 10 and not killed == self.last_rendered_achievement:
+            self.last_rendered_achievement = killed
+            self.achievement_image = image_util.load_image("achievement_10.png")
+            self.achievement_countdown = 200
+        
+        
+        if self.achievement_countdown > 0:
+            self.screen.blit(self.achievement_image, (250,100))
+            self.achievement_countdown -= 1
     
     def get_input(self):
         self.getEvents()
@@ -240,6 +282,16 @@ class Game:
                 self.player.move(1, 0)
         else:
             self.pressed[K_RIGHT] = False
+        
+        if(keys[K_o]):
+            if not self.pressed[K_o]:
+                self.pressed[K_o] = True
+                if self.soundUtil.sound_on:
+                    self.soundUtil.sound_on = False
+                else:
+                    self.soundUtil.sound_on = True
+        else:
+            self.pressed[K_o] = False
             
             
     def update_state(self):
@@ -258,9 +310,13 @@ class Game:
         #for p in self.player_group:
         #    p.draw()
         self.player.draw()
+        self.achievement()
     
     def draw(self):
         self.draw_without_flip()
+        for cutscene in self.current_map.start_cutscenes:
+            self.current_map.start_cutscenes.remove(cutscene)
+            cutscene.fire(self.player)
         pygame.display.flip()
 
 if __name__ == '__main__':

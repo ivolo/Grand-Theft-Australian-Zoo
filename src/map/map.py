@@ -18,6 +18,8 @@ from cutscene import Cutscene
 from utils import image_util
 from koalaDoorEvent import KoalaDoorEvent
 from game_variables import animals_freed
+from dingoDoorEvent import DingoDoorEvent
+from snakeLinkEvent import SnakeLinkEvent
 
 class Map:
     tile_size = 32   
@@ -76,7 +78,8 @@ class Map:
     def intialize(self):
         file = open(self.fullname, 'r')
         self.load_map(file)
-        self.randomize_people()
+        if self.shouldCreateAnimals or self.shouldCreateVisitors or self.shouldCreateZookeepers:
+            self.randomize_people()
 
     def fire_tile(self, index, source):
         if index in self.events:
@@ -169,10 +172,6 @@ class Map:
             
         for splat in self.splats:
                 splat.draw()
-                
-        for cutscene in self.start_cutscenes:
-            self.start_cutscenes.remove(cutscene)
-            cutscene.fire(self.game.player)
         
     def draw_objects(self):
         for obj in self.game_objects:
@@ -246,11 +245,12 @@ class Map:
                 self.not_player.remove(obj)
     
     def reset(self):
-        self.remove_people()
-        self.num_visitors = 0
-        self.num_zookeepers = 0
-        self.num_animals = 0
-        self.randomize_people()
+        if self.shouldCreateAnimals or self.shouldCreateVisitors or self.shouldCreateZookeepers:
+            self.remove_people()
+            self.num_visitors = 0
+            self.num_zookeepers = 0
+            self.num_animals = 0
+            self.randomize_people()
     
     # Load the map from the text file
     # Maps are comma separated value files
@@ -350,6 +350,14 @@ class Map:
             elif command[0] == 'koaladoor':
                 coords = command[1].split(',')
                 self.events[int(coords[1])*self.tiles_wide+int(coords[0])] = KoalaDoorEvent(int(coords[0]), int(coords[1]), self.game)
+            elif command[0] == 'dingodoor':
+                coords = command[1].split(',')
+                self.events[int(coords[1])*self.tiles_wide+int(coords[0])] = DingoDoorEvent(int(coords[0]), int(coords[1]), self.game)
+            elif command[0] == 'snakedoor':
+                start_coords = command[1].split(',')
+                end_map = command[2]
+                end_coords = command[3].split(',')
+                self.events[int(start_coords[1])*self.tiles_wide+int(start_coords[0])] = SnakeLinkEvent(start_coords, end_coords, end_map, self.game)
             elif command[0] == 'visitors\n':
                 self.shouldCreateVisitors = True
             elif command[0] == 'zookeepers\n':

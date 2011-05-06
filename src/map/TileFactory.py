@@ -29,6 +29,7 @@ from car.imperviousCar import ImperviousCar
 from player.snake import Snake
 from specialObject.snakeFence import SnakeFence
 from specialObject.walkableRoof import WalkableRoof
+from specialObject.key import Key
 
 # The dictionary describing tiles
 # The form is: character : (tile image file, tile Class)
@@ -46,6 +47,10 @@ tiles = { '' : (os.path.join("tiles","grass.png"), FloorTile),
           'P': (os.path.join("tiles","path.png"), FloorTile),
           
           '_': (os.path.join("tiles","indoor_floor.png"), FloorTile),
+          '-': (os.path.join("tiles","indoor_floor.png"), VisitorTile),
+          
+          '.': (os.path.join("tiles","wooden_floor.png"), FloorTile),
+          ';': (os.path.join("tiles","wooden_floor.png"), VisitorTile),
         }
 
 # The dictionary describing sprites (non-Player)
@@ -86,10 +91,12 @@ sprites = { 'V' : (os.path.join("tourist.png"), Visitor),
             '2' : (os.path.join("koala_fence_UL.png"), KoalaFence),
             '3' : (os.path.join("koala_fence_verticle.png"), KoalaFence),
             
-            '4' : (os.path.join("fence.png"), DingoFence),
-            '5' : (os.path.join("fence_UL.png"), DingoFence),
-            '6' : (os.path.join("fence_verticle_left.png"), DingoFence),
-            '7' : (os.path.join("fence_LL.png"), DingoFence),
+            '4' : (os.path.join("dingofence.png"), DingoFence),
+            '5' : (os.path.join("dingofence_UL.png"), DingoFence),
+            '6' : (os.path.join("dingofence_LL.png"), DingoFence),
+            '7' : (os.path.join("dingofence_verticle.png"), DingoFence),
+            '8' : (os.path.join("dingofence_UR.png"), DingoFence),
+            '9' : (os.path.join("dingofence_LR.png"), DingoFence),
             
             '(' : (os.path.join("reptilefence_verticle.png"), SnakeFence),
             '-' : (os.path.join("reptilefence.png"), SnakeFence),
@@ -116,6 +123,11 @@ sprites = { 'V' : (os.path.join("tourist.png"), Visitor),
             'RHF' : (os.path.join("reptilehouse_front.png"), Building),
             'RB1' : (os.path.join("reptilehouse_base_1.png"), Building),
             'RB2' : (os.path.join("reptilehouse_base_2.png"), Building),
+            
+            'ZKH' : (os.path.join("zookeeper_hut.png"), Building),
+            'DSK' : (os.path.join("desk.png"), Building),
+            'CHR' : (os.path.join("chair.png"), Building),
+            'KEY' : (os.path.join("key.png"), Key),
             
             '|' : (os.path.join("tree.png"), Tree)}
 

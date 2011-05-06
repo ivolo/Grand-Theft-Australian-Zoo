@@ -25,6 +25,8 @@ class Hud:
         self.ability = ""
         self.canDrive = ""
         
+        self.key_image = image_util.load_image("key.png")
+        
         self.x = 0
         self.y = MAP_HEIGHT
         
@@ -78,5 +80,9 @@ class Hud:
             if index is 3:
                 y += 34
                 x = x_start
+                
+        if self.game.hasKey:
+            print "drawing"
+            self.screen.blit(self.key_image, (self.x + x_start + TILE_SIZE * 2, self.y + y_start + TILE_SIZE * 1))
             
             
