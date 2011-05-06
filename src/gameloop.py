@@ -167,22 +167,27 @@ class Game:
             self.update_state()
             self.draw()
             
+    achievements_done = []
     def achievement(self):
         killed = self.hud.visitors_killed
-        if killed == 1000 and not killed == self.last_rendered_achievement:
-            self.last_rendered_achievement = killed
+        if killed >= 1000 and 1000 not in self.achievements_done:#not killed == self.last_rendered_achievement:
+            #self.last_rendered_achievement = killed
+            self.achievements_done.append(1000)
             self.achievement_image = image_util.load_image("achievement_1000.png")
             self.achievement_countdown = 200
-        elif killed == 500 and not killed == self.last_rendered_achievement:
-            self.last_rendered_achievement = killed
+        elif killed >= 500 and 500 not in self.achievements_done:## and not killed == self.last_rendered_achievement:
+            self.achievements_done.append(500)
+            #self.last_rendered_achievement = killed
             self.achievement_image = image_util.load_image("achievement_500.png")
             self.achievement_countdown = 200
-        elif killed == 100 and not killed == self.last_rendered_achievement:
-            self.last_rendered_achievement = killed
+        elif killed >= 100 and 100 not in self.achievements_done:## and not killed == self.last_rendered_achievement:
+            self.achievements_done.append(100)
+            #self.last_rendered_achievement = killed
             self.achievement_image = image_util.load_image("achievement_100.png")
             self.achievement_countdown = 200
-        elif killed == 10 and not killed == self.last_rendered_achievement:
-            self.last_rendered_achievement = killed
+        elif killed >= 10 and 10 not in self.achievements_done:## and not killed == self.last_rendered_achievement:
+            self.achievements_done.append(10)
+            #self.last_rendered_achievement = killed
             self.achievement_image = image_util.load_image("achievement_10.png")
             self.achievement_countdown = 200
         
