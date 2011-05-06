@@ -29,6 +29,7 @@ from car.imperviousCar import ImperviousCar
 from player.snake import Snake
 from specialObject.snakeFence import SnakeFence
 from specialObject.walkableRoof import WalkableRoof
+from specialObject.key import Key
 
 # The dictionary describing tiles
 # The form is: character : (tile image file, tile Class)
@@ -47,6 +48,9 @@ tiles = { '' : (os.path.join("tiles","grass.png"), FloorTile),
           
           '_': (os.path.join("tiles","indoor_floor.png"), FloorTile),
           '-': (os.path.join("tiles","indoor_floor.png"), VisitorTile),
+          
+          '.': (os.path.join("tiles","wooden_floor.png"), FloorTile),
+          ';': (os.path.join("tiles","wooden_floor.png"), VisitorTile),
         }
 
 # The dictionary describing sprites (non-Player)
@@ -121,6 +125,9 @@ sprites = { 'V' : (os.path.join("tourist.png"), Visitor),
             'RB2' : (os.path.join("reptilehouse_base_2.png"), Building),
             
             'ZKH' : (os.path.join("zookeeper_hut.png"), Building),
+            'DSK' : (os.path.join("desk.png"), Building),
+            'CHR' : (os.path.join("chair.png"), Building),
+            'KEY' : (os.path.join("key.png"), Key),
             
             '|' : (os.path.join("tree.png"), Tree)}
 

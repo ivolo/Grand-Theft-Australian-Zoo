@@ -19,6 +19,7 @@ from utils import image_util
 from koalaDoorEvent import KoalaDoorEvent
 from game_variables import animals_freed
 from dingoDoorEvent import DingoDoorEvent
+from snakeLinkEvent import SnakeLinkEvent
 
 class Map:
     tile_size = 32   
@@ -350,6 +351,11 @@ class Map:
             elif command[0] == 'dingodoor':
                 coords = command[1].split(',')
                 self.events[int(coords[1])*self.tiles_wide+int(coords[0])] = DingoDoorEvent(int(coords[0]), int(coords[1]), self.game)
+            elif command[0] == 'snakedoor':
+                start_coords = command[1].split(',')
+                end_map = command[2]
+                end_coords = command[3].split(',')
+                self.events[int(start_coords[1])*self.tiles_wide+int(start_coords[0])] = SnakeLinkEvent(start_coords, end_coords, end_map, self.game)
             elif command[0] == 'visitors\n':
                 self.shouldCreateVisitors = True
             elif command[0] == 'zookeepers\n':

@@ -1,4 +1,5 @@
 from mapEvent import MapEvent
+from player.snake import Snake
 
 class SnakeLinkEvent(MapEvent):
     
@@ -14,7 +15,7 @@ class SnakeLinkEvent(MapEvent):
         self.game = game
     
     def fire(self, source):
-        if source is self.game.player or source is self.game.player.car:
+        if source is self.game.player and isinstance(source, Snake):
             self.game.change_maps(self.dest, self.dest_x, self.dest_y)
             return False
         return True

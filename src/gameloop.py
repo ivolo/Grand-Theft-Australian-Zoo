@@ -40,6 +40,8 @@ class Game:
         pygame.display.set_caption("Grand Theft Australian Zoo")
         pygame.mouse.set_visible(1);        
         
+        self.hasKey = False
+        
         self.soundUtil = SoundUtil()
         self.soundUtil.sound_on = True
         
@@ -51,7 +53,7 @@ class Game:
         self.hud = Hud(self)
         
         self.player_group = Group()
-        self.player = Taz(image_util.load_image("tasmanian.png"), 1, 1, self)
+        self.player = Snake(image_util.load_image("snake.png"), 1, 1, self)
         self.player.inUse = True
         self.player.current_image = self.player.image
         
@@ -63,9 +65,7 @@ class Game:
         for key in pygame.key.get_pressed():
             self.pressed.append( True )
             
-        self.hasKey = False
-            
-        self.loadLevel("koala.txt")
+        self.loadLevel("zookeeper_hut.txt")
         
         self.returnToMainMenu = False
         
