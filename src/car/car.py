@@ -182,8 +182,10 @@ class Car(GameObject):
     def update(self):
         if self.damage >= self.health:
             if self.driver:
-                self.driver.x = self.x
-                self.driver.y = self.y
+                self.driver.x = self.rect.left
+                self.driver.y = self.rect.top
+                self.driver.rect.left = self.rect.left
+                self.driver.rect.top = self.rect.top
                 self.driver.isInCar = False
                 self.driver.car = None
                 self.game.current_map.game_objects.add(self.driver)

@@ -6,6 +6,7 @@ Created on Apr 29, 2011
 import sys
 import pygame
 from pygame.locals import *
+from game_constants.client import *
 
 from utils import image_util
 from gameloop import Game
@@ -19,9 +20,10 @@ MAX_INDEX = 2
 
 class MenuScreen:
     
-    def __init__(self):
-        self.game = Game()
-        self.screen = self.game.screen
+    def __init__(self, screen):
+        
+        self.game = Game(screen)
+        self.screen = screen
         self.image = image_util.load_image("mainmenu.png")
         
         self.index = 0
@@ -113,7 +115,7 @@ class MenuScreen:
     def play(self):
         self.game.gameloop()
         if self.game.isGameOver:
-            self.game = Game()
+            self.game = Game(self.screen)
         for x in xrange(len(self.pressed)):
             self.pressed[x] = True
     
@@ -170,5 +172,9 @@ class MenuScreen:
             self.get_input()
 
 if __name__ == '__main__':
-    menu = MenuScreen()
+    pygame.init()
+    pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+    screen = pygame.display.get_surface()
+    pygame.display.set_caption("Grand Theft Australian Zoo")
+    menu = MenuScreen(screen)
     menu.loop()

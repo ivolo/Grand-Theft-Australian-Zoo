@@ -174,6 +174,7 @@ class Player(GameObject):
                 for collision in collisions:
                     if not self.isInCar and collision != self: # if a previous use put us in car, do nothing
                         collision.use(self)
+                        return
         else:
             self.leave_car()
                     

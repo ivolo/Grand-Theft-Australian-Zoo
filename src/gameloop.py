@@ -29,16 +29,17 @@ from map.cutscene import Cutscene
 
 class Game:
     
-    loaded_maps = {}
-    current_map = None
     
-    def __init__(self):
-        pygame.init()
-        self.window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
-        self.screen = pygame.display.get_surface()
+    
+    def __init__(self, screen):
+        print "New screen created!"
+        self.screen = screen
         self.map_screen = self.screen.subsurface(0, 0, MAP_WIDTH, MAP_HEIGHT)
         #pygame.display.set_icon(pygame.image.load(os.path.join("images", "ui","icon.png")))
-        pygame.display.set_caption("Grand Theft Australian Zoo")
+        
+        self.loaded_maps = {}
+        self.current_map = None
+        
         pygame.mouse.set_visible(1);        
         
         self.hasKey = False
@@ -65,16 +66,13 @@ class Game:
         self.achievement_countdown = 0
         
         self.clock = pygame.time.Clock()
+        self.achievements_done = []
         
         self.pressed = []
         for key in pygame.key.get_pressed():
             self.pressed.append( True )
             
         self.loadLevel("jail.txt")
-        
-        self.isGameOver = False
-        self.returnToMainMenu = False
-        
     def reset(self):
         self.player_group.remove(self.player)
         self.current_map.game_objects.remove(self.player)
@@ -167,8 +165,9 @@ class Game:
             self.get_input()
             self.update_state()
             self.draw()
+        print "GAME ENDING!"
             
-    achievements_done = []
+    
     def achievement(self):
         killed = self.hud.visitors_killed
         if killed >= 1000 and 1000 not in self.achievements_done:#not killed == self.last_rendered_achievement:
