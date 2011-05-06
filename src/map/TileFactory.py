@@ -89,8 +89,10 @@ sprites = { 'V' : (os.path.join("tourist.png"), Visitor),
             
             '4' : (os.path.join("dingofence.png"), DingoFence),
             '5' : (os.path.join("dingofence_UL.png"), DingoFence),
-            '6' : (os.path.join("dingofence_verticle.png"), DingoFence),
-            '7' : (os.path.join("dingofence_LL.png"), DingoFence),
+            '6' : (os.path.join("dingofence_LL.png"), DingoFence),
+            '7' : (os.path.join("dingofence_verticle.png"), DingoFence),
+            '8' : (os.path.join("dingofence_UR.png"), DingoFence),
+            '9' : (os.path.join("dingofence_LR.png"), DingoFence),
             
             '(' : (os.path.join("reptilefence_verticle.png"), SnakeFence),
             '-' : (os.path.join("reptilefence.png"), SnakeFence),

@@ -63,7 +63,9 @@ class Game:
         for key in pygame.key.get_pressed():
             self.pressed.append( True )
             
-        self.loadLevel("zookeeperland.txt")
+        self.hasKey = False
+            
+        self.loadLevel("koala.txt")
         
         self.returnToMainMenu = False
         

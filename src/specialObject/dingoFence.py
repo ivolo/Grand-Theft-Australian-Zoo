@@ -18,15 +18,7 @@ class DingoFence(GameObject):
     
     def __init__(self, image, x, y, game):
         super(DingoFence, self).__init__(image, (x*TILE_SIZE, y*TILE_SIZE), game)
-        
-    def attacked(self, source):
-        if isinstance(source, Taz):
-            self.game.free_animal("Dingo")
-            self.kill()
-            
-    def ranOver(self, source):
-        self.game.free_animal("Dingo")
-        self.kill()
+
             
 
     
