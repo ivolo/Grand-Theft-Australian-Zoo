@@ -275,6 +275,7 @@ class Game:
         
         if(keys[K_o]):
             if not self.pressed[K_o]:
+                self.pressed[K_o] = True
                 if self.soundUtil.sound_on:
                     self.soundUtil.sound_on = False
                 else:
