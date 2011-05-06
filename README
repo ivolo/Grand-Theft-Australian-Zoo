@@ -21,8 +21,9 @@ The goal of the game is to get all of the animals out of their compounds and esc
 + Press the W-A-S-D keys or arrow keys to move your player around the map.
 + Press the Space Bar to attack Zoo visitors.
 + Zookeepers with nets can capture you and send you back to your starting point.
-+ You can press the Q key when you are next to an animal with a yellow halo to switch animals.
-+ You can press the Q key to ingress-egress from the car.
++ Press the Q key when you are next to an animal with a yellow halo to switch animals.
++ Press the Q key to ingress-egress from the car.
++ Press the o key to toggle sound.
 
 -----------------------
 |    Known Issues     |
