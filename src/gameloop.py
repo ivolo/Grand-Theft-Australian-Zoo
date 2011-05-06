@@ -25,6 +25,7 @@ from player.koala import Koala
 from player.taz import Taz
 from player.dingo import Dingo
 from utils.sound_util import SoundUtil
+from map.cutscene import Cutscene
 
 class Game:
     
@@ -41,6 +42,7 @@ class Game:
         pygame.mouse.set_visible(1);        
         
         self.hasKey = False
+        self.animalsFreed = False
         
         self.soundUtil = SoundUtil()
         self.soundUtil.sound_on = True
@@ -68,7 +70,7 @@ class Game:
         for key in pygame.key.get_pressed():
             self.pressed.append( True )
             
-        self.loadLevel("reptileland.txt")
+        self.loadLevel("jail.txt")
         
         self.returnToMainMenu = False
         
@@ -142,6 +144,12 @@ class Game:
     def free_animal(self, animal_name):
         animals_freed[animal_name] = image_util.load_image(animal_info.info[animal_name][3])
         self.hud.draw()
+        if len(animals_freed) is 5 and self.animalsFreed is False:
+            cutscene = Cutscene(self, "escape the zoo", \
+                                 [image_util.load_image(os.path.join("cutscenes","escape_the_zoo.png"))], \
+                                 image_util.load_sliced_sprites(210, 80, os.path.join("cutscenes","press_enter.png")));
+            cutscene.fire(self.player)
+            self.animalsFreed = True
     
     def gameloop(self):
         self.returnToMainMenu = False
