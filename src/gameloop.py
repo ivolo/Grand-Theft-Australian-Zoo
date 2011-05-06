@@ -73,6 +73,10 @@ class Game:
             self.pressed.append( True )
             
         self.loadLevel("jail.txt")
+        
+        self.isGameOver = False
+        self.returnToMainMenu = False
+        
     def reset(self):
         self.player_group.remove(self.player)
         self.current_map.game_objects.remove(self.player)
