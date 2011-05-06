@@ -70,7 +70,7 @@ class Game:
         for key in pygame.key.get_pressed():
             self.pressed.append( True )
             
-        self.loadLevel("jail.txt")
+        self.loadLevel("zookeeperland.txt")
         
         self.isGameOver = False
         self.returnToMainMenu = False
