@@ -2,6 +2,7 @@ from mapEvent import MapEvent
 from game_variables import animals_freed
 from game_constants.client import TILE_SIZE
 from dialogEvent import DialogEvent
+from player.kangaroo import Kangaroo
 
 class PushbackLinkEvent(MapEvent):
     
@@ -19,6 +20,8 @@ class PushbackLinkEvent(MapEvent):
     def fire(self, source):
         if source is self.game.player or source is self.game.player.car:
             if len(animals_freed) == 5:
+                self.game.player.leave_car()
+                self.game.change_player(Kangaroo(None, self.game.player.x/32, self.game.player.y/32, self.game))
                 self.game.change_maps(self.dest, self.dest_x, self.dest_y)
             else:
                 self.game.player.y -= TILE_SIZE
