@@ -11,10 +11,9 @@ from utils import image_util
 from menus.controlScreen import ControlScreen
 
 CONTINUE = 0
-OPTIONS = 1
-CONTROLS = 2
-MAIN_MENU = 3
-MAX_INDEX = 3
+CONTROLS = 1
+MAIN_MENU = 2
+MAX_INDEX = 2
 
 class PauseScreen:
     
@@ -26,9 +25,8 @@ class PauseScreen:
         self.index = 0
     
         self.continue_rect = Rect(275,200,245,70)
-        self.options_rect = Rect(275,290,245,70)
-        self.controls_rect = Rect(275,380,245,70)
-        self.mainmenu_rect = Rect(275,470,245,70)
+        self.controls_rect = Rect(275,290,245,70)
+        self.mainmenu_rect = Rect(275,380,245,70)
         
         self.pressed = []
         for key in pygame.key.get_pressed():
@@ -52,10 +50,6 @@ class PauseScreen:
                     self.index = CONTINUE
                     self.draw()
                     self.cont()
-                elif self.options_rect.collidepoint(pos):
-                    self.index = OPTIONS
-                    self.draw()
-                    self.options()
                 elif self.controls_rect.collidepoint(pos):
                     self.index = CONTROLS
                     self.draw()
@@ -120,9 +114,6 @@ class PauseScreen:
     def cont(self):
         self.leave()
     
-    def options(self):
-        for x in xrange(len(self.pressed)):
-            self.pressed[x] = True
     
     def controls(self):
         self.control_screen.loop()
@@ -149,8 +140,6 @@ class PauseScreen:
     def select(self):
         if self.index is CONTINUE:
             self.cont()
-        elif self.index is OPTIONS:
-            self.options()
         elif self.index is CONTROLS:
             self.controls()
         elif self.index is MAIN_MENU:
@@ -167,8 +156,6 @@ class PauseScreen:
         
         if self.index is CONTINUE:
             pygame.draw.rect(self.screen, (255,255,0), self.continue_rect, 5)
-        elif self.index is OPTIONS:
-            pygame.draw.rect(self.screen, (255,255,0), self.options_rect, 5)
         elif self.index is CONTROLS:
             pygame.draw.rect(self.screen, (255,255,0), self.controls_rect, 5)
         elif self.index is MAIN_MENU:
