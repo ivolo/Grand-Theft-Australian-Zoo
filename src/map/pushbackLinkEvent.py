@@ -1,0 +1,32 @@
+from mapEvent import MapEvent
+from game_variables import animals_freed
+from game_constants.client import TILE_SIZE
+from dialogEvent import DialogEvent
+from player.kangaroo import Kangaroo
+
+class PushbackLinkEvent(MapEvent):
+    
+    def __init__(self, start_coords, end_coords, dest, game):
+        self.source_x = int(start_coords[0])
+        self.source_y = int(start_coords[1])
+        
+        self.dest_x = int(end_coords[0])
+        self.dest_y = int(end_coords[1])
+        
+        self.dest = dest
+        
+        self.game = game
+    
+    def fire(self, source):
+        if source is self.game.player or source is self.game.player.car:
+            if len(animals_freed) == 5:
+                self.game.player.leave_car()
+                self.game.change_player(Kangaroo(None, self.game.player.x/32, self.game.player.y/32, self.game))
+                self.game.change_maps(self.dest, self.dest_x, self.dest_y)
+            else:
+                self.game.player.y -= TILE_SIZE
+                self.game.player.rect.top = self.game.player.y - self.game.player.top_offset
+                dialog = DialogEvent("You cannot leave until you've freed all the animals!", self.game)
+                dialog.fire(source)
+            return False
+        return True

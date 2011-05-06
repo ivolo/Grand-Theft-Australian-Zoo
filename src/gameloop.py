@@ -70,7 +70,7 @@ class Game:
         for key in pygame.key.get_pressed():
             self.pressed.append( True )
             
-        self.loadLevel("car_chase.txt")
+        self.loadLevel("jail.txt")
         
         self.isGameOver = False
         self.returnToMainMenu = False
@@ -85,7 +85,7 @@ class Game:
         for key in pygame.key.get_pressed():
             self.pressed.append( False )
             
-        self.loadLevel("car_chase.txt")
+        self.loadLevel("jail.txt")
         self.player.x = TILE_SIZE
         self.player.y = TILE_SIZE
         self.player.rect.left = self.player.x + self.player.left_offset
@@ -142,6 +142,13 @@ class Game:
         self.player.current_image = self.player.image
         self.hud.set_player(self.player)
     
+    def free_all_animals(self):
+        self.free_animal("Koala")
+        self.free_animal("Tasmanian Devil")
+        self.free_animal("Kangaroo")
+        self.free_animal("Brown Snake")
+        self.free_animal("Dingo")
+    
     def free_animal(self, animal_name):
         animals_freed[animal_name] = image_util.load_image(animal_info.info[animal_name][3])
         self.hud.draw()
@@ -161,22 +168,27 @@ class Game:
             self.update_state()
             self.draw()
             
+    achievements_done = []
     def achievement(self):
         killed = self.hud.visitors_killed
-        if killed == 1000 and not killed == self.last_rendered_achievement:
-            self.last_rendered_achievement = killed
+        if killed >= 1000 and 1000 not in self.achievements_done:#not killed == self.last_rendered_achievement:
+            #self.last_rendered_achievement = killed
+            self.achievements_done.append(1000)
             self.achievement_image = image_util.load_image("achievement_1000.png")
             self.achievement_countdown = 200
-        elif killed == 500 and not killed == self.last_rendered_achievement:
-            self.last_rendered_achievement = killed
+        elif killed >= 500 and 500 not in self.achievements_done:## and not killed == self.last_rendered_achievement:
+            self.achievements_done.append(500)
+            #self.last_rendered_achievement = killed
             self.achievement_image = image_util.load_image("achievement_500.png")
             self.achievement_countdown = 200
-        elif killed == 100 and not killed == self.last_rendered_achievement:
-            self.last_rendered_achievement = killed
+        elif killed >= 100 and 100 not in self.achievements_done:## and not killed == self.last_rendered_achievement:
+            self.achievements_done.append(100)
+            #self.last_rendered_achievement = killed
             self.achievement_image = image_util.load_image("achievement_100.png")
             self.achievement_countdown = 200
-        elif killed == 10 and not killed == self.last_rendered_achievement:
-            self.last_rendered_achievement = killed
+        elif killed >= 10 and 10 not in self.achievements_done:## and not killed == self.last_rendered_achievement:
+            self.achievements_done.append(10)
+            #self.last_rendered_achievement = killed
             self.achievement_image = image_util.load_image("achievement_10.png")
             self.achievement_countdown = 200
         
@@ -226,6 +238,14 @@ class Game:
                 self.player.use_ability()
         else:
             self.pressed[K_RETURN] = False
+            
+        # use ability
+        if(keys[K_F1]):
+            if not self.pressed[K_F1]:
+                self.pressed[K_F1] = True
+                self.free_all_animals()
+        else:
+            self.pressed[K_F1] = False
     
         # get into and out of car
         if(keys[K_q]):
